@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FolderPageRoutingModule } from './folder-routing.module';
+import { GearComparePageRoutingModule } from './gear-compare-routing.module';
 
-import { FolderPage } from './folder.page';
+import { GearComparePage } from './gear-compare.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    GearComparePageRoutingModule
   ],
-  declarations: [FolderPage]
+  declarations: [GearComparePage]
 })
-export class FolderPageModule {}
+export class GearComparePageModule {}
