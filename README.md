@@ -4,6 +4,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/nandakho/tools-of-fantasy.svg)](https://github.com/nandakho/tools-of-fantasy/stargazers)
 
 ## Description
+This project is still in **development!**
 Tools of Fantasy is a serverless tools built with the Ionic-Angular framework, designed to assist players in the MMO game \"Tower of Fantasy\".  
 This project aims to provide various helpful tools to enhance the gaming experience for players.  
 
@@ -14,7 +15,7 @@ Currently, the project offers the following tools:
 More tools will be added in future updates to further enhance the functionality and usability of the project.
 
 ## Run Locally
-You can just visit the [online version here](https://tof.nandakho.my.id/),  
+You can just visit the [online version here](https://tof.nandakho.my.id/) *coming soon!*,  
 or to install and use Tools of Fantasy locally, you can follow these steps:  
 1. Clone this repository to your local machine using the following command:  
 ```bash
