@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 
 register();
@@ -25,11 +26,16 @@ export class HomePage implements OnInit {
       background: "assets/background/compare.jpg",
     }
   ];
-  constructor() { }
+  constructor(
+    private nav: NavController
+  ) { }
 
   ngOnInit() {
   }
 
+  async goTo(url:any){
+    await this.nav.navigateRoot(url);
+  }
 }
 
 interface menu {

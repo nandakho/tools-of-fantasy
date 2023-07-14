@@ -8,7 +8,7 @@
   <div>
     <swiper-container [autoplay]="{delay:5000}" loop="true" space-between="20">
       <swiper-slide *ngFor="let menu of menus">
-        <ion-card>
+        <ion-card (click)="goTo(menu.url)">
           <div class="bg-img" [ngStyle]= "{'background-image': menu.background?'url('+ menu.background +')':'none'}"></div>
           <div class="card-overlay"></div>
           <ion-card-header>
