@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-home',
@@ -6,10 +9,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
+  menus: menu[] = [
+    {
+      title: "Gear Compare",
+      summary: "Which is better?",
+      description: "Ever wonder which one give higher stats between flat attack and percentage one? Worry not, this tool can help you figure that out!",
+      url: "gear-compare",
+      background: "assets/background/compare.jpg",
+    },
+    {
+      title: "Crit Calc",
+      summary: "Crit chance? But isn't that obvious?",
+      description: "Nope! In game stat only tells you the chance to crit against target with the same level. Then you see enemy with higher or lower level in some instance, what's your crit chance against them?",
+      url: "gear-compare",
+      background: "assets/background/compare.jpg",
+    }
+  ];
   constructor() { }
 
   ngOnInit() {
   }
 
+}
+
+interface menu {
+  title: string;
+  background?: string;
+  summary?: string;
+  description?: string;
+  url?: string;
 }

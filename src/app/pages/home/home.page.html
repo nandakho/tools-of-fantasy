@@ -1,13 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div>
+    <swiper-container autoplay="5000" loop="true">
+      <swiper-slide *ngFor="let menu of menus">
+        <ion-card [ngStyle]= "{'background-image': menu.background?'url('+ menu.background +')':'none'}">
+          <ion-card-header>
+            <ion-card-title>{{menu.title}}</ion-card-title>
+            <ion-card-subtitle>{{menu.summary}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>{{menu.description}}</ion-card-content>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
+  </div>
 </ion-content>
