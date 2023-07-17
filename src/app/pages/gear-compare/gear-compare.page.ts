@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { gear } from 'src/app/services';
 
 @Component({
   selector: 'app-gear-compare',
@@ -6,21 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gear-compare.page.scss'],
 })
 export class GearComparePage implements OnInit {
-  gearType: gear[] = [
-    { type: "microreactor" }
-  ]
+  yourStats = {
+    baseAtk: 0,
+    percentAtk: 0
+  }
   constructor() { }
 
   ngOnInit() {
   }
 
-}
-
-interface gear {
-  type: string;
-  icon?: string;
-}
-
-interface stat {
-  
 }
