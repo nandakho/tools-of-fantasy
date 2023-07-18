@@ -1,5 +1,19 @@
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  ion-list {
+    padding-top: 0px;
+    ion-item {
+      --padding-end: 0px;
+      ion-avatar {
+        margin: 0px;
+      }
+      ion-label {
+        h1 {
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
 
 ion-menu.md ion-content {

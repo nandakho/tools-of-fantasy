@@ -6,20 +6,41 @@
 
 <ion-content [fullscreen]="true">
   <ion-grid>
-    <ion-col>
+    <ion-row>
       <ion-card>
         <ion-card-header>
           <ion-card-title>
             Your Stats
           </ion-card-title>
           <ion-card-subtitle>
-            Input your stat without equipping the piece you want to compare
+            Input your stat without equipping the piece you want to compare <ion-icon name="help-circle-outline" (click)="help('stats')"></ion-icon>
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Input form here
+          <ion-list>
+            <ion-item>
+              <ion-avatar button slot="start" (click)="changeElement()"><img src="assets/icon/icon.png"/></ion-avatar>
+              <ion-input [label]="elementSelected+' Attack'" placeholder="Base Attack"></ion-input><ion-input label="+" placeholder="Bonus Attack"></ion-input>
+            </ion-item>
+          </ion-list>
         </ion-card-content>
       </ion-card>
-    </ion-col>
+    </ion-row>
+    <ion-row class="equip">
+      <ion-card class="container">
+        <ion-card-header>
+          <ion-card-title>Let's Compare!</ion-card-title>
+          <ion-button color="warning" class="btn" fill="outline" size="small" (click)="addEquipment()"><ion-icon name="add-circle-outline"></ion-icon>Add</ion-button>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card *ngFor="let e of equipment; let i=index">
+            <ion-card-header>
+              <ion-card-title>Equip {{i+1}}</ion-card-title>
+              <ion-button color="danger" class="btn" fill="outline" size="small" (click)="removeEquipment(i)"><ion-icon name="remove-circle-outline"></ion-icon>Remove</ion-button>
+            </ion-card-header>
+          </ion-card>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
   </ion-grid>
 </ion-content>

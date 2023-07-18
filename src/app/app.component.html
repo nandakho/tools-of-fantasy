@@ -3,8 +3,13 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>{{appTitle}}</ion-list-header>
-          <ion-note>Simple tools to help you!</ion-note>
+          <ion-item>
+            <ion-avatar slot="end"><img src="assets/icon/icon.png"/></ion-avatar>
+            <ion-label>
+              <h1>{{appTitle}}</h1>
+              <p>Simple tools to help you!</p>
+            </ion-label>
+          </ion-item>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
