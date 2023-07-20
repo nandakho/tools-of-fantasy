@@ -11,19 +11,29 @@
   <ion-grid>
     <ion-row>
       <ion-card>
-        <ion-card-header>
+        <ion-card-header class="stats">
           <ion-card-title>
-            Your Stats
+            Your Stats <ion-icon name="help-circle-outline" (click)="help('stats')"></ion-icon>
           </ion-card-title>
-          <ion-card-subtitle>
-            Input your stat without equipping the piece you want to compare <ion-icon name="help-circle-outline" (click)="help('stats')"></ion-icon>
-          </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
+          <ion-label class="subtitle">Input your stat below (without equipping the piece you want to compare)</ion-label>
           <ion-list>
-            <ion-item>
-              <ion-avatar button slot="start" (click)="changeElement()"><img src="assets/icon/icon.png"/></ion-avatar>
-              <ion-input [label]="elementSelected+' Attack'" placeholder="Base Attack"></ion-input><ion-input label="+" placeholder="Bonus Attack"></ion-input>
+            <ion-item lines="none" class="ion-text-wrap">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-button fill="outline" [ngClass]="'Element_'+elementSelected">
+                      <ion-avatar button slot="start" (click)="changeElement()"><img [src]="'assets/icon/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="5"><ion-input placeholder="Base Attack"></ion-input></ion-col>
+                  <ion-col size="2" class="plus_sign">+</ion-col>
+                  <ion-col size="5"><ion-input placeholder="Bonus Attack"></ion-input></ion-col>
+                </ion-row>
+              </ion-grid>
             </ion-item>
           </ion-list>
         </ion-card-content>
