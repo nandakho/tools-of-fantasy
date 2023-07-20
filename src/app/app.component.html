@@ -3,7 +3,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list>
-          <ion-item>
+          <ion-item lines="none">
             <ion-avatar slot="end"><img src="assets/icon/icon.png"/></ion-avatar>
             <ion-label>
               <h1>{{appTitle}}</h1>
@@ -18,7 +18,7 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
-      <ion-footer>
+      <ion-footer class="ion-no-border">
         <p><ion-label>Created by nandakho</ion-label></p>
         <a [href]="gitLink" target="_blank"><ion-icon name="logo-github"></ion-icon><p><ion-label> Find this project on Github!</ion-label></p></a>
       </ion-footer>
