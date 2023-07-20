@@ -1,10 +1,36 @@
+ion-header {
+    ion-toolbar {
+        --background: var(--ion-color-dark-shade);
+        ion-menu-button {
+            color: var(--ion-color-warning);
+        }
+        ion-title {
+            font-weight: bold;
+            color: var(--ion-color-warning);
+        }
+    }
+}
+
+ion-content {
+    --background: var(--ion-color-dark-shade);
+}
+
 ion-card {
-    ion-card-subtitle {
-        ion-icon {
-            font-size: 16px;
-            position: absolute;
-            top: 0px;
-            padding-left: 4px;
+    --background: var(--ion-color-dark-tint);
+    border: 1px solid var(--ion-color-medium-shade);
+    ion-card-header {
+        ion-card-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--ion-color-warning);
+        }
+        ion-card-subtitle {
+            ion-icon {
+                font-size: 16px;
+                position: absolute;
+                top: 0px;
+                padding-left: 4px;
+            }
         }
     }
 }
