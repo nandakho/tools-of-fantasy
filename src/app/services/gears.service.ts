@@ -12,10 +12,11 @@ export class GearsService {
  * For now this is only used for frontend icon
  */
 export interface gear {
-  type: gearTypesNormal|gearTypesSpecial;
+  type: gearTypes;
   icon?: string;
 }
 
+export type gearTypes = gearTypesNormal|gearTypesSpecial;
 type gearTypesNormal = "Helm"|"Armor"|"Belt"|"Legguards"|"Bracers"|"Spaulders"|"Sabatons"|"Handguards";
 type gearTypesSpecial = "Eyepiece"|"Combat Engine"|"Exoskeleton"|"Microreactor";
 
@@ -26,6 +27,7 @@ type gearTypesSpecial = "Eyepiece"|"Combat Engine"|"Exoskeleton"|"Microreactor";
  * - `eleAttackPercent`: A cooler eleAttack, that boost it with percentage value
  */
 export interface augStat {
-  type: "attack"|"eleAttack"|"eleAttackPercent";
-  value: number;
+  attack: number;
+  eleAttack: number;
+  eleAttackPercent: number;
 }

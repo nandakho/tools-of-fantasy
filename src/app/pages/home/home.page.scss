@@ -68,14 +68,17 @@ ion-card {
             font-weight: bold;
             color: var(--ion-color-warning);
         }
-        ion-card-subtitle {
-            margin-top: 4px;
-            color: var(--ion-color-primary-contrast);
-        }
     }
     ion-card-content {
         white-space: break-spaces;
         padding: 6px 12px 0px 12px;
+        display: flex;
+        flex-direction: column;
+        ion-label.subtitle {
+            font-weight: lighter;
+            padding-bottom: 6px;
+        }
+        color: rgba(var(--ion-color-primary-contrast-rgb), 0.9);
     }
     .bg-img {
         width: 100%;

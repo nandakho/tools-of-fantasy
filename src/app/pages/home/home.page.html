@@ -16,9 +16,11 @@
           <div class="card-overlay"></div>
           <ion-card-header>
             <ion-card-title>{{menu.title}}</ion-card-title>
-            <ion-card-subtitle>{{menu.summary}}</ion-card-subtitle>
           </ion-card-header>
-          <ion-card-content>{{menu.description}}</ion-card-content>
+          <ion-card-content>
+            <ion-label class="subtitle">{{menu.summary}}</ion-label>
+            <ion-label class="description">{{menu.description}}</ion-label>
+          </ion-card-content>
         </ion-card>
       </swiper-slide>
     </swiper-container>
