@@ -82,10 +82,34 @@ ion-card {
                             }
                         }
                         ion-button.Element_Flame {
-                            color: var(--ion-color-danger);
-                            --border-color: var(--ion-color-danger);
-                            --background-activated: var(--ion-color-danger);
-                            --background-hover: var(--ion-color-danger);
+                            color: var(--ion-color-primary-contrast);
+                            --border-color: var(--element-flame);
+                            --background-activated: var(--element-flame);
+                            --background-hover: var(--element-flame);
+                        }
+                        ion-button.Element_Frost {
+                            color: var(--ion-color-primary-contrast);
+                            --border-color: var(--element-frost);
+                            --background-activated: var(--element-frost);
+                            --background-hover: var(--element-frost);
+                        }
+                        ion-button.Element_Physical {
+                            color: var(--ion-color-primary-contrast);
+                            --border-color: var(--element-physical);
+                            --background-activated: var(--element-physical);
+                            --background-hover: var(--element-physical);
+                        }
+                        ion-button.Element_Volt {
+                            color: var(--ion-color-primary-contrast);
+                            --border-color: var(--element-volt);
+                            --background-activated: var(--element-volt);
+                            --background-hover: var(--element-volt);
+                        }
+                        ion-button.Element_Altered {
+                            color: var(--ion-color-primary-contrast);
+                            --border-color: var(--element-altered);
+                            --background-activated: var(--element-altered);
+                            --background-hover: var(--element-altered);
                         }
                         ion-col {
                             display: flex;

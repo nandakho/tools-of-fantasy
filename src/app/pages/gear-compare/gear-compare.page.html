@@ -29,9 +29,9 @@
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.baseAtk"></ion-input></ion-col>
+                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
                   <ion-col size="auto" class="plus_sign">+</ion-col>
-                  <ion-col size="5"><ion-input type="number" label="Bonus Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.bonusAtk"></ion-input></ion-col>
+                  <ion-col size="5"><ion-input type="number" label="Bonus Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
@@ -59,12 +59,12 @@
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.baseAtk"></ion-input></ion-col>
+                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
                   <ion-col size="auto" class="plus_sign">+</ion-col>
-                  <ion-col size="5"><ion-input type="number" label="Enhancement" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.enhanceAtk"></ion-input></ion-col>
+                  <ion-col size="5"><ion-input type="number" label="Enhancement" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.enhanceAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col size="auto"><ion-input type="number" label="Enhancement Unlocked (Attack)" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.bonusAtk"></ion-input></ion-col>
+                  <ion-col size="auto"><ion-input type="number" label="Enhancement Unlocked (Attack)" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
@@ -89,9 +89,9 @@
                 <ion-item lines="none" class="ion-text-wrap">
                   <ion-grid>
                     <ion-row>
-                      <ion-col size="auto"><ion-input type="number" label="Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.attack"></ion-input></ion-col>
-                      <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttack"></ion-input></ion-col>
-                      <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent"></ion-input></ion-col>
+                      <ion-col size="auto"><ion-input type="number" label="Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.attack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
+                      <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
+                      <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
                     </ion-row>
                     <ion-row>
                       <ion-col size="auto"><ion-input type="number" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [(ngModel)]="e.totalAttack" class="result"></ion-input></ion-col>
