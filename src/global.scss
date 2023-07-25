@@ -72,13 +72,13 @@ ion-alert {
                     }
                 }
             }
-            $element-names: "flame", "frost", "physical", "volt", "altered";
+            $element-names: "Flame", "Frost", "Physical", "Volt", "Altered";
             @each $name in $element-names {
                 .element-#{$name} {
                     background-image: url("assets/icon/elements/Element_#{$name}.png");
                 }
             }
-            $gear-names: "helm", "armor", "belt", "legguards", "bracers", "spaulders", "sabatons", "handguards", "eyepiece", "combat-engine", "exoskeleton", "microreactor";
+            $gear-names: "Helm", "Armor", "Belt", "Legguards", "Bracers", "Spaulders", "Sabatons", "Handguards", "Eyepiece", "Combat-Engine", "Exoskeleton", "Microreactor";
             @each $name in $gear-names {
                 .gear-#{$name} {
                     background-image: url(get-gear-url($name));

@@ -49,7 +49,7 @@ export class GearComparePage implements OnInit {
         type:"radio",
         value: this.elementAvailable[i],
         checked: this.elementAvailable[i]==this.elementSelected,
-        cssClass: `element-${this.elementAvailable[i].toLowerCase()}`
+        cssClass: `element-${this.elementAvailable[i]}`
       });
     }
     return r;
@@ -63,7 +63,7 @@ export class GearComparePage implements OnInit {
         type:"radio",
         value: this.gearAvailable[i],
         checked: this.gearAvailable[i]==this.gearSelected.type,
-        cssClass: `gear-${this.gearAvailable[i].toLowerCase().replace(" ","-")}`
+        cssClass: `gear-${this.gearAvailable[i].replace(" ","-")}`
       });
     }
     return r;
