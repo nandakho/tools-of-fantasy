@@ -7,18 +7,15 @@ export class GearsService {
 
   constructor() { }
 }
-
-/**
- * For now this is only used for frontend icon
- */
 export interface gear {
   type: gearTypes;
-  icon?: string;
+  rarity: gearRarity;
 }
 
 export type gearTypes = gearTypesNormal|gearTypesSpecial;
 type gearTypesNormal = "Helm"|"Armor"|"Belt"|"Legguards"|"Bracers"|"Spaulders"|"Sabatons"|"Handguards";
 type gearTypesSpecial = "Eyepiece"|"Combat Engine"|"Exoskeleton"|"Microreactor";
+type gearRarity = "5"|"Augmented"|"Titan";
 
 /**
  * `type` only includes augment that matters in this calculator (at least for now):  
@@ -30,4 +27,17 @@ export interface augStat {
   attack: number;
   eleAttack: number;
   eleAttackPercent: number;
+}
+
+/**
+ * Consider all equipment has same enhancement value and rarity,  
+ * so all equipment will have same `baseAtk`, `enhanceAtk`, and `bonusAtk`  
+ * - `baseAtk`: Is the main plain Attack stat in your equipment  
+ * - `enhanceAtk`: The plus attack value right beside your base attack  
+ * - `bonusAtk`: Bonus attack value gained from enhancement (usually per 5 levels)  
+ */
+export interface basicStat {
+  baseAtk: number;
+  enhanceAtk: number;
+  bonusAtk: number;
 }

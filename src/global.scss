@@ -29,3 +29,73 @@
 @import 'swiper/scss';
 @import 'swiper/scss/keyboard';
 @import 'swiper/scss/pagination';
+
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+    @return $string;
+}
+
+@function get-gear-url($name) {
+    $newname: str-replace($name, "-", " ");
+    @return "assets/icon/equipments/#{$newname} 5.png";
+}
+
+ion-alert {
+    --backdrop-opacity: 0.7;
+    .alert-wrapper {
+        --background: var(--ion-color-dark-tint);
+        border: 1px solid var(--ion-color-medium-shade);
+        .alert-head {
+            .alert-title {
+                color: var(--ion-color-primary-contrast);
+                font-size: 1rem;
+                font-weight: 800;
+            }
+        }
+        .alert-radio-group {
+            .alert-radio-button {
+                border-bottom: 0.55px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.2);
+                .alert-button-inner {
+                    .alert-radio-icon {
+                        border-color: var(--ion-color-primary-contrast);
+                        .alert-radio-inner {
+                            border-color: var(--ion-color-warning);;
+                        }
+                    }
+                    .alert-radio-label {
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--ion-color-primary-contrast);
+                    }
+                }
+            }
+            $element-names: "flame", "frost", "physical", "volt", "altered";
+            @each $name in $element-names {
+                .element-#{$name} {
+                    background-image: url("assets/icon/elements/Element_#{$name}.png");
+                }
+            }
+            $gear-names: "helm", "armor", "belt", "legguards", "bracers", "spaulders", "sabatons", "handguards", "eyepiece", "combat-engine", "exoskeleton", "microreactor";
+            @each $name in $gear-names {
+                .gear-#{$name} {
+                    background-image: url(get-gear-url($name));
+                }
+            }
+            [class^="element-"],[class^="gear-"] {
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: contain;
+                background-origin: content-box;
+                padding: 4px;
+            }
+        }
+        .alert-button-group {
+            .alert-button {
+                color: var(--ion-color-warning);
+            }
+        }
+    }
+}

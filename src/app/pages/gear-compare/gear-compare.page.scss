@@ -81,6 +81,14 @@ ion-card {
                                 width: 32px;
                             }
                         }
+                        ion-button.gear {
+                            --padding-start: 0px;
+                            ion-avatar{
+                                height: 60px;
+                                width: 60px;
+                                margin: 0px;
+                            }
+                        }
                         ion-button.Element_Flame {
                             color: var(--ion-color-primary-contrast);
                             --border-color: var(--element-flame);

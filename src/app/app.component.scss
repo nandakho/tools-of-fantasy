@@ -33,10 +33,10 @@ ion-menu {
         }
       }
       ion-item.selected {
-        --color: var(--ion-color-success);
-        --background: rgba(var(--ion-color-success-rgb), 0.14);
+        --color: var(--ion-color-warning);
+        --background: rgba(var(--ion-color-warning-rgb), 0.14);
         ion-icon {
-          color: var(--ion-color-success);
+          color: var(--ion-color-warning);
         }
       }
     }

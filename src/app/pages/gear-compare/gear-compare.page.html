@@ -24,7 +24,7 @@
                 <ion-row>
                   <ion-col size="12">
                     <ion-button fill="outline" (click)="changeElement()" [ngClass]="'Element_'+elementSelected">
-                      <ion-avatar button slot="start"><img [src]="'assets/icon/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
+                      <ion-avatar slot="start"><img [src]="'assets/icon/elements/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -53,8 +53,8 @@
               <ion-grid>
                 <ion-row>
                   <ion-col size="12">
-                    <ion-button fill="outline" (click)="changeType()" [ngClass]="'Element_'+elementSelected">
-                      <ion-avatar button slot="start"><img [src]="'assets/icon/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
+                    <ion-button class="gear" fill="outline" (click)="changeGear()" [ngClass]="'Element_'+elementSelected">
+                      <ion-avatar slot="start"><img [src]="'assets/icon/equipments/'+gearSelected.type+' '+gearSelected.rarity+'.png'"/></ion-avatar>{{gearSelected.type}}
                     </ion-button>
                   </ion-col>
                 </ion-row>

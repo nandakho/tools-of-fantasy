@@ -19,10 +19,10 @@ export class HomePage implements OnInit {
       background: "assets/background/compare.jpg",
     },
     {
-      title: "Crit Calc",
+      title: "Crit Calc (Soon)",
       summary: "Crit chance? But isn't that obvious?",
       description: "Nope!\nIn game stat only tells you the chance to crit against target with the same level.\nThen you see enemy with higher or lower level in some instance, what's your crit chance against them?",
-      url: "gear-compare",
+      url: "",
       background: "assets/background/compare.jpg",
     }
   ];

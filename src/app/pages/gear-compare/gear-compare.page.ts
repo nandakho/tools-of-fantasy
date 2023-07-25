@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { AlertController, AlertInput, AlertOptions } from '@ionic/angular';
-import { augStat, gear, gearTypes } from 'src/app/services';
+import { AlertController, AlertInput } from '@ionic/angular';
+import { augStat, basicStat, gear, gearTypes } from 'src/app/services';
 
 @Component({
   selector: 'app-gear-compare',
   templateUrl: './gear-compare.page.html',
   styleUrls: ['./gear-compare.page.scss'],
 })
-export class GearComparePage {
+export class GearComparePage implements OnInit {
   elementSelected:elementAvailable = "Flame";
   elementAvailable:elementAvailable[] = ["Flame","Frost","Physical","Volt","Altered"];
-  gearSelected: gearTypes = "Combat Engine";
+  gearSelected: gear = {
+    type: "Helm",
+    rarity: "5"
+  };
   gearAvailable: gearTypes[] = ["Helm","Armor","Belt","Legguards","Bracers","Spaulders","Sabatons","Handguards","Eyepiece","Combat Engine","Exoskeleton","Microreactor"];
-  sharedStats = {
+  sharedStats:basicStat = {
     baseAtk: 0,
     enhanceAtk: 0,
     bonusAtk: 0
@@ -27,12 +30,11 @@ export class GearComparePage {
     private alert: AlertController
   ) { }
 
-  async ionViewWillEnter(){
+  async ngOnInit(){
     //This is for future update cz i'm lazy lol
     //load last input stats automatically on page load
     try {
       const data = await this.readStorage();
-      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +47,22 @@ export class GearComparePage {
         label: this.elementAvailable[i],
         type:"radio",
         value: this.elementAvailable[i],
-        checked: this.elementAvailable[i]==this.elementSelected
+        checked: this.elementAvailable[i]==this.elementSelected,
+        cssClass: `element-${this.elementAvailable[i].toLowerCase()}`
+      });
+    }
+    return r;
+  }
+
+  gearRadioGenerate(){
+    var r:AlertInput[] = [];
+    for(let i = 0; i<this.gearAvailable.length; i++){
+      r.push({
+        label: this.gearAvailable[i],
+        type:"radio",
+        value: this.gearAvailable[i],
+        checked: this.gearAvailable[i]==this.gearSelected.type,
+        cssClass: `gear-${this.gearAvailable[i].toLowerCase().replace(" ","-")}`
       });
     }
     return r;
@@ -56,21 +73,35 @@ export class GearComparePage {
       header: "Select Element",
       backdropDismiss: true,
       inputs: this.eleRadioGenerate(),
+      mode: "ios",
       buttons: [{
+        text:'Cancel'
+      },{
         text:'OK',
         handler: async (newSelected)=>{
           this.elementSelected = newSelected;
         }
-      },{
-        text:'Cancel'
       }]
-
     });
     alert.present();
   }
 
-  changeType(){
-    console.log(`Popup equipment selection here!`);
+  async changeGear(){
+    const alert = await this.alert.create({
+      header: "Select Gear",
+      backdropDismiss: true,
+      inputs: this.gearRadioGenerate(),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.gearSelected.type = newSelected;
+        }
+      }]
+    });
+    alert.present();
   }
 
   help(section:string){
