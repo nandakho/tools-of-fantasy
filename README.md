@@ -15,7 +15,7 @@ Currently, the project offers the following tools:
 More tools will be added in future updates to further enhance the functionality and usability of the project.
 
 ## Run Locally
-You can just visit the [online version here](https://tof.nandakho.my.id/) *coming soon!*,  
+You can just visit the [online version here](https://tof.nandakho.my.id/),  
 or to install and use Tools of Fantasy locally, you can follow these steps:  
 1. Clone this repository to your local machine using the following command:  
 ```bash
@@ -47,4 +47,4 @@ If you have suggestions for new features, bug fixes, or improvements, feel free 
 
 ## License
 This project is licensed under the MIT License.  
-See the [LICENSE](https://github.com/nandakho/tools-of-fantasy/blob/main/LICENSE) file for more information.
+See the [LICENSE](https://github.com/nandakho/tools-of-fantasy/blob/master/LICENSE) file for more information.
