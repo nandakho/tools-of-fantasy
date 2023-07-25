@@ -68,6 +68,7 @@ ion-card {
                         align-content: center;
                         justify-content: center;
                         ion-button {
+                            text-transform: capitalize;
                             height: max-content;
                             width: max-content;
                             font-weight: bold;
@@ -135,9 +136,23 @@ ion-card {
                                 --highlight-color: var(--ion-color-warning);
                             }
                             ion-input.result {
-                                border: 2px solid var(--ion-color-warning);
                                 color: var(--ion-color-warning);
                                 font-weight: bold;
+                            }
+                            ion-input.result.Element_Flame {
+                                border: 2px solid var(--element-flame);
+                            }
+                            ion-input.result.Element_Frost {
+                                border: 2px solid var(--element-frost);
+                            }
+                            ion-input.result.Element_Physical {
+                                border: 2px solid var(--element-physical);
+                            }
+                            ion-input.result.Element_Volt {
+                                border: 2px solid var(--element-volt);
+                            }
+                            ion-input.result.Element_Altered {
+                                border: 2px solid var(--element-altered);
                             }
                         }
                         ion-col.plus_sign {

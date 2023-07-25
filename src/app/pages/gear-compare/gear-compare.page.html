@@ -98,7 +98,7 @@
                       <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
                     </ion-row>
                     <ion-row>
-                      <ion-col size="auto"><ion-input type="number" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [(ngModel)]="e.totalAttack" class="result"></ion-input></ion-col>
+                      <ion-col size="auto"><ion-input type="number" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [(ngModel)]="e.totalAttack" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
                     </ion-row>
                   </ion-grid>
                 </ion-item>
