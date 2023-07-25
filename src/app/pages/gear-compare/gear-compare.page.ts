@@ -26,6 +26,7 @@ export class GearComparePage implements OnInit {
     bonusAtk: 0
   }
   equipment: eqStats[] = [];
+  helpGif: any = undefined;
   constructor(
     private alert: AlertController
   ) { }
@@ -104,8 +105,23 @@ export class GearComparePage implements OnInit {
     alert.present();
   }
 
-  help(section:string){
-    console.log(`Popup help about: ${section}`);
+  async showHelp(section:any){
+    const img = `assets/help/${section}.gif`;
+    this.helpGif = img;
+    return Promise.resolve();
+  }
+
+  async hideHelp(){
+    this.helpGif = undefined;
+    return Promise.resolve();
+  }
+
+  async help(section:string){
+    const notice = await this.alert.create({
+      cssClass: `help-popup-${section}`,
+      backdropDismiss: true
+    });
+    notice.present();
   }
 
   addEquipment(){

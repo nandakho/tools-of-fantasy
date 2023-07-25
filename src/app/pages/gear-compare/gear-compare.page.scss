@@ -150,6 +150,23 @@ ion-card {
     }
 }
 
+.img-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 10;
+
+    .popup-img {
+        max-width: 90%;
+        max-height: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        position: relative;
+    }
+}
+
 ion-row.equip {
     display: flex;
     justify-content: center;

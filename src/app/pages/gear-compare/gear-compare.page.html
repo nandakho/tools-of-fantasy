@@ -7,13 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
+<div *ngIf="helpGif" class="img-container" (click)="hideHelp()">
+  <img [src]="helpGif" class="popup-img"/>
+</div>
+
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
       <ion-card>
         <ion-card-header class="stats">
           <ion-card-title>
-            Your Stats <ion-icon name="help-circle-outline" (click)="help('stats')"></ion-icon>
+            Your Stats <ion-icon name="help-circle-outline" (click)="showHelp('stats')"></ion-icon>
           </ion-card-title>
         </ion-card-header>
         <ion-card-content>
@@ -43,7 +47,7 @@
       <ion-card>
         <ion-card-header class="eqinfo">
           <ion-card-title>
-            Equipment Info <ion-icon name="help-circle-outline" (click)="help('eqinfo')"></ion-icon>
+            Equipment Info <ion-icon name="help-circle-outline" (click)="showHelp('eqinfo')"></ion-icon>
           </ion-card-title>
         </ion-card-header>
         <ion-card-content>
