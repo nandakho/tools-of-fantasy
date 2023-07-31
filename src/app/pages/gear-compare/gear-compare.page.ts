@@ -26,6 +26,7 @@ export class GearComparePage implements OnInit {
     bonusAtk: 0
   }
   equipment: eqStats[] = [];
+  equipped: number|undefined = undefined;
   helpGif: any = undefined;
   constructor(
     private alert: AlertController
@@ -124,11 +125,25 @@ export class GearComparePage implements OnInit {
     notice.present();
   }
 
+  isEquipped(event:any){
+    console.log(event);
+    console.log(this.equipped);
+  }
+
   addEquipment(){
+    console.log(this.equipped);
     this.equipment.push({attack:0,eleAttack:0,eleAttackPercent:0,totalAttack:this.calcAtk(0,0,0)});
   }
 
   removeEquipment(index:number){
+    console.log("nih:",index,this.equipped);
+    if(index == this.equipped){
+      this.equipped = undefined;
+      console.log("HAI??")
+    } else {
+      console.log(this.equipped);
+      console.log("LAHH??");
+    }
     this.equipment.splice(index,1);
   }
 
@@ -145,11 +160,18 @@ export class GearComparePage implements OnInit {
   }
 
   calcAtk(eqAtk:number,eqEleAtk:number,eqElePercent:number){
-    const curPercent = this.yourStats.bonusAtk/this.yourStats.baseAtk;
-    const a = this.yourStats.baseAtk+(this.sharedStats.baseAtk+this.sharedStats.bonusAtk+this.sharedStats.enhanceAtk);
-    const b = eqAtk+eqEleAtk;
-    const result = Math.ceil((a+b)*(1+(eqElePercent/100)+curPercent));
-    return result;
+    if(this.equipped!=undefined){
+      const curPercent = this.yourStats.bonusAtk/this.yourStats.baseAtk;
+      const basePercent = curPercent - (this.equipment[this.equipped].eleAttackPercent/100);
+      const baseAtk = this.yourStats.baseAtk - (this.equipment[this.equipped].attack+this.equipment[this.equipped].eleAttack);
+      return 0;
+    } else {
+      const curPercent = this.yourStats.bonusAtk/this.yourStats.baseAtk;
+      const a = this.yourStats.baseAtk+(this.sharedStats.baseAtk+this.sharedStats.bonusAtk+this.sharedStats.enhanceAtk);
+      const b = eqAtk+eqEleAtk;
+      const result = Math.ceil((a+b)*(1+(eqElePercent/100)+curPercent));
+      return result;
+    }
   }
 
   async readStorage(){
