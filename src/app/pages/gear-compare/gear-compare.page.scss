@@ -19,6 +19,7 @@ ion-card {
     --background: var(--ion-color-dark-tint);
     border: 1px solid var(--ion-color-medium-shade);
     border-radius: 10px;
+    width: 100%;
     ion-card-header.stats,
     ion-card-header.eqinfo {
         padding-bottom: 0px;
@@ -125,6 +126,20 @@ ion-card {
                             align-items: center;
                             justify-content: center;
                             color: var(--ion-color-primary-contrast);
+                            ion-radio {
+                                font-size: smaller;
+                                --color: var(--ion-color-medium);
+                                border: 1px solid var(--ion-color-medium);
+                                padding: 10px;
+                                border-radius: 5px;
+                            }
+                            ion-radio.ios::part(container) {
+                                border: 1px solid var(--ion-color-medium);
+                                border-radius: 50%;
+                                width: 25px;
+                                height: 25px;
+                                padding-bottom: 4px;
+                            }
                             ion-input {
                                 text-align: center;
                                 border: 1px solid var(--ion-color-medium);
@@ -186,9 +201,10 @@ ion-row.equip {
     display: flex;
     justify-content: center;
     ion-card.container {
-        width: 100%;
+        padding-right: 20px;
         ion-card-header {
             padding-bottom: 8px;
+            padding-right: 0px;
             ion-button.btn {
                 position: absolute;
                 font-size: x-small;
@@ -197,6 +213,9 @@ ion-row.equip {
                 ion-icon {
                     padding-right: 2px;
                 }
+            }
+            ion-button.add-btn {
+                right: 2px;
             }
         }
         ion-card-content {

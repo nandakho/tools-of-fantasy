@@ -125,24 +125,17 @@ export class GearComparePage implements OnInit {
     notice.present();
   }
 
-  isEquipped(event:any){
-    console.log(event);
-    console.log(this.equipped);
+  changeEquipped(){
+    this.recalcEquip("all");
   }
 
   addEquipment(){
-    console.log(this.equipped);
-    this.equipment.push({attack:0,eleAttack:0,eleAttackPercent:0,totalAttack:this.calcAtk(0,0,0)});
+    this.equipment.push({attack:0,eleAttack:0,eleAttackPercent:0,calculated:this.calcAtk(0,0,0)});
   }
 
   removeEquipment(index:number){
-    console.log("nih:",index,this.equipped);
     if(index == this.equipped){
       this.equipped = undefined;
-      console.log("HAI??")
-    } else {
-      console.log(this.equipped);
-      console.log("LAHH??");
     }
     this.equipment.splice(index,1);
   }
@@ -151,27 +144,28 @@ export class GearComparePage implements OnInit {
     if(i=="all"){
       if(this.equipment.length>0){
         for(let id=0;id<this.equipment.length;id++){
-          this.equipment[id].totalAttack = this.calcAtk(this.equipment[id].attack,this.equipment[id].eleAttack,this.equipment[id].eleAttackPercent);
+          this.equipment[id].calculated = this.calcAtk(this.equipment[id].attack,this.equipment[id].eleAttack,this.equipment[id].eleAttackPercent);
         }
       }
     } else {
-      this.equipment[i].totalAttack = this.calcAtk(this.equipment[i].attack,this.equipment[i].eleAttack,this.equipment[i].eleAttackPercent);
+      this.equipment[i].calculated = this.calcAtk(this.equipment[i].attack,this.equipment[i].eleAttack,this.equipment[i].eleAttackPercent);
     }
   }
 
   calcAtk(eqAtk:number,eqEleAtk:number,eqElePercent:number){
-    if(this.equipped!=undefined){
-      const curPercent = this.yourStats.bonusAtk/this.yourStats.baseAtk;
-      const basePercent = curPercent - (this.equipment[this.equipped].eleAttackPercent/100);
-      const baseAtk = this.yourStats.baseAtk - (this.equipment[this.equipped].attack+this.equipment[this.equipped].eleAttack);
-      return 0;
-    } else {
-      const curPercent = this.yourStats.bonusAtk/this.yourStats.baseAtk;
-      const a = this.yourStats.baseAtk+(this.sharedStats.baseAtk+this.sharedStats.bonusAtk+this.sharedStats.enhanceAtk);
-      const b = eqAtk+eqEleAtk;
-      const result = Math.ceil((a+b)*(1+(eqElePercent/100)+curPercent));
-      return result;
+    const curPercent = this.yourStats.baseAtk!=0?this.yourStats.bonusAtk/this.yourStats.baseAtk:0;
+    const basePercent = this.equipped!=undefined?(curPercent - (this.equipment[this.equipped].eleAttackPercent/100)):curPercent;
+    const baseAtk = this.equipped!=undefined?(this.yourStats.baseAtk - (this.equipment[this.equipped].attack+this.equipment[this.equipped].eleAttack)):this.yourStats.baseAtk+(this.sharedStats.baseAtk+this.sharedStats.bonusAtk+this.sharedStats.enhanceAtk);    
+    const eqFinAtk = eqAtk+eqEleAtk;
+    const rBase = baseAtk+eqFinAtk;
+    const rPercent = Math.ceil(rBase*((eqElePercent/100)+basePercent));
+    const rTotal = rBase+rPercent;
+    const result = {
+      base: rBase,
+      percent: rPercent,
+      total: rTotal
     }
+    return result;
   }
 
   async readStorage(){
@@ -199,5 +193,9 @@ type pStats = {
   bonusAtk: number
 }
 interface eqStats extends augStat {
-  totalAttack: number;
+  calculated: {
+    base: number;
+    percent: number;
+    total: number;
+  };
 }

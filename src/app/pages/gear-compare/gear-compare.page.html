@@ -21,7 +21,7 @@
           </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-label class="subtitle">Input your stat below (without equipping the piece you want to compare)</ion-label>
+          <ion-label class="subtitle">Input your stat below</ion-label>
           <ion-list>
             <ion-item lines="none" class="ion-text-wrap">
               <ion-grid>
@@ -80,14 +80,14 @@
       <ion-card class="container">
         <ion-card-header>
           <ion-card-title>Let's Compare!</ion-card-title>
-          <ion-button color="warning" class="btn" fill="outline" size="small" (click)="addEquipment()"><ion-icon name="add-circle-outline"></ion-icon>Add</ion-button>
+          <ion-button color="warning" class="btn add-btn" fill="outline" size="small" (click)="addEquipment()"><ion-icon name="add-circle-outline"></ion-icon>Add</ion-button>
         </ion-card-header>
         <ion-card-content>
-          <ion-radio-group [allowEmptySelection]="true" [(ngModel)]="equipped" (ionChange)="isEquipped($event)">
+          <ion-radio-group [allowEmptySelection]="true" [(ngModel)]="equipped" (ionChange)="changeEquipped()">
             <ion-card *ngFor="let e of equipment; let i=index">
               <ion-card-header>
                 <ion-card-title>Equip {{i+1}}</ion-card-title>
-                <ion-button color="danger" class="btn" fill="outline" size="small" (click)="removeEquipment(i)"><ion-icon name="remove-circle-outline"></ion-icon>Remove</ion-button>
+                <ion-button color="danger" class="btn del-btn" fill="outline" size="small" (click)="removeEquipment(i)"><ion-icon name="remove-circle-outline"></ion-icon>Remove</ion-button>
               </ion-card-header>
               <ion-card-content>
                 <ion-list>
@@ -99,8 +99,8 @@
                         <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
                       </ion-row>
                       <ion-row>
-                        <ion-col size="auto"><ion-radio color="warning" [value]="i">Equipped</ion-radio></ion-col>
-                        <ion-col size="auto"><ion-input type="number" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [(ngModel)]="e.totalAttack" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
+                        <ion-col size="auto"><ion-radio color="warning" labelPlacement="end" [value]="i">Equipped</ion-radio></ion-col>
+                        <ion-col size="auto"><ion-input type="text" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [value]="e.calculated.base+' + '+e.calculated.percent+' = '+e.calculated.total" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
                       </ion-row>
                     </ion-grid>
                   </ion-item>
