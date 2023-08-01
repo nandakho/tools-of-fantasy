@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Preferences } from '@capacitor/preferences';
 import { AlertController, AlertInput } from '@ionic/angular';
 import { augStat, basicStat, gear, gearTypes } from 'src/app/services';
@@ -29,12 +30,19 @@ export class GearComparePage implements OnInit {
   equipped: number|undefined = undefined;
   helpGif: any = undefined;
   constructor(
-    private alert: AlertController
-  ) { }
+    private alert: AlertController,
+    private titleService: Title,
+    private meta: Meta
+  ) {}
 
   async ngOnInit(){
     //This is for future update cz i'm lazy lol
     //load last input stats automatically on page load
+    this.titleService.setTitle("Tools of Fantasy");
+    this.meta.updateTag({ property: 'og:url', content:'https://tof.nandakho.my.id/gear-compare'});
+    this.meta.updateTag({ property: 'og:title', content:"Tools of Fantasy" });
+    this.meta.updateTag({ property: 'og:image', content: "https://tof.nandakho.my.id/assets/icon/icon.png"});
+    this.meta.updateTag({ property: 'og:description', content:  "Tools for Tower of Fantasy"});
     try {
       const data = await this.readStorage();
     } catch (err) {
