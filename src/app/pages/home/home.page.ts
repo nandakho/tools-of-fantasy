@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 
@@ -28,17 +27,10 @@ export class HomePage implements OnInit {
     }
   ];
   constructor(
-    private nav: NavController,
-    private titleService: Title,
-    private meta: Meta
+    private nav: NavController
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Tools of Fantasy");
-    this.meta.updateTag({ property: 'og:url', content:'https://tof.nandakho.my.id/home'});
-    this.meta.updateTag({ property: 'og:title', content:"Tools of Fantasy" });
-    this.meta.updateTag({ property: 'og:image', content: "https://tof.nandakho.my.id/assets/icon/icon.png"});
-    this.meta.updateTag({ property: 'og:description', content:  "Tools for Tower of Fantasy"});
   }
 
   async goTo(url:any){
