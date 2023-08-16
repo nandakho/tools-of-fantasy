@@ -7,10 +7,12 @@
 This project is still in **development!**
 Tools of Fantasy is a serverless tools built with the Ionic-Angular framework, designed to assist players in the MMO game \"Tower of Fantasy\".  
 This project aims to provide various helpful tools to enhance the gaming experience for players.  
+Well, mostly useful for those who cares about numbers.  
 
 Currently, the project offers the following tools:  
 - **Gear Compare**: This tool can helps players calculate which is the optimal gear for their characters. No more confusion to choose which gear gives higher boost to your stats between two gears!  
-- **[PLANNED] Crit Calculator**: The Crit Calculator enables players to calculate the critical hit chance of their characters based on their stats and target level. It assists in optimizing damage output by providing valuable insights into critical hit mechanics.  
+- **Crit Calculator**: The Crit Calculator enables players to calculate the critical hit chance of their characters based on their stats and target level. It's finally here! You can now calculate how much base critical is "enough" against lower level enemies. As a bonus it can also calculate how much base crit is needed to reach a certain crit % that you want.  
+- **Suggestion?**: Open an issue for feature request, if it's possible I might add it..  
 
 More tools will be added in future updates to further enhance the functionality and usability of the project.
 

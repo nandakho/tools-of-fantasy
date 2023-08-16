@@ -1,0 +1,71 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Crit Calc</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Calculate Crit Chance %</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label class="subtitle">Input your stat below</ion-label>
+          <ion-list>
+            <ion-item lines="none" class="ion-text-wrap">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-input type="number" label="Target Level" labelPlacement="stacked" placeholder="0" [(ngModel)]="pCrit.targetLevel" (ionInput)="recalcCrit('percent')"></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-input type="number" label="Base Crit" labelPlacement="stacked" placeholder="0" [(ngModel)]="pCrit.baseCrit" (ionInput)="recalcCrit('percent')"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly class="result" type="number" label="Crit Chance % (Calculated)" labelPlacement="stacked" [(ngModel)]="pCrit.finalCrit"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Calculate Base Crit Needed</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label class="subtitle">Input your stat below</ion-label>
+          <ion-list>
+            <ion-item lines="none" class="ion-text-wrap">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-input type="number" label="Target Level" labelPlacement="stacked" placeholder="0" [(ngModel)]="bCrit.targetLevel" (ionInput)="recalcCrit('base')"></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-input type="number" label="Crit % Wanted" labelPlacement="stacked" placeholder="0" [(ngModel)]="bCrit.finalCrit" (ionInput)="recalcCrit('base')"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly class="result" type="number" label="Base Crit Needed (Calculated)" labelPlacement="stacked" [(ngModel)]="bCrit.baseCrit"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>
