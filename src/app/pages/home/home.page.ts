@@ -16,14 +16,14 @@ export class HomePage implements OnInit {
       summary: "Which is better?",
       description: "Ever wonder which one give higher stats between flat attack and percentage one?\nWorry not, this tool can help you figure that out!",
       url: "gear-compare",
-      background: "assets/background/compare.jpg",
+      background: "assets/background/default.jpg",
     },
     {
       title: "Crit Calc",
       summary: "Crit chance? But isn't that obvious?",
       description: "Nope!\nIn game stat only tells you the chance to crit against target with the same level.\nThen you see enemy with higher or lower level in some instance, what's your crit chance against them?",
       url: "crit-calc",
-      background: "assets/background/compare.jpg",
+      background: "assets/background/crit-calc.jpg",
     }
   ];
   constructor(
