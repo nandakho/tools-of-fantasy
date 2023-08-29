@@ -49,17 +49,17 @@ export class CritCalcPage {
           }
           this.recalcCrit("percent");
         }
-        this.setTag();
       }
     }
+    this.setTag();
   }
 
   setTag(){
-    var desc = ``;
+    var desc = this.url?``:`Let's calculate your crit % or base crit needed!`;
     if(this.typeSelected==0){
-      desc += `Let's calculated your base crit!${this.url?`\nAgainst lvl: ${this.bCrit.targetLevel}, Desired crit %: ${this.bCrit.finalCrit}%\nYou need: ${this.bCrit.baseCrit}`:''}`;
+      desc += `How much base crit you need?${this.url?`\nAgainst lvl: ${this.bCrit.targetLevel}, Crit % wanted: ${this.bCrit.finalCrit}%\nBase crit needed: ${this.bCrit.baseCrit}`:''}`;
     } else {
-      desc += `What is your crit % chance?${this.url?`\nAgainst lvl: ${this.pCrit.targetLevel}, Your base crit: ${this.pCrit.baseCrit}\nYour crit % chance is: ${this.pCrit.finalCrit}%`:''}`;
+      desc += `What is your crit % chance?${this.url?`\nAgainst lvl: ${this.pCrit.targetLevel}, Your base crit: ${this.pCrit.baseCrit}\nCrit % chance is: ${this.pCrit.finalCrit}%`:''}`;
     }
     this.title.setTitle(`Tools of Fantasy - Crit Calc`);
     this.meta.updateTag({ name: 'description', content: desc });

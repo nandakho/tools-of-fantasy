@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
       summary: "Which is better?",
       description: "Ever wonder which one give higher stats between flat attack and percentage one?\nWorry not, this tool can help you figure that out!",
       url: "gear-compare",
-      background: "assets/background/default.jpg",
+      background: "assets/background/gear-compare.jpg",
     },
     {
       title: "Crit Calc",

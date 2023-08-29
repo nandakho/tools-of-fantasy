@@ -68,9 +68,9 @@ export class GearComparePage {
           bonusAtk: parseInt(attr[6]??0)
         }
         this.parseEq(attr, (length-7)/5);
-        this.setTag();
       }
     }
+    this.setTag();
   }
 
   setTag(){
