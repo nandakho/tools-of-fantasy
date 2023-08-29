@@ -11,14 +11,22 @@ const routes: Routes = [
     loadChildren: () => import('./pages/gear-compare/gear-compare.module').then( m => m.GearComparePageModule)
   },
   {
+    path: 'gear-compare/:attr',
+    loadChildren: () => import('./pages/gear-compare/gear-compare.module').then( m => m.GearComparePageModule)
+  },
+  {
     path: 'crit-calc',
+    loadChildren: () => import('./pages/crit-calc/crit-calc.module').then( m => m.CritCalcPageModule)
+  },
+  {
+    path: 'crit-calc/:attr',
     loadChildren: () => import('./pages/crit-calc/crit-calc.module').then( m => m.CritCalcPageModule)
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabledBlocking' })
   ],
   exports: [RouterModule]
 })

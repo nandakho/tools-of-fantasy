@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Preferences } from '@capacitor/preferences';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController, AlertInput } from '@ionic/angular';
 import { augStat, basicStat, gear, gearTypes } from 'src/app/services';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-gear-compare',
   templateUrl: './gear-compare.page.html',
   styleUrls: ['./gear-compare.page.scss'],
 })
-export class GearComparePage implements OnInit {
+export class GearComparePage {
+  url: string|null = '';
   elementSelected:elementAvailable = "Flame";
   elementAvailable:elementAvailable[] = ["Flame","Frost","Physical","Volt","Altered"];
   gearSelected: gear = {
@@ -29,17 +31,62 @@ export class GearComparePage implements OnInit {
   equipped: number|undefined = undefined;
   helpGif: any = undefined;
   constructor(
+    private route: ActivatedRoute,
+    private meta: Meta,
+    private title: Title,
     private alert: AlertController
-  ) {}
+  ) {
+    this.serverSide();
+  }
 
-  async ngOnInit(){
-    //This is for future update cz i'm lazy lol
-    //load last input stats automatically on page load
-    try {
-      const data = await this.readStorage();
-    } catch (err) {
-      console.log(err);
+  validLength(length:number): boolean {
+    length-=7;
+    return length<0?false:length%5==0;
+  }
+
+  parseEq(data:string[], howMany:number):void {
+    //tba - soon
+  }
+
+  serverSide(){
+    this.url = this.route.snapshot.paramMap.get('attr');
+    if(this.url){
+      const attr = this.url.split("_");
+      this.elementSelected = this.elementAvailable[parseInt(attr?.[0]??0)];
+      this.gearSelected = {
+        type: this.gearAvailable[parseInt(attr?.[1]??0)],
+        rarity: "5"
+      }
+      if(this.validLength(attr?.length??0)){
+        this.yourStats = {
+          baseAtk: parseInt(attr[2]??0),
+          bonusAtk: parseInt(attr[3]??0)
+        }
+        this.sharedStats = {
+          baseAtk: parseInt(attr[4]??0),
+          enhanceAtk: parseInt(attr[5]??0),
+          bonusAtk: parseInt(attr[6]??0)
+        }
+        this.parseEq(attr, (length-7)/5);
+        this.setTag();
+      }
     }
+  }
+
+  setTag(){
+    //desc in progress
+    var desc = `Check my gear!${this.url?`\nAttack: ${0}%, ${'ele'} Attack %: ${0}%, ${'ele'} Attack: ${0}, Attack Gained: ${0}\nTotal Attack: ${0}`:''}`;
+    this.title.setTitle(`Tools of Fantasy - Gear Compare`);
+    this.meta.updateTag({ name: 'description', content: desc });
+    this.meta.updateTag({ property: 'og:url', content: `/gear-compare${this.url?'/'+this.url:''}` });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:description', content: desc });
+    this.meta.updateTag({ property: 'og:title', content: `Tools of Fantasy - Gear Compare` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://hsr.nandakho.my.id/assets/icon/icon.png' });
+    this.meta.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ property: 'twitter:title', content: `Tools of Fantasy - Gear Compare` });
+    this.meta.updateTag({ property: 'twitter:description', content: desc });
+    this.meta.updateTag({ property: 'twitter:image', content: 'https://hsr.nandakho.my.id/assets/icon/icon.png' });
   }
 
   eleRadioGenerate(){
@@ -166,24 +213,6 @@ export class GearComparePage implements OnInit {
       total: rTotal
     }
     return result;
-  }
-
-  async readStorage(){
-    try {
-      const data = await Preferences.get({key:"gear_compare"});
-      return Promise.resolve(data);
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  }
-
-  async saveStorage(data:string){
-    try {
-      await Preferences.set({key:"gear_compare",value:data});
-      return Promise.resolve();
-    } catch (err) {
-      return Promise.reject(err);
-    }
   }
 }
 
