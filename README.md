@@ -4,7 +4,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/nandakho/tools-of-fantasy.svg)](https://github.com/nandakho/tools-of-fantasy/stargazers)
 
 ## Description
-This project is still in **development!**
+This project is still in **development!**  
 Tools of Fantasy is a serverless tools built with the Ionic-Angular framework, designed to assist players in the MMO game \"Tower of Fantasy\".  
 This project aims to provide various helpful tools to enhance the gaming experience for players.  
 Well, mostly useful for those who cares about numbers.  
@@ -35,13 +35,13 @@ npm install
 Notes: You might need to install ionic globally first with `npm i -g @ionic/cli`  
 More info at [ionic's official site](https://ionicframework.com/docs/intro/cli)
 ```bash
-ionic build
+npm run build:ssr
 ```
 5. Run the project locally:  
 ```bash
-ionic serve
+npm run serve:ssr
 ```
-6. Access the application through your web browser at [http://localhost:8100](http://localhost:8100).
+6. Access the application through your web browser at [http://localhost:4001](http://localhost:4001).
 
 ## Contributing
 Contributions to the Tools of Fantasy project are welcome and encouraged.  
