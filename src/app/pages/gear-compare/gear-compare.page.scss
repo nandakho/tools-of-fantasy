@@ -20,6 +20,8 @@ ion-card {
     border: 1px solid var(--ion-color-medium-shade);
     border-radius: 10px;
     width: 100%;
+    margin-top: 0px;
+    margin-bottom: 12px;
     ion-card-header.stats,
     ion-card-header.eqinfo {
         padding-bottom: 0px;
@@ -216,6 +218,20 @@ ion-row.equip {
             }
             ion-button.add-btn {
                 right: 2px;
+            }
+            ion-button.del-btn {
+                right: 12px;
+            }
+            .btn-grp {
+                position: absolute;
+                top: 12px;
+                right: 0px;
+                ion-button {
+                    position: relative;
+                }
+                .share-btn {
+                    right: 6px;
+                }
             }
         }
         ion-card-content {

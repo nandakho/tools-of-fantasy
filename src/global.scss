@@ -99,3 +99,24 @@ ion-alert {
         }
     }
 }
+
+ion-toast {
+    opacity: 0%;
+    transition: opacity 0.3s;
+    --background: var(--ion-color-dark-tint);
+    --border-radius: 12px;
+    --box-shadow: none;
+}
+
+ion-toast::part(container){
+    border: 2px solid var(--ion-color-warning);
+    border-radius: 12px;
+}
+
+ion-toast::part(message){
+    color: var(--ion-color-medium-contrast);
+}
+
+.toast-wrapper{
+    background: none;
+}

@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'crit-calc/:attr',
     loadChildren: () => import('./pages/crit-calc/crit-calc.module').then( m => m.CritCalcPageModule)
+  },
+  {
+    path: '**',
+    redirectTo: '',  
   }
 ];
 
