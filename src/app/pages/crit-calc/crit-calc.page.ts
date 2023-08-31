@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
+import { MiscService } from 'src/app/services';
 
 @Component({
   selector: 'app-crit-calc',
@@ -23,7 +24,8 @@ export class CritCalcPage {
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private misc: MiscService
   ) {
     this.serverSide();
   }
@@ -138,6 +140,22 @@ export class CritCalcPage {
       b: 1151,
       c: -49787
     };
+  }
+
+  generateURL(type:0|1){
+    var segment = [];
+    segment.push(type);
+    segment.push(type==0?this.bCrit.targetLevel??0:this.pCrit.targetLevel??0);
+    segment.push(type==0?this.bCrit.finalCrit??0:this.pCrit.baseCrit??0);
+    return segment.join("_");
+  }
+
+  urlShare(type:0|1=0,withDesc:boolean=true){
+    var desc = type==0?`You need "${this.bCrit.baseCrit}" crit to reach ${this.bCrit.finalCrit}% crit chance against level ${this.bCrit.targetLevel} enemy!`:`With ${this.pCrit.baseCrit} crit, your chance of hitting crit against level ${this.pCrit.targetLevel} enemy is "${this.pCrit.finalCrit}%"!`;
+    desc += `\nMore info or calculate your own at:`;
+    const url = `https://tof.nandakho.my.id/crit-calc/${this.generateURL(type)}`;
+    navigator.clipboard.writeText(`${withDesc?`${desc}\n`:``}${url}`);
+    this.misc.showToast(`${withDesc?`Crit info`:`Link`} copied to clipboard!`);
   }
 }
 

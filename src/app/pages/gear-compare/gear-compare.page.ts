@@ -253,15 +253,15 @@ export class GearComparePage {
     return segment.join("_");
   }
 
-  urlShare(){
+  urlShare(withDesc:boolean=true){
     var desc = `Check out my gear comparison!\n\nMy Stats:\n${this.elementSelected} Attack: ${this.yourStats.baseAtk} + ${this.yourStats.bonusAtk}\n\nGear Enhance:\nBase Attack: ${this.sharedStats.baseAtk}\nAttack Enhancement: ${this.sharedStats.enhanceAtk}\nEnhancement Unlocked (Attack): ${this.sharedStats.bonusAtk}\n`;
     for (let i = 0; i < this.equipment.length; i++) {
       desc += `\nGear #${i+1}${this.equipped==i?` (Equipped)`:``}:\nAttack: ${this.equipment[i].attack}\n${this.elementSelected} Attack: ${this.equipment[i].eleAttack} + ${this.equipment[i].eleAttackPercent}%\nTotal Attack: ${this.equipment[i].calculated.base} + ${this.equipment[i].calculated.percent} = ${this.equipment[i].calculated.total}\nAttack Gain: ${this.equipment[i].calculated.gain}\n`;
     }
     desc += `\nMore info or calculate your own at:`;
     const url = `https://tof.nandakho.my.id/gear-compare/${this.generateURL()}`;
-    navigator.clipboard.writeText(`${desc}\n${url}`);
-    this.misc.showToast(`Copied to clipboard!`);
+    navigator.clipboard.writeText(`${withDesc?`${desc}\n`:``}${url}`);
+    this.misc.showToast(`${withDesc?`Comparison info`:`Link`} copied to clipboard!`);
   }
 }
 

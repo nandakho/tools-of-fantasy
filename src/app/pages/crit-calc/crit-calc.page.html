@@ -13,6 +13,10 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>Calculate Crit Chance %</ion-card-title>
+          <div class="btn-grp">
+            <ion-button color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(1)"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+            <ion-button color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(1,false)"><ion-icon name="link-outline"></ion-icon></ion-button>
+          </div>
         </ion-card-header>
         <ion-card-content>
           <ion-label class="subtitle">Input your stat below</ion-label>
@@ -42,6 +46,10 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>Calculate Base Crit Needed</ion-card-title>
+          <div class="btn-grp">
+            <ion-button color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(0)"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+            <ion-button color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(0,false)"><ion-icon name="link-outline"></ion-icon></ion-button>
+          </div>
         </ion-card-header>
         <ion-card-content>
           <ion-label class="subtitle">Input your stat below</ion-label>
