@@ -197,9 +197,8 @@ export class GearComparePage {
   }
 
   removeEquipment(index:number){
-    if(index == this.equipped){
-      this.equipped = undefined;
-    }
+    if(index == this.equipped) this.equipped = undefined;
+    if(this.equipped && index < this.equipped) this.equipped--;
     this.equipment.splice(index,1);
     this.recalcEquip("all");
   }
