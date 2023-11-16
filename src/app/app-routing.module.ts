@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/crit-calc/crit-calc.module').then( m => m.CritCalcPageModule)
   },
   {
+    path: 'my-char',
+    loadChildren: () => import('./pages/my-char/my-char.module').then( m => m.MyCharPageModule)
+  },
+  {
     path: '**',
     redirectTo: '',  
   }
