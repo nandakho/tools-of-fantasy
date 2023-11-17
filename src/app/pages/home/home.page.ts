@@ -12,6 +12,13 @@ register();
 export class HomePage implements OnInit {
   menus: menu[] = [
     {
+      title: "My Character",
+      summary: "All about your character",
+      description: "Configure your character here, and it will be integrated on other tools!\nNeat right?",
+      url: "my-char",
+      background: "assets/background/my-char.jpg",
+    },
+    {
       title: "Gear Compare",
       summary: "Which is better?",
       description: "Ever wonder which one give higher stats between flat attack and percentage one?\nWorry not, this tool can help you figure that out!",
