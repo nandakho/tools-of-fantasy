@@ -1,0 +1,794 @@
+{
+    "digger_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "bigsword_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 15.473301,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 7.964199,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "bow_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "stave_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 15.473301,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 7.964199,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "sickle_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 16.383495,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 6.826457,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "gun_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "sword_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 16.383495,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 6.826457,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "darts_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "cube_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 9.101942,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "dgun_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "ShieldAxe_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 9.101942,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Mark_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 15.473301,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 7.964199,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Immortal_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.203884,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 4.550971,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Linghan_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Suspension_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Frigg_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "funnel_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Dkatana_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 15.473301,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 7.964199,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "fan_superpower_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "feise_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "arm_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 15.473301,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 7.964199,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "tianlang_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Snipe_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "iceblade_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.203884,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 4.550971,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Whip_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "fenrir_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "umbrella_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 16.383495,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 6.826457,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Yoyo_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "queen_superpower_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.203884,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 4.550971,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Chainsaw_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Rubilia_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "brush_fire_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "yulan_ice_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Zeke_physic_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 19.114079,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 13.652913,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "mimi_thunder_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 16.383495,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "ElementDef",
+            "PropValue": 6.826457,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    },
+    "Nanyin_superpower_ssr_1": {
+        "ModifyData": [
+        {
+            "IsTag": false,
+            "PropName": "CommonAtkAdded",
+            "PropValue": 18.93204,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "MaxHealthAdded",
+            "PropValue": 1165.0486,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        },
+        {
+            "IsTag": false,
+            "PropName": "CritAdded",
+            "PropValue": 14.563107,
+            "ModifierOp": "MODIFY_MODOP_ADDITIVE"
+        }
+        ]
+    }
+}

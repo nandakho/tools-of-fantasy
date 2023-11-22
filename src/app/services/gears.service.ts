@@ -45,16 +45,16 @@ export interface basicStat {
 }
 
 //Update below, interface for my-char
-export interface baseStat {
-
-}
-
-export interface randomStat {
-
-}
-
 export interface augmentStat {
 
+}
+
+type aaaaa = {
+  [stat in possibleAugStat]: number;
+}
+
+type bbbbb = {
+  [rare in possibleRareStat]: number
 }
 
 type eleAttack = "FlameAttack"|"FrostAttack"|"PhysicalAttack"|"VoltAttack";
@@ -66,6 +66,9 @@ type basicRandomStat = "Attack"|eleAttack|"Resist"|eleResist|"HP";
 type critPieceRandomStat = basicRandomStat|"Crit";
 type specialRandomStat = basicRandomStat|eleAttackPercent|eleResistPercent|"HPPercent"|eleDamagePercent;
 type eyepieceRandomStat = specialRandomStat|"AlterAttack"|"AlterResist"|"AlterResistPercent"|"CritPercent";
+type possibleBaseStat = "HP"|"Attack"|"Resist"|"Crit";
+type possibleAugStat = "";
+type possibleRareStat = "";
 
 export interface equipmentStat {
   "Bracers"?: {[type in basicRandomStat]:number},
@@ -80,4 +83,18 @@ export interface equipmentStat {
   "Microreactor"?: {[type in specialRandomStat]:number},
   "Eyepiece"?: {[type in eyepieceRandomStat]:number},
   "Combat Engine"?: {[type in specialRandomStat]:number}
+}
+
+export type eqRarity = "5"|"Augment"|"Titan";
+export type baseStat = {
+  [t in gearTypes]: {[s in possibleBaseStat]?: {[r in eqRarity]: number}}
+}
+export const baseStatList:baseStat = require("./tables/equipmentStat.json");
+
+type randomStat = {[type in eyepieceRandomStat]:number};
+export interface gearStat {
+  rarity: eqRarity;
+  randomStat: randomStat;
+  augStat: augmentStat;
+  enhance: number;
 }

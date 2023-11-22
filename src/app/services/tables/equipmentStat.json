@@ -1,0 +1,52 @@
+{
+    "Bracers": {
+        "Attack": { "5": 120.0, "Augment": 144.0, "Titan": 144.0 },
+        "HP": { "5": 5400.0, "Augment": 6480.0 , "Titan": 6480.0 }
+    },
+    "Legguards": {
+        "Resist": { "5": 100.0, "Augment": 120.0, "Titan": 120.0 },
+        "HP": { "5": 8600.0, "Augment": 10320.0, "Titan": 10320.0 }
+    },
+    "Sabatons": {
+        "Attack": { "5": 120.0, "Augment": 144.0, "Titan": 144.0 },
+        "HP": { "5": 5400.0, "Augment": 6480.0, "Titan": 6480.0 }
+    },
+    "Spaulders": {
+        "Attack": { "5": 120.0, "Augment": 144.0, "Titan": 144.0 },
+        "HP": { "5": 5400.0, "Augment": 6480.0, "Titan": 6480.0 }
+    },
+    "Armor": {
+        "Resist": { "5": 100.0, "Augment": 120.0, "Titan": 120.0 },
+        "HP": { "5": 8600.0, "Augment": 10320.0, "Titan": 10320.0 }
+    },
+    "Handguards": {
+        "Attack": { "5": 127.5, "Augment": 153.0, "Titan": 153.0 },
+        "Crit": { "5": 300.0, "Augment": 360.0, "Titan": 360.0 }
+    },
+    "Belt": {
+        "Resist": { "5": 100.0, "Augment": 120.0, "Titan": 120.0 },
+        "HP": { "5": 8600.0, "Augment": 10320.0, "Titan": 10320.0 }
+    },
+    "Helm": {
+        "Attack": { "5": 112.5, "Augment": 135.0, "Titan": 135.0 },
+        "HP": { "5": 6000.0, "Augment": 7200.0, "Titan": 7200.0 }
+    },
+    "Exoskeleton": {
+        "Attack": { "5": 107.25, "Augment": 128.7, "Titan": 128.7 },
+        "HP": { "5": 6420.0, "Augment": 7704.0, "Titan": 7704.0 }
+    },
+    "Microreactor": {
+        "Attack": { "5": 85.5, "Augment": 102.6, "Titan": 102.6 },
+        "Resist": { "5": 20.625, "Augment": 24.75, "Titan": 24.75 },
+        "HP": { "5": 6840.0, "Augment": 8208.0, "Titan": 8208.0 }
+    },
+    "Eyepiece": {
+        "Resist": { "5": 129.375, "Augment": 155.25, "Titan": 155.25 },
+        "HP": { "5": 4320.0, "Augment": 5184.0, "Titan": 5184.0 },
+        "Crit": { "5": 150.0, "Augment": 180.0, "Titan": 180.0 }
+    },
+    "Combat Engine": {
+        "Attack": { "5": 107.25, "Augment": 128.7, "Titan": 128.7 },
+        "HP": { "5": 6420.0, "Augment": 7704.0, "Titan": 7704.0 }
+    }
+}

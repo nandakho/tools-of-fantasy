@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { augStat, baseStat, equipmentStat, gear, gearTypes, randomStat } from '.';
+import { augmentStat, baseStat, equipmentStat, gear, gearTypes, baseStatList } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ export class CharacterService {
   public characterInfo: characterInfo|null = null;
   constructor() {
     this.loadStat();
+    console.log(baseStatList);
   }
 
   async loadStat(){
@@ -26,7 +27,7 @@ export interface characterInfo {
   uid: number|null;
   name: string|null;
   weapon: weaponList[];
-  equipment: equipmentStat;
+  equipment: gearList;
 }
 
 type atkType = "Attack"|"Fortitude"|"Benediction";
@@ -38,12 +39,5 @@ export interface weaponList {
 }
 
 type gearList = {
-  [str in gearTypes]: gearStat
-}
-
-interface gearStat {
-  rarity: "5"|"Augmented"|"Titan";
-  baseStat: baseStat;
-  randomStat: randomStat;
-  augStat: augStat;
+  [str in gearTypes]: number
 }
