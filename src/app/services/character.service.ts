@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { augmentStat, baseStat, equipmentStat, gear, gearTypes, baseStatList } from '.';
+import { augmentStat, baseStat, equipmentStat, gear, gearTypes, baseStatList, weaponAvailable } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class CharacterService {
   constructor() {
     this.loadStat();
     console.log(baseStatList);
+    console.log(weaponAvailable);
   }
 
   async loadStat(){
@@ -30,10 +31,8 @@ export interface characterInfo {
   equipment: gearList;
 }
 
-type atkType = "Attack"|"Fortitude"|"Benediction";
 export interface weaponList {
   name: string;
-  type: atkType;
   level: number;
   advance: number;
 }
