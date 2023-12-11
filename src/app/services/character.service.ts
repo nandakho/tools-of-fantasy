@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { augmentStat, baseStat, equipmentStat, gear, gearTypes, baseStatList, weaponAvailable } from '.';
+import { gearList, baseStatList, weaponList, weaponAvailable } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,29 @@ export class CharacterService {
   async loadStat(){
     const c = await Preferences.get({key:`character`});
     this.characterInfo = JSON.parse(c.value??"null");
+    this.characterInfo={
+      uid: `100001`,
+      name: `Testing`,
+      server: "Southeast Asia",
+      weapon: [],
+      gear: {
+        Bracers: {
+          rarity: "5",
+          random: {
+            Attack: 52,
+            VoltAttack: 69,
+            HP: 600,
+            PhysicalAttack: 69
+          },
+          augment: null,
+          rare: null,
+          enhance: 20
+        }
+      },
+      supre: null,
+      drugs: {atk:0,hp:0},
+      simul: {"4500":0,"5500":0,"7000":0}
+    };
     console.log(this.characterInfo);
   }
 
@@ -24,19 +47,21 @@ export class CharacterService {
   }
 }
 
+type serverList = "Asia Pacific"|"Europe"|"North America"|"South America"|"Southeast Asia";
 export interface characterInfo {
-  uid: number|null;
+  uid: string|null;
   name: string|null;
+  server: serverList|null;
   weapon: weaponList[];
-  equipment: gearList;
-}
-
-export interface weaponList {
-  name: string;
-  level: number;
-  advance: number;
-}
-
-type gearList = {
-  [str in gearTypes]: number
+  gear: gearList|null;
+  supre: string|null;
+  drugs: {
+    atk: number;
+    hp: number;
+  };
+  simul: {
+    "4500": number;
+    "5500": number;
+    "7000": number;
+  }
 }

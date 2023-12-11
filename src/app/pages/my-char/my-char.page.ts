@@ -8,7 +8,7 @@ import { CharacterService, characterInfo } from 'src/app/services';
 })
 export class MyCharPage implements OnInit {
   constructor(
-    private char: CharacterService
+    public char: CharacterService
   ) { }
 
   ngOnInit() { }

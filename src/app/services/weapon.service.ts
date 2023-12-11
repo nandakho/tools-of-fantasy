@@ -8,4 +8,34 @@ export class WeaponService {
   constructor() { }
 }
 
-export const weaponAvailable = require("./tables/weaponStat.json");
+type weaponResoType = "Attack"|"Benedict"|"Fortitude";
+type weaponElement = "Flame"|"Frost"|"Physical"|"Volt"|"Altered";
+type weaponResonance = {
+  "Name": string;
+  "Cond": resoCondition;
+  "Boost": {[boost:string]:number};
+  "Overrides": string[];
+}
+type resoCondition = {
+    "On": "Element"|"Benedict",
+    "What": weaponElement,
+    "Number": number
+}
+type baseStat = {
+  "Type": weaponResoType;
+  "Element": weaponElement[];
+  "Reso": weaponResonance[];
+  "Base": any;
+}
+
+export interface weaponList {
+  name: string;
+  level: number;
+  advance: number;
+  matrix: any[];
+}
+export interface baseWeap {
+  [weaponName:string]: baseStat;
+}
+export const weaponAvailable:baseWeap = require("./tables/weaponStat.json");
+export const matrixAvailable:any = require("./tables/matrixStat.json");

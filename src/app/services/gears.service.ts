@@ -45,18 +45,6 @@ export interface basicStat {
 }
 
 //Update below, interface for my-char
-export interface augmentStat {
-
-}
-
-type aaaaa = {
-  [stat in possibleAugStat]: number;
-}
-
-type bbbbb = {
-  [rare in possibleRareStat]: number
-}
-
 type eleAttack = "FlameAttack"|"FrostAttack"|"PhysicalAttack"|"VoltAttack";
 type eleAttackPercent = "FlameAttackPercent"|"FrostAttackPercent"|"PhysicalAttackPercent"|"VoltAttackPercent";
 type eleDamagePercent = "FlameDamagePercent"|"FrostDamagePercent"|"PhysicalDamagePercent"|"VoltDamagePercent";
@@ -67,34 +55,97 @@ type critPieceRandomStat = basicRandomStat|"Crit";
 type specialRandomStat = basicRandomStat|eleAttackPercent|eleResistPercent|"HPPercent"|eleDamagePercent;
 type eyepieceRandomStat = specialRandomStat|"AlterAttack"|"AlterResist"|"AlterResistPercent"|"CritPercent";
 type possibleBaseStat = "HP"|"Attack"|"Resist"|"Crit";
-type possibleAugStat = "";
-type possibleRareStat = "";
+type possibleAugStat = specialRandomStat;
+type possibleRareStat = "Delay"|"Heal"|"Normal"|"Skill"|"Damage"|"Weak"|"Dodge"|"Discharge"|"Lifesteal"|"Recovery"|"Block"|"Reduction"
 
-export interface equipmentStat {
-  "Bracers"?: {[type in basicRandomStat]:number},
-  "Legguards"?: {[type in basicRandomStat]:number},
-  "Sabatons"?: {[type in critPieceRandomStat]:number},
-  "Spaulders"?: {[type in basicRandomStat]:number},
-  "Armor"?: {[type in basicRandomStat]:number},
-  "Handguards"?: {[type in critPieceRandomStat]:number},
-  "Belt"?: {[type in basicRandomStat]:number},
-  "Helm"?: {[type in basicRandomStat]:number},
-  "Exoskeleton"?: {[type in specialRandomStat]:number},
-  "Microreactor"?: {[type in specialRandomStat]:number},
-  "Eyepiece"?: {[type in eyepieceRandomStat]:number},
-  "Combat Engine"?: {[type in specialRandomStat]:number}
+export interface gearList {
+  "Bracers"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]?:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Legguards"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]?:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Sabatons"?: {
+    rarity: eqRarity,
+    random: {[type in critPieceRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Spaulders"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Armor"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Handguards"?: {
+    rarity: eqRarity,
+    random: {[type in critPieceRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Belt"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Helm"?: {
+    rarity: eqRarity,
+    random: {[type in basicRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  },
+  "Exoskeleton"?: {
+    rarity: eqRarity,
+    random: {[type in specialRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  }, 
+  "Microreactor"?: {
+    rarity: eqRarity,
+    random: {[type in specialRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  }, 
+  "Eyepiece"?: {
+    rarity: eqRarity,
+    random: {[type in eyepieceRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  }, 
+  "Combat Engine"?: {
+    rarity: eqRarity,
+    random:  {[type in specialRandomStat]:number},
+    augment: {[aug in possibleAugStat]?:number}|null,
+    rare: {[rare in possibleRareStat]?:number}|null,
+    enhance: number
+  }
 }
-
 export type eqRarity = "5"|"Augment"|"Titan";
-export type baseStat = {
+export type baseGear = {
   [t in gearTypes]: {[s in possibleBaseStat]?: {[r in eqRarity]: number}}
 }
-export const baseStatList:baseStat = require("./tables/equipmentStat.json");
-
-type randomStat = {[type in eyepieceRandomStat]:number};
-export interface gearStat {
-  rarity: eqRarity;
-  randomStat: randomStat;
-  augStat: augmentStat;
-  enhance: number;
-}
+export const baseStatList:baseGear = require("./tables/equipmentStat.json");
