@@ -47,6 +47,15 @@ export class CharacterService {
   }
 }
 
+type drugTaken = {
+  atk: number;
+  hp: number;
+}
+type simulActive = {
+  "4500": number;
+  "5500": number;
+  "7000": number;
+}
 type serverList = "Asia Pacific"|"Europe"|"North America"|"South America"|"Southeast Asia";
 export interface characterInfo {
   uid: string|null;
@@ -55,13 +64,6 @@ export interface characterInfo {
   weapon: weaponList[];
   gear: gearList|null;
   supre: string|null;
-  drugs: {
-    atk: number;
-    hp: number;
-  };
-  simul: {
-    "4500": number;
-    "5500": number;
-    "7000": number;
-  }
+  drugs: drugTaken;
+  simul: simulActive;
 }

@@ -18,6 +18,50 @@
         }
     },
     "Upgrade": {
-        
+        "Mind": {
+            "HP": 339.80582,
+            "Crit": 4.045308
+        },
+        "Memory": {
+            "Attack": 3.135113,
+            "HP": 153.72168
+        },
+        "Faith": {
+            "Attack": 3.135113,
+            "HP": 153.72168
+        },
+        "Emotion": {
+            "Attack": 1.820388,
+            "Resist": 4.045308
+        }
+    },
+    "Ascend": [1.0,1.333333,0.666667,2.0],
+    "List": ["KING","Zero","Huma","Tsubasa","Cocoritter","Meryl","Shiro","Crow","Samir","Nemesis","Frigg","Claudia","Cobalt-B","Ruby","Saki","Lin","Lyra","Tian Lang","Annabella","Alyss","Umi","Fenrir","Lan","Icarus","Fiona","Gnonno","Rubilia","Liu Huo","Yu lan","Ming Jing","Mimi","Fei Se","Ling Han","Nanyin"],
+    "Special": {
+        "Lyra": {
+            "Set": 2,
+            "Increase": ["Attack"],
+            "Value": [0.13,0.17,0.21,0.25]
+        },
+        "Lan": {
+            "Set": 2,
+            "Increase": ["FlameAttack"],
+            "Value": [0.06,0.07,0.08,0.09]
+        },
+        "Rubilia": {
+            "Set": 2,
+            "Increase": ["VoltAttack"],
+            "Value": [0.145,0.165,0.185,0.205]
+        },
+        "Ming Jing": {
+            "Set": 2,
+            "Increase": ["PhysicalAttack","FlameAttack"],
+            "Value": [0.145,0.165,0.185,0.205]
+        },
+        "Nanyin": {
+            "Set": 2,
+            "Increase": ["Attack"],
+            "Value": [0.19,0.21,0.23,0.25]
+        }
     }
 }
