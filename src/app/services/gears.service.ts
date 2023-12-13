@@ -156,4 +156,3 @@ export type baseGear = {
   }
 }
 export const baseStatList:baseGear = require("./tables/equipmentStat.json");
-export const tempUpEq = require("./tables/tempEqUpgrade.json");
