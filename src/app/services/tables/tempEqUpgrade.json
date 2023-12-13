@@ -1,6 +1,6 @@
 [
     {
-        "tipe": "armband",
+        "tipe": "Handguards",
         "stat": {
             "5": [
                 [
@@ -671,7 +671,7 @@
         }
     },
     {
-        "tipe": "cloth",
+        "tipe": "Armor",
         "stat": {
             "5": [
                 [
@@ -1342,7 +1342,7 @@
         }
     },
     {
-        "tipe": "pants",
+        "tipe": "Legguards",
         "stat": {
             "5": [
                 [
@@ -2013,7 +2013,7 @@
         }
     },
     {
-        "tipe": "shoes",
+        "tipe": "Sabatons",
         "stat": {
             "5": [
                 [
@@ -2684,7 +2684,7 @@
         }
     },
     {
-        "tipe": "helmet",
+        "tipe": "Helm",
         "stat": {
             "5": [
                 [
@@ -3355,7 +3355,7 @@
         }
     },
     {
-        "tipe": "glove",
+        "tipe": "Handguards",
         "stat": {
             "5": [
                 [
@@ -4026,7 +4026,7 @@
         }
     },
     {
-        "tipe": "belt",
+        "tipe": "Belt",
         "stat": {
             "5": [
                 [
@@ -4697,7 +4697,7 @@
         }
     },
     {
-        "tipe": "shawl",
+        "tipe": "Spaulders",
         "stat": {
             "5": [
                 [
@@ -5368,7 +5368,7 @@
         }
     },
     {
-        "tipe": "exoskeleton",
+        "tipe": "Exoskeleton",
         "stat": {
             "5": [
                 [
@@ -6039,7 +6039,7 @@
         }
     },
     {
-        "tipe": "core",
+        "tipe": "Combat Engine",
         "stat": {
             "5": [
                 [
@@ -6710,7 +6710,7 @@
         }
     },
     {
-        "tipe": "visor",
+        "tipe": "Eyepiece",
         "stat": {
             "5": [
                 [
@@ -7546,7 +7546,7 @@
         }
     },
     {
-        "tipe": "reactor",
+        "tipe": "Microreactor",
         "stat": {
             "5": [
                 [
