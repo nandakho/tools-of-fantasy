@@ -15,12 +15,11 @@ export class CharacterService {
 
   async loadStat(){
     const c = await Preferences.get({key:`character`});
-    this.characterInfo = JSON.parse(c.value??"null");
-    this.characterInfo={
+    this.characterInfo = JSON.parse(c.value??"null")??{
       uid: `100001`,
       name: `Testing`,
       server: "Southeast Asia",
-      weapon: [],
+      weapon: [{name:null,advance:0,level:0,matrix:[]},{name:null,advance:0,level:0,matrix:[]},{name:null,advance:0,level:0,matrix:[]}],
       gear: {
         Bracers: {
           rarity: "5",

@@ -29,7 +29,7 @@ type baseStat = {
 }
 
 export interface weaponList {
-  name: string;
+  name: string|null;
   level: number;
   advance: number;
   matrix: any[];

@@ -8,5 +8,18 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-label>To Be Added</ion-label>
+  <ion-card *ngIf="char.characterInfo">
+    <ion-card-header>
+      <ion-card-title>Weapon</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-select (ionChange)="tes()" *ngFor="let weapon of char.characterInfo.weapon; index as wIdx" [(ngModel)]="weapon.name" [placeholder]="'Select Weapon '+(wIdx+1)">
+            <ion-select-option *ngFor="let w of wp" [value]="w">{{w}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
