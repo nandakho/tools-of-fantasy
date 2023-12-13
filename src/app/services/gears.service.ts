@@ -146,6 +146,14 @@ export interface gearList {
 }
 export type eqRarity = "5"|"Augment"|"Titan";
 export type baseGear = {
-  [t in gearTypes]: {[s in possibleBaseStat]?: {[r in eqRarity]: number}}
+  [t in gearTypes]: {
+    "Base": {
+      [s in possibleBaseStat]?: {[r in eqRarity]: number}
+    };
+    "Upgrade": {
+      [s in possibleBaseStat]?: {[r in eqRarity]: number[]}
+    }
+  }
 }
 export const baseStatList:baseGear = require("./tables/equipmentStat.json");
+export const tempUpEq = require("./tables/tempEqUpgrade.json");

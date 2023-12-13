@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { gearList, baseStatList, weaponList, weaponAvailable } from '.';
+import { gearList, baseStatList, weaponList, weaponAvailable,tempUpEq } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class CharacterService {
     this.loadStat();
     console.log(baseStatList);
     console.log(weaponAvailable);
+    console.log(tempUpEq);
   }
 
   async loadStat(){
