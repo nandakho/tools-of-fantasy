@@ -38,14 +38,14 @@
           <ion-col size="6">
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Drugs</ion-card-title>
+                <ion-card-title>Shots</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-item lines="none">
-                  <ion-input (ionChange)="saveChanges()" label-placement="fixed" label="Attack" placeholder="Attack drugs taken" type="number" min="0" [(ngModel)]="char.characterInfo.drugs.atk"></ion-input>
+                  <ion-input (ionChange)="saveChanges()" label-placement="fixed" label="Attack" placeholder="Power Shot taken" type="number" min="0" [(ngModel)]="char.characterInfo.shots.powerShot"></ion-input>
                 </ion-item>
                 <ion-item lines="none">
-                  <ion-input (ionChange)="saveChanges()" label-placement="fixed" label="HP" placeholder="HP drugs taken" type="number" min="0" [(ngModel)]="char.characterInfo.drugs.hp"></ion-input>
+                  <ion-input (ionChange)="saveChanges()" label-placement="fixed" label="HP" placeholder="Source Shot taken" type="number" min="0" [(ngModel)]="char.characterInfo.shots.sourceShot"></ion-input>
                 </ion-item>
               </ion-card-content>
             </ion-card>

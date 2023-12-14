@@ -195,3 +195,15 @@ export type baseGear = {
   }
 }
 export const gearAvailable:baseGear = require("./tables/equipmentStat.json");
+
+export const gearCombo:gearTypes[] = ["Bracers","Legguards","Sabatons","Spaulders","Armor","Handguards","Belt","Helm"];
+type comboLevel = "5"|"10"|"15"|"20"|"25"|"30"|"35"|"40"|"45"|"50";
+export type comboStat = {
+  [lv in comboLevel]: {
+    "Attack":number;
+    "Resist":number;
+    "HP":number;
+    "Crit":number;
+  }
+}
+export const gearComboStat:comboStat = require("./tables/equipmentStat.json");

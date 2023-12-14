@@ -117,7 +117,7 @@ export class CharacterService {
       }
     },
     supre: null,
-    drugs: {atk:0,hp:0},
+    shots: {powerShot:0,sourceShot:0},
     simul: {"4500":0,"5500":0,"7000":0}
   };
   constructor() {
@@ -137,9 +137,18 @@ export class CharacterService {
   }
 }
 
-type drugTaken = {
-  atk: number;
-  hp: number;
+export const shotIncrease = {
+  powerShot:{"Attack":25.0},
+  sourceShot:{"HP":1200.0}
+}
+type shotTaken = {
+  powerShot: number;
+  sourceShot: number;
+}
+export const simulIncrease = {
+  "4500":{"HP":7600.0},
+  "5500":{"Attack":25.0,"HP":2000.0},
+  "7000":{"Attack":55.0}
 }
 type simulActive = {
   "4500": number;
@@ -154,7 +163,7 @@ export interface characterInfo {
   weapon: weaponList[];
   gear: gearList;
   supre: string|null;
-  drugs: drugTaken;
+  shots: shotTaken;
   simul: simulActive;
 }
 type supreStat = {
