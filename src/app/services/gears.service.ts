@@ -7,6 +7,37 @@ export class GearsService {
 
   constructor() { }
 }
+
+export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor"];
+export const randomStatList = {
+  "Bracers": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Legguards": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Sabatons": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","Crit"],
+  "Spaulders": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Armor": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Handguards": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","Crit"],
+  "Belt": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Helm": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Exoskeleton": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+  "Microreactor": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+  "Eyepiece": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent","AlterAttack","AlterResist","AlterResistPercent","CritPercent"],
+  "Combat Engine": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+}
+export const titanStatList = {
+  "Bracers": ["Delay","Heal","Skill","Discharge","Damage","Weak"],
+  "Legguards": ["Lifesteal","Recovery","Block","Reduction","Normal","Dodge"],
+  "Sabatons": ["Lifesteal","Recovery","Block","Reduction","Normal","Skill"],
+  "Spaulders": [],
+  "Armor": ["Delay","Heal","Dodge","Discharge","Damage","Weak"],
+  "Handguards": ["Delay","Heal","Normal","Skill","Damage","Weak"],
+  "Belt": [],
+  "Helm": [],
+  "Exoskeleton": [],
+  "Microreactor": ["Lifesteal","Recovery","Block","Reduction","Dodge","Discharge"],
+  "Eyepiece": [],
+  "Combat Engine": [],
+}
+
 export interface gear {
   type: gearTypes;
   rarity: gearRarity;
@@ -58,89 +89,97 @@ type possibleBaseStat = "HP"|"Attack"|"Resist"|"Crit";
 type possibleAugStat = specialRandomStat;
 type possibleRareStat = "Delay"|"Heal"|"Normal"|"Skill"|"Damage"|"Weak"|"Dodge"|"Discharge"|"Lifesteal"|"Recovery"|"Block"|"Reduction"
 
+type randomStat = {
+  type: eyepieceRandomStat|null;
+  val: number;
+}
+type rareStat = {
+  type: possibleRareStat|null;
+  val: number;
+}
 export interface gearList {
-  "Bracers"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]?:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Bracers": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Legguards"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]?:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Legguards": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Sabatons"?: {
-    rarity: eqRarity,
-    random: {[type in critPieceRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Sabatons": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Spaulders"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Spaulders": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Armor"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Armor": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Handguards"?: {
-    rarity: eqRarity,
-    random: {[type in critPieceRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Handguards": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Belt"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Belt": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Helm"?: {
-    rarity: eqRarity,
-    random: {[type in basicRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Helm": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   },
-  "Exoskeleton"?: {
-    rarity: eqRarity,
-    random: {[type in specialRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Exoskeleton": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   }, 
-  "Microreactor"?: {
-    rarity: eqRarity,
-    random: {[type in specialRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Microreactor": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   }, 
-  "Eyepiece"?: {
-    rarity: eqRarity,
-    random: {[type in eyepieceRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Eyepiece": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   }, 
-  "Combat Engine"?: {
-    rarity: eqRarity,
-    random:  {[type in specialRandomStat]:number},
-    augment: {[aug in possibleAugStat]?:number}|null,
-    rare: {[rare in possibleRareStat]?:number}|null,
+  "Combat Engine": {
+    rarity: eqRarity|null,
+    random: randomStat[],
+    augment: randomStat[],
+    rare: rareStat,
     enhance: number
   }
 }
@@ -151,8 +190,8 @@ export type baseGear = {
       [s in possibleBaseStat]?: {[r in eqRarity]: number}
     };
     "Upgrade": {
-      [s in possibleBaseStat]?: {[r in eqRarity]: number[]}
+      [s in possibleBaseStat]?: number[]
     }
   }
 }
-export const baseStatList:baseGear = require("./tables/equipmentStat.json");
+export const gearAvailable:baseGear = require("./tables/equipmentStat.json");

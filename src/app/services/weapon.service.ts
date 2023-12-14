@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { matrixStat } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +33,9 @@ export interface weaponList {
   name: string|null;
   level: number;
   advance: number;
-  matrix: any[];
+  matrix: matrixStat;
 }
 export interface baseWeap {
   [weaponName:string]: baseStat;
 }
 export const weaponAvailable:baseWeap = require("./tables/weaponStat.json");
-export const matrixAvailable:any = require("./tables/matrixStat.json");
