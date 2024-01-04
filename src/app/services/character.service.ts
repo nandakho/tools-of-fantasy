@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { gearList, weaponList, weaponAvailable } from '.';
+import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -120,8 +120,46 @@ export class CharacterService {
     shots: {powerShot:0,sourceShot:0},
     simul: {"4500":0,"5500":0,"7000":0}
   };
-  constructor() {
+  constructor(
+    private gears: GearsService,
+    private weapons: WeaponService
+  ) {
     this.loadStat();
+  }
+
+  charStat(){
+    let stat = new StatsService();
+    if(this.characterInfo.shots.powerShot>0){
+      for(let [ps,pv] of Object.entries(shotIncrease.powerShot)){
+        stat.addVal(ps as statTypes,(pv*this.characterInfo.shots.powerShot));
+      }
+    }
+    if(this.characterInfo.shots.sourceShot>0){
+      for(let [ss,sv] of Object.entries(shotIncrease.sourceShot)){
+        stat.addVal(ss as statTypes,(sv*this.characterInfo.shots.sourceShot));
+      }
+    }
+    if(this.characterInfo.simul[4500]>0){
+      for(let [s1s,s1v] of Object.entries(simulIncrease[4500])){
+        stat.addVal(s1s as statTypes,(s1v*this.characterInfo.simul[4500]));
+      }
+    }
+    if(this.characterInfo.simul[5500]>0){
+      for(let [s2s,s2v] of Object.entries(simulIncrease[5500])){
+        stat.addVal(s2s as statTypes,(s2v*this.characterInfo.simul[5500]));
+      }
+    }
+    if(this.characterInfo.simul[7000]>0){
+      for(let [s3s,s3v] of Object.entries(simulIncrease[7000])){
+        stat.addVal(s3s as statTypes,(s3v*this.characterInfo.simul[7000]));
+      }
+    }
+    if(this.characterInfo.supre!=null){
+      for(let [sups,supv] of Object.entries(supreAvailable[this.characterInfo.supre])){
+        stat.addVal(sups as statTypes,supv);
+      }
+    }
+    return stat.getAll();
   }
 
   async loadStat(){
@@ -134,6 +172,12 @@ export class CharacterService {
 
   async saveStat(){
     await Preferences.set({key:`character`,value:JSON.stringify(this.characterInfo)});
+    const statGears = this.gears.calc(this.characterInfo.gear);
+    console.log(statGears);
+    const statChar = this.charStat();
+    console.log(statChar);
+    const statWeap = this.weapons.calc(this.characterInfo.weapon);
+    console.log(statWeap);
   }
 }
 

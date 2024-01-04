@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { StatsService, statTypes } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,64 @@ import { Injectable } from '@angular/core';
 export class GearsService {
 
   constructor() { }
+
+  calc(gear:gearList){
+    let stat = new StatsService();
+    stat.add(stat.getAll());
+    for(let [k,v] of Object.entries(gear)){
+      if(v.rarity!=null){
+        for(let [kk,vv] of Object.entries(gearAvailable[k as gearTypes].Base)){
+          stat.addVal(kk as statTypes,vv[v.rarity as gearRarity]);
+        };
+        for(let [kk,vv] of Object.entries(gearAvailable[k as gearTypes].Upgrade)){
+          for(let i=0;i<v.enhance;i++){
+            stat.addVal(kk as statTypes,vv[i]);
+          }
+        };
+        for(let x of Object.values(v.random) as Array<randomStat>){
+          if(x.type!=null){
+            stat.addVal(x.type,x.val);
+          }
+        }
+      }
+      if(v.rarity=="Augment"||v.rarity=="Titan"){
+        for(let xx of Object.values(v.augment) as Array<randomStat>){
+          if(xx.type!=null){
+            stat.addVal(xx.type,xx.val);
+          }
+        }
+      }
+      if(v.rarity=="Titan" && v.rare.type!=null){
+        stat.addVal(v.rare.type,v.rare.val);
+      }
+    }
+    const combo = this.comboLevel(gear);
+    if(combo!=null) stat.add(combo);
+    return stat.getAll();
+  }
+
+  comboLevel(gear:gearList){
+    let lvl:number[] = [];
+    for(let t of gearCombo){
+      if(gear[t].rarity!=null){
+        lvl.push(gear[t].enhance);
+      }
+    }
+    lvl.sort((a,b)=>a-b);
+    if(lvl.length==8){
+      if(lvl[0]>=50) return gearComboStat[50];
+      if(lvl[0]>=45) return gearComboStat[45];
+      if(lvl[0]>=40) return gearComboStat[40];
+      if(lvl[0]>=35) return gearComboStat[35];
+      if(lvl[0]>=30) return gearComboStat[30];
+      if(lvl[0]>=25) return gearComboStat[25];
+      if(lvl[0]>=20) return gearComboStat[20];
+      if(lvl[0]>=15) return gearComboStat[15];
+      if(lvl[0]>=10) return gearComboStat[10];
+      if(lvl[0]>=5) return gearComboStat[5];
+    }
+    return null;
+  }
 }
 
 export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor"];
@@ -46,7 +105,7 @@ export interface gear {
 export type gearTypes = gearTypesNormal|gearTypesSpecial;
 type gearTypesNormal = "Helm"|"Armor"|"Belt"|"Legguards"|"Bracers"|"Spaulders"|"Sabatons"|"Handguards";
 type gearTypesSpecial = "Eyepiece"|"Combat Engine"|"Exoskeleton"|"Microreactor";
-type gearRarity = "5"|"Augmented"|"Titan";
+type gearRarity = "5"|"Augment"|"Titan";
 
 type element = "Flame"|"Frost"|"Physical"|"Volt"|"Altered";
 
@@ -206,4 +265,4 @@ export type comboStat = {
     "Crit":number;
   }
 }
-export const gearComboStat:comboStat = require("./tables/equipmentStat.json");
+export const gearComboStat:comboStat = require("./tables/equipmentComboStat.json");

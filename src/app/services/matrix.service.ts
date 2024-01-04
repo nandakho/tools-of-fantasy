@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { StatsService, statTypes } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,11 @@ import { Injectable } from '@angular/core';
 export class MatrixService {
 
   constructor() { }
+
+  calc(matrix:matrixStat){
+    let stat = new StatsService();
+    return stat.getAll();
+  }
 }
 
 export type matrixType = "Mind"|"Memory"|"Faith"|"Emotion";
