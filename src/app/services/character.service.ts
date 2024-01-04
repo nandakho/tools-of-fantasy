@@ -159,6 +159,8 @@ export class CharacterService {
         stat.addVal(sups as statTypes,supv);
       }
     }
+    //base stat
+    stat.add({"Resist":150,"HP":24000,"Attack":300});
     return stat.getAll();
   }
 
@@ -173,11 +175,16 @@ export class CharacterService {
   async saveStat(){
     await Preferences.set({key:`character`,value:JSON.stringify(this.characterInfo)});
     const statGears = this.gears.calc(this.characterInfo.gear);
-    console.log(statGears);
+    console.log("Gears:",statGears);
     const statChar = this.charStat();
-    console.log(statChar);
+    console.log("Char Stuff:",statChar);
     const statWeap = this.weapons.calc(this.characterInfo.weapon);
-    console.log(statWeap);
+    console.log("Weapon:",statWeap);
+    let allStat = new StatsService();
+    allStat.add(statGears);
+    allStat.add(statChar);
+    allStat.add(statWeap);
+    console.log("AllStat:",allStat.getAll());
   }
 }
 

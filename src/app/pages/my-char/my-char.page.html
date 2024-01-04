@@ -87,7 +87,7 @@
                 <ion-select (ionChange)="saveChanges()" [(ngModel)]="weapon.name" [placeholder]="'Select Weapon '+(wIdx+1)">
                   <ion-select-option *ngFor="let w of wp" [value]="w">{{w}}</ion-select-option>
                 </ion-select>
-                <ion-range (ionChange)="saveChanges()" *ngIf="weapon.name!=null" [label]="'Level: '+weapon.level" [(ngModel)]="weapon.level" [min]="1" [max]="200" [pin]="true"></ion-range>
+                <ion-range (ionChange)="saveChanges()" *ngIf="weapon.name!=null" [label]="'Level: '+weapon.level" [(ngModel)]="weapon.level" [min]="0" [max]="200" [pin]="true"></ion-range>
                 <ion-range (ionChange)="saveChanges()" *ngIf="weapon.name!=null" [label]="'Advance: '+weapon.advance" [(ngModel)]="weapon.advance" [ticks]="true" [snaps]="true" [min]="0" [max]="6" [pin]="true"></ion-range>
                 <ion-card *ngIf="weapon.name!=null">
                   <ion-card-header>

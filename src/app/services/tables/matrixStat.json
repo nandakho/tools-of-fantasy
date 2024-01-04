@@ -40,28 +40,28 @@
     "Special": {
         "Lyra": {
             "Set": 2,
-            "Increase": ["Attack"],
-            "Value": [0.13,0.17,0.21,0.25]
+            "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
+            "Value": [13,17,21,25]
         },
         "Lan": {
             "Set": 2,
-            "Increase": ["FlameAttack"],
-            "Value": [0.06,0.07,0.08,0.09]
+            "Increase": ["FlameAttackPercent"],
+            "Value": [6,7,8,9]
         },
         "Rubilia": {
             "Set": 2,
-            "Increase": ["VoltAttack"],
-            "Value": [0.145,0.165,0.185,0.205]
+            "Increase": ["VoltAttackPercent"],
+            "Value": [14.5,16.5,18.5,20.5]
         },
         "Ming Jing": {
             "Set": 2,
-            "Increase": ["PhysicalAttack","FlameAttack"],
-            "Value": [0.145,0.165,0.185,0.205]
+            "Increase": ["FlameAttackPercent","PhysicalAttackPercent"],
+            "Value": [14.5,16.5,18.5,20.5]
         },
         "Nanyin": {
             "Set": 2,
-            "Increase": ["Attack"],
-            "Value": [0.19,0.21,0.23,0.25]
+            "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
+            "Value": [19,21,23,25]
         }
     }
 }

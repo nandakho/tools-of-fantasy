@@ -15,12 +15,12 @@ export class WeaponService {
     let wtype = [];
     let wele = [];
     let reso = [];
+    let matrixs = [];
     for(let w of weapons){
       if(w.name!=null){
         wtype.push(weaponAvailable[w.name].Type);
         wele.push(weaponAvailable[w.name].Element);
         let ssw = new StatsService();
-        let ssm = new StatsService();
         ssw.add(weaponAvailable[w.name].Base);
         if(weaponAvailable[w.name].Reso.length>0){
           reso.push(weaponAvailable[w.name].Reso);
@@ -31,12 +31,15 @@ export class WeaponService {
         for(let [as,av] of Object.entries(weaponAvailable[w.name].Ascend)){
           ssw.setVal(as as statTypes,((av as number[])[w.advance])*ssw.getVal(as as statTypes));
         }
-        ssm.add(this.matrixs.calc(w.matrix));
+        matrixs.push(w.matrix);
         stat.add(ssw.getAll());
-        stat.add(ssm.getAll());
       }
     }
-    //check reso here
+    let ssm = new StatsService();
+    ssm.add(this.matrixs.calc(matrixs));
+    console.log("Matrixs (Included in Weapon):",ssm.getAll());
+    stat.add(ssm.getAll());
+    //reso to be added here
     return stat.getAll();
   }
 }

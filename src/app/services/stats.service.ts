@@ -29,6 +29,12 @@ export class StatsService {
   addVal(what:statTypes,val:number):void{
     this.stats[what] = (this.stats[what]??0)+val;
   }
+
+  multiplyAll(val:number):void{ 
+    for(let [k,v] of Object.entries(this.stats)){
+      this.setVal(k as statTypes,(v*val));
+    }
+  }
   
   setVal(what:statTypes,val:number):void{
     this.stats[what] = val;
