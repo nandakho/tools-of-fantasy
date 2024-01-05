@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class StatsService {
   private stats:stats = {};
-  private typeList: statTypes[] = ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent","AlterAttack","AlterResist","AlterResistPercent","CritPercent","Delay","Heal","Skill","Discharge","Damage","Weak","Lifesteal","Recovery","Block","Reduction","Normal","Dodge"];
   constructor() {
     this.initAll();
   }
@@ -15,7 +14,7 @@ export class StatsService {
   }
   
   initAll():void{
-    for(const t of this.typeList){
+    for(const t of typeList){
       Object.assign(this.stats,{[t]:0});
     }
   }
@@ -49,7 +48,8 @@ export class StatsService {
   }
 }
 
+export const typeList: statTypes[] = ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent","AlterAttack","AlterResist","AlterResistPercent","CritPercent","Delay","Heal","Skill","Discharge","Damage","Weak","Lifesteal","Recovery","Block","Reduction","Normal","Dodge"];
 export type statTypes = "Attack"|"FlameAttack"|"FrostAttack"|"PhysicalAttack"|"VoltAttack"|"Resist"|"FlameResist"|"FrostResist"|"PhysicalResist"|"VoltResist"|"HP"|"FlameAttackPercent"|"FrostAttackPercent"|"PhysicalAttackPercent"|"VoltAttackPercent"|"FlameResistPercent"|"FrostResistPercent"|"PhysicalResistPercent"|"VoltResistPercent"|"HPPercent"|"FlameDamagePercent"|"FrostDamagePercent"|"PhysicalDamagePercent"|"VoltDamagePercent"|"AlterAttack"|"AlterResist"|"AlterResistPercent"|"CritPercent"|"Delay"|"Heal"|"Skill"|"Discharge"|"Damage"|"Weak"|"Lifesteal"|"Recovery"|"Block"|"Reduction"|"Normal"|"Dodge";
-type stats = {
+export type stats = {
   [stat in statTypes]?:number
 };

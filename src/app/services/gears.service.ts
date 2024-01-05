@@ -10,7 +10,7 @@ export class GearsService {
 
   calc(gear:gearList){
     let stat = new StatsService();
-    stat.add(stat.getAll());
+    let randCount = new StatsService();
     for(let [k,v] of Object.entries(gear)){
       if(v.rarity!=null){
         for(let [kk,vv] of Object.entries(gearAvailable[k as gearTypes].Base)){
@@ -21,9 +21,16 @@ export class GearsService {
             stat.addVal(kk as statTypes,vv[i]);
           }
         };
+        const advLevel = Math.floor(v.enhance/5);
+        for(let i=0;i<advLevel;i++){
+          for(let [kk,vv] of Object.entries(gearAvailable[k as gearTypes].Advance[i])){
+            stat.addVal(kk as statTypes,vv);
+          }
+        }
         for(let x of Object.values(v.random) as Array<randomStat>){
           if(x.type!=null){
             stat.addVal(x.type,x.val);
+            if(rStatNeedCount.includes(x.type as statNeedCount) && this.needCount(x.type,x.val)) randCount.addVal(x.type,1);
           }
         }
       }
@@ -31,6 +38,7 @@ export class GearsService {
         for(let xx of Object.values(v.augment) as Array<randomStat>){
           if(xx.type!=null){
             stat.addVal(xx.type,xx.val);
+            if(rStatNeedCount.includes(xx.type as statNeedCount)) randCount.addVal(xx.type,1);
           }
         }
       }
@@ -40,7 +48,27 @@ export class GearsService {
     }
     const combo = this.comboLevel(gear);
     if(combo!=null) stat.add(combo);
+    for(let [rs,rv] of Object.entries(randCount.getAll())){
+      /* Notes:
+        Ok this one is kinda 'cheaty'.
+        User won't know the 'exact' value of random stat that has been enhanced,
+        since the value will always be shown rounded to nearest integer in game.
+        (Yes you can find the exact value using packet sniffer, but not all user can or want to do that..)
+        
+        The workaround solution is to count how many times that random stat appear,
+        divide it by 2, then rounding it down.
+        Dividing by 2 to tolerate when said random value appear with value less or more than .5 (50:50 chance)),
+        because of this workaround, there might be slight error (0-2 point of difference) in the final result.
+        Well what can I do, the game hides the true value from user anyway ¯\_(ツ)_/¯
+      */
+      if(rv>0) stat.addVal(rs as statTypes,Math.floor(rv/2));
+    }
     return stat.getAll();
+  }
+
+  needCount(type:statTypes,val:number){
+    if(randStatNeedCount[type as statNeedCount]!=val) return true;
+    return false;
   }
 
   comboLevel(gear:gearList){
@@ -250,11 +278,34 @@ export type baseGear = {
     };
     "Upgrade": {
       [s in possibleBaseStat]?: number[]
-    }
+    };
+    "Advance": [{
+      [s in possibleBaseStat]?: number
+    }]
   }
 }
+type statNeedCount = "Attack"|"AlterAttack"|"AlterResist"|"Crit"|"FlameAttack"|"FlameResist"|"FrostAttack"|"FrostResist"|"HP"|"PhysicalAttack"|"PhysicalResist"|"Resist"|"VoltAttack"|"VoltResist";
+type needCount = {
+  [stat in statNeedCount]:number
+}
+export const rStatNeedCount:statNeedCount[] = ["Attack","AlterAttack","AlterResist","Crit","FlameAttack","FlameResist","FrostAttack","FrostResist","HP","PhysicalAttack","PhysicalResist","Resist","VoltAttack","VoltResist"];
 export const gearAvailable:baseGear = require("./tables/equipmentStat.json");
-
+export const randStatNeedCount:needCount = {
+  "Attack":52,
+  "AlterAttack":137,
+  "AlterResist":215,
+  "Crit":258,
+  "FlameAttack":69,
+  "FlameResist":215,
+  "FrostAttack":69,
+  "FrostResist":215,
+  "HP":4125,
+  "PhysicalAttack":69,
+  "PhysicalResist":215,
+  "Resist":64,
+  "VoltAttack":69,
+  "VoltResist":215
+};
 export const gearCombo:gearTypes[] = ["Bracers","Legguards","Sabatons","Spaulders","Armor","Handguards","Belt","Helm"];
 type comboLevel = "5"|"10"|"15"|"20"|"25"|"30"|"35"|"40"|"45"|"50";
 export type comboStat = {

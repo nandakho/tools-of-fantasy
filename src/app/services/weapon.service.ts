@@ -37,9 +37,51 @@ export class WeaponService {
     }
     let ssm = new StatsService();
     ssm.add(this.matrixs.calc(matrixs));
-    console.log("Matrixs (Included in Weapon):",ssm.getAll());
     stat.add(ssm.getAll());
-    //reso to be added here
+    let ssr = new StatsService();
+    let activeReso = [];
+    let overridden:string[] = [];
+    for(let rw of reso){
+      for(let r of rw){
+        if(r.Cond.On=="Benedict"){
+          const isBene = (wtype.map(w=>w=="Benedict").length);
+          if(r.Cond.Number<=isBene){
+            if(activeReso.findIndex(a=>a.name==r.Name)<0 && !overridden.includes(r.Name)){
+              activeReso.push({name:r.Name,boost:r.Boost});
+              for(let ov of r.Overrides){
+                overridden.push(ov);
+                const ovIdx = activeReso.findIndex(a=>a.name==ov);
+                if(ovIdx>=0) activeReso.splice(ovIdx,1);
+              }
+            }
+          }
+        }
+        if(r.Cond.On=="Element"){
+          let isEle = 0;
+          for(let wwe of wele){
+            for(let w of wwe){
+              if(w==r.Cond.What) isEle++;
+            }
+          }
+          if(r.Cond.Number<=isEle){
+            if(activeReso.findIndex(a=>a.name==r.Name)<0 && !overridden.includes(r.Name)){
+              activeReso.push({name:r.Name,boost:r.Boost});
+              for(let ov of r.Overrides){
+                overridden.push(ov);
+                const ovIdx = activeReso.findIndex(a=>a.name==ov);
+                if(ovIdx>=0) activeReso.splice(ovIdx,1);
+              }
+            }
+          }
+        }
+      }
+    }
+    for(let ar of activeReso){
+      for(let [arstat,arval] of Object.entries(ar.boost)){
+        ssr.addVal(arstat as statTypes,arval);
+      }
+    }
+    stat.add(ssr.getAll());
     return stat.getAll();
   }
 }

@@ -35,12 +35,12 @@
                     "FlameAttackPercent":20,
                     "FlameResistPercent":40
                 },
-                "Overrides":["Flame Resonance","Flame Reaction"]
+                "Overrides":["Flame Resonance"]
             },
             {
                 "Name":"Flame Benediction",
                 "Cond": {
-                    "On":"Type",
+                    "On":"Benedict",
                     "What":"Benedict",
                     "Number":2
                 },
@@ -124,12 +124,12 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             },
             {
                 "Name":"Frost Benediction",
                 "Cond": {
-                    "On":"Type",
+                    "On":"Benedict",
                     "What":"Benedict",
                     "Number":2
                 },
@@ -255,12 +255,12 @@
                     "VoltAttackPercent":15,
                     "VoltResistPercent":25
                 },
-                "Overrides":["Volt Resonance"]
+                "Overrides":[]
             },
             {
                 "Name":"Volt Benediction",
                 "Cond": {
-                    "On":"Type",
+                    "On":"Benedict",
                     "What":"Benedict",
                     "Number":2
                 },
@@ -302,7 +302,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -337,7 +337,7 @@
                     "PhysicalAttackPercent":15,
                     "PhysicalResistPercent":25
                 },
-                "Overrides":["Physical Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -372,7 +372,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -407,7 +407,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -442,7 +442,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -498,12 +498,12 @@
                     "PhysicalAttackPercent":15,
                     "PhysicalResistPercent":25
                 },
-                "Overrides":["Physical Resonance"]
+                "Overrides":[]
             },
             {
                 "Name":"Physical Benediction",
                 "Cond": {
-                    "On":"Type",
+                    "On":"Benedict",
                     "What":"Benedict",
                     "Number":2
                 },
@@ -545,7 +545,7 @@
                     "VoltAttackPercent":15,
                     "VoltResistPercent":25
                 },
-                "Overrides":["Volt Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -580,7 +580,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -615,7 +615,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -650,7 +650,7 @@
                     "PhysicalAttackPercent":15,
                     "PhysicalResistPercent":25
                 },
-                "Overrides":["Physical Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -685,7 +685,7 @@
                     "VoltAttackPercent":15,
                     "VoltResistPercent":25
                 },
-                "Overrides":["Volt Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -720,7 +720,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -755,7 +755,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -787,10 +787,13 @@
                     "Number":2
                 },
                 "Boost": {
-                    "AttackPercent":20,
+                    "FlameAttackPercent":20,
+                    "FrostAttackPercent":20,
+                    "PhysicalAttackPercent":20,
+                    "VoltAttackPercent":20,
                     "AlterResistPercent":30
                 },
-                "Overrides":["Altered Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -825,7 +828,7 @@
                     "PhysicalAttackPercent":15,
                     "PhysicalResistPercent":25
                 },
-                "Overrides":["Physical Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -860,7 +863,7 @@
                     "VoltAttackPercent":15,
                     "VoltResistPercent":25
                 },
-                "Overrides":["Volt Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -895,7 +898,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -930,7 +933,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -965,7 +968,7 @@
                     "PhysicalAttackPercent":15,
                     "PhysicalResistPercent":25
                 },
-                "Overrides":["Physical Resonance"]
+                "Overrides":[]
             },
             {
                 "Name":"Flame Resonance",
@@ -978,7 +981,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -1013,7 +1016,7 @@
                     "VoltAttackPercent":15,
                     "VoltResistPercent":25
                 },
-                "Overrides":["Volt Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -1048,7 +1051,7 @@
                     "FlameAttackPercent":15,
                     "FlameResistPercent":25
                 },
-                "Overrides":["Flame Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -1083,7 +1086,7 @@
                     "FrostAttackPercent":15,
                     "FrostResistPercent":25
                 },
-                "Overrides":["Frost Resonance"]
+                "Overrides":[]
             }
         ],
         "Base": {
@@ -1115,7 +1118,10 @@
                     "Number":3
                 },
                 "Boost": {
-                    "AttackPercent":30
+                    "FlameAttackPercent":30,
+                    "FrostAttackPercent":30,
+                    "PhysicalAttackPercent":30,
+                    "VoltAttackPercent":30
                 },
                 "Overrides":[]
             }

@@ -11,19 +11,19 @@ export class CharacterService {
     name: null,
     server: null,
     weapon: [
-      {name:null,advance:0,level:1,matrix:{
+      {name:null,advance:0,level:0,matrix:{
         "Mind":{name:null,level:0,advance:0},
         "Memory":{name:null,level:0,advance:0},
         "Faith":{name:null,level:0,advance:0},
         "Emotion":{name:null,level:0,advance:0}}
       },
-      {name:null,advance:0,level:1,matrix:{
+      {name:null,advance:0,level:0,matrix:{
         "Mind":{name:null,level:0,advance:0},
         "Memory":{name:null,level:0,advance:0},
         "Faith":{name:null,level:0,advance:0},
         "Emotion":{name:null,level:0,advance:0}}
       },
-      {name:null,advance:0,level:1,matrix:{
+      {name:null,advance:0,level:0,matrix:{
         "Mind":{name:null,level:0,advance:0},
         "Memory":{name:null,level:0,advance:0},
         "Faith":{name:null,level:0,advance:0},
@@ -116,10 +116,12 @@ export class CharacterService {
         enhance: 0
       }
     },
+    level: 1,
     supre: null,
     shots: {powerShot:0,sourceShot:0},
     simul: {"4500":0,"5500":0,"7000":0}
   };
+  public characterStat = new StatsService();
   constructor(
     private gears: GearsService,
     private weapons: WeaponService
@@ -169,22 +171,27 @@ export class CharacterService {
     const info = JSON.parse(c.value??"null");
     if(info!=null){
       this.characterInfo = info;
+      this.calcStat();
     }
   }
 
   async saveStat(){
     await Preferences.set({key:`character`,value:JSON.stringify(this.characterInfo)});
+    this.calcStat();
+  }
+
+  calcStat(){
+    this.characterStat.initAll();
     const statGears = this.gears.calc(this.characterInfo.gear);
     console.log("Gears:",statGears);
     const statChar = this.charStat();
     console.log("Char Stuff:",statChar);
     const statWeap = this.weapons.calc(this.characterInfo.weapon);
     console.log("Weapon:",statWeap);
-    let allStat = new StatsService();
-    allStat.add(statGears);
-    allStat.add(statChar);
-    allStat.add(statWeap);
-    console.log("AllStat:",allStat.getAll());
+    this.characterStat.add(statGears);
+    this.characterStat.add(statChar);
+    this.characterStat.add(statWeap);
+    console.log("AllStat:",this.characterStat.getAll());
   }
 }
 
@@ -213,6 +220,7 @@ export interface characterInfo {
   server: serverList|null;
   weapon: weaponList[];
   gear: gearList;
+  level: number;
   supre: string|null;
   shots: shotTaken;
   simul: simulActive;
