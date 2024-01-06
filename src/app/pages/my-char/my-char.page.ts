@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable } from 'src/app/services';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-my-char',
   templateUrl: './my-char.page.html',
   styleUrls: ['./my-char.page.scss'],
 })
-export class MyCharPage implements OnInit {
+export class MyCharPage {
   wp = Object.keys(weaponAvailable);
   mt = matrixAvailable.List;
   sp = Object.keys(supreAvailable).map(x=>{
@@ -18,10 +19,26 @@ export class MyCharPage implements OnInit {
   al = augAvailable;
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
   constructor(
+    private meta: Meta,
+    private title: Title,
     public char: CharacterService
   ) { }
 
-  ngOnInit() { }
+  setTag(){
+    const title = `Tools of Fantasy - My Character`;
+    const desc = `Ever wanted to know how your stats will look like with different equipment? Try it out yourself!`;
+    this.title.setTitle(title);
+    this.meta.updateTag({ name: 'description', content: desc });
+    this.meta.updateTag({ property: 'og:url', content: `/my-char` });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:description', content: desc });
+    this.meta.updateTag({ property: 'og:title', content: `Tools of Fantasy - My Character` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
+    this.meta.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ property: 'twitter:title', content: `Tools of Fantasy - My Character` });
+    this.meta.updateTag({ property: 'twitter:description', content: desc });
+    this.meta.updateTag({ property: 'twitter:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
+  }
 
   async saveChanges(){
     await this.char.saveStat();
