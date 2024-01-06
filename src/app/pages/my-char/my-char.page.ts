@@ -23,17 +23,6 @@ export class MyCharPage implements OnInit {
 
   ngOnInit() { }
 
-  async unequipWeapon(idx:number){
-    this.char.characterInfo.weapon[idx].name=null;
-    await this.saveChanges();
-  }
-
-  async unequipMatrix(wIdx:number,mType:any){
-    const x:matrixType = mType;
-    this.char.characterInfo.weapon[wIdx].matrix[x].name=null;
-    await this.saveChanges();
-  }
-
   async saveChanges(){
     console.log(this.char.characterInfo);
     await this.char.saveStat();
