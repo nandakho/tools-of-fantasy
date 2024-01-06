@@ -22,7 +22,9 @@ export class MyCharPage {
     private meta: Meta,
     private title: Title,
     public char: CharacterService
-  ) { }
+  ) {
+    this.setTag();
+  }
 
   setTag(){
     const title = `Tools of Fantasy - My Character`;

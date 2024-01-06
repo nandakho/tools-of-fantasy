@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
+import { Title, Meta } from '@angular/platform-browser';
 
 register();
 
@@ -9,7 +10,7 @@ register();
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   menus: menu[] = [
     {
       title: "My Character",
@@ -34,10 +35,27 @@ export class HomePage implements OnInit {
     }
   ];
   constructor(
+    private meta: Meta,
+    private title: Title,
     private nav: NavController
-  ) { }
+  ) {
+    this.setTag();
+  }
 
-  ngOnInit() {
+  setTag(){
+    const title = `Tools of Fantasy`;
+    const desc = `Tools for Tower of Fantasy`;
+    this.title.setTitle(title);
+    this.meta.updateTag({ name: 'description', content: desc });
+    this.meta.updateTag({ property: 'og:url', content: `` });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:description', content: desc });
+    this.meta.updateTag({ property: 'og:title', content: `Tools of Fantasy` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
+    this.meta.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ property: 'twitter:title', content: `Tools of Fantasy` });
+    this.meta.updateTag({ property: 'twitter:description', content: desc });
+    this.meta.updateTag({ property: 'twitter:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
   }
 
   async goTo(url:any){
