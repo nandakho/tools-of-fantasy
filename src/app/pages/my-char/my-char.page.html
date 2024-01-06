@@ -124,10 +124,10 @@
                                     <ion-select-option *ngFor="let w of wp" [value]="w">{{w}}</ion-select-option>
                                   </ion-select>
                                 </ion-col>
-                                <ion-col *ngIf="weapon.name!=null" class="fullwidth">
+                                <ion-col size="12" *ngIf="weapon.name!=null" class="fullwidth">
                                   <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Level: '+weapon.level" [(ngModel)]="weapon.level" [min]="0" [max]="200" [pin]="true"></ion-range>
                                 </ion-col>
-                                <ion-col *ngIf="weapon.name!=null" class="fullwidth">
+                                <ion-col size="12" *ngIf="weapon.name!=null" class="fullwidth">
                                   <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Advance: '+weapon.advance" [(ngModel)]="weapon.advance" [ticks]="true" [snaps]="true" [min]="0" [max]="6" [pin]="true"></ion-range>
                                 </ion-col>
                               </ion-row>
@@ -158,10 +158,10 @@
                                                                 <ion-select-option *ngFor="let m of mt" [value]="m">{{m}}</ion-select-option>
                                                               </ion-select>
                                                             </ion-col>
-                                                            <ion-col *ngIf="m.value.name!=null"  class="fullwidth">
+                                                            <ion-col size="12" *ngIf="m.value.name!=null"  class="fullwidth">
                                                               <ion-range (ionChange)="saveChanges()" color="warning"[label]="'Level: '+m.value.level" [(ngModel)]="m.value.level" [min]="0" [max]="100" [pin]="true"></ion-range>
                                                             </ion-col>
-                                                            <ion-col *ngIf="m.value.name!=null"  class="fullwidth">
+                                                            <ion-col size="12" *ngIf="m.value.name!=null"  class="fullwidth">
                                                               <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Advance: '+m.value.advance" [ticks]="true" [snaps]="true" [(ngModel)]="m.value.advance" [min]="0" [max]="3" [pin]="true"></ion-range>
                                                             </ion-col>
                                                           </ion-row>
@@ -211,7 +211,7 @@
                           <ion-item lines="none" class="ion-text-wrap">
                             <ion-grid>
                               <ion-row>
-                                <ion-col size="auto">
+                                <ion-col size="12">
                                   <ion-select mode="ios" (ionChange)="saveChanges()" label="Rarity" [placeholder]="'Select '+(gr.key)+' rarity'" [(ngModel)]="char.characterInfo.gear[gr.key].rarity">
                                     <ion-select-option [value]="null">Unequip</ion-select-option>
                                     <ion-select-option [value]="5">5*</ion-select-option>
@@ -219,7 +219,7 @@
                                     <ion-select-option *ngIf="al.includes(gr.key)" value="Titan">Titan</ion-select-option>
                                   </ion-select>
                                 </ion-col>
-                                <ion-col size="auto" class="fullwidth" *ngIf="char.characterInfo.gear[gr.key].rarity!=null">
+                                <ion-col size="12" class="fullwidth" *ngIf="char.characterInfo.gear[gr.key].rarity!=null">
                                   <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Enhance: '+char.characterInfo.gear[gr.key].enhance" [snaps]="true" [(ngModel)]="char.characterInfo.gear[gr.key].enhance" [min]="0" [max]="55" [pin]="true"></ion-range>
                                 </ion-col>
                               </ion-row>
@@ -293,15 +293,83 @@
         </ion-card-content>
       </ion-card>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="char.characterStat">
       <ion-card>
         <ion-card-header>
           <ion-card-title>Stats (Calculated)</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-label class="subtitle">To Be Added, for now check console..</ion-label>
+          <ion-label class="subtitle">Minor difference due to rounding issue..</ion-label>
           <ion-list>
-            <ion-item lines="none" class="ion-text-wrap"></ion-item>
+            <ion-item lines="none" class="ion-text-wrap">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="HP" [value]="hp"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Crit" [value]="crit"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Crit Rate" [value]="critPercent"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Physical Attack" [value]="physicalAtk"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Flame Attack" [value]="flameAtk"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Frost Attack" [value]="frostAtk"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Volt Attack" [value]="voltAtk"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Altered Attack" [value]="alterAtk"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Physical Resistance" [value]="physicalRes"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Flame Resistance" [value]="flameRes"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Frost Resistance" [value]="frostRes"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Volt Resistance" [value]="voltRes"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-input readonly label="Altered Resistance" [value]="alterRes"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
           </ion-list>
         </ion-card-content>
       </ion-card>

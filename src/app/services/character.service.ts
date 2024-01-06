@@ -183,15 +183,11 @@ export class CharacterService {
   calcStat(){
     this.characterStat.initAll();
     const statGears = this.gears.calc(this.characterInfo.gear);
-    console.log("Gears:",statGears);
     const statChar = this.charStat();
-    console.log("Char Stuff:",statChar);
     const statWeap = this.weapons.calc(this.characterInfo.weapon);
-    console.log("Weapon:",statWeap);
     this.characterStat.add(statGears);
     this.characterStat.add(statChar);
     this.characterStat.add(statWeap);
-    console.log("AllStat:",this.characterStat.getAll());
   }
 }
 
