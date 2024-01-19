@@ -12,6 +12,7 @@ Well, mostly useful for those who cares about numbers.
 Currently, the project offers the following tools:  
 - **Gear Compare**: This tool can helps players calculate which is the optimal gear for their characters. No more confusion to choose which gear gives higher boost to your stats between two gears!  
 - **Crit Calculator**: The Crit Calculator enables players to calculate the critical hit chance of their characters based on their stats and target level. It's finally here! You can now calculate how much base critical is "enough" against lower level enemies. As a bonus it can also calculate how much base crit is needed to reach a certain crit % that you want.  
+- **(WIP) My Character**: Set your character info here, then it can be used in other tools! Or you can use it as a character simulation to see the "what if" scenario of your char. Like how your stats will look at max enhancement equipment, max advancement weapon, matrix etc. Still a work in progress, planned to make a better UI, but hey it's already functional, so give it a try I guess..  
 - **Suggestion?**: Open an issue for feature request, if it's possible I might add it..  
 
 More tools will be added in future updates to further enhance the functionality and usability of the project.
