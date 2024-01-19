@@ -120,7 +120,7 @@
                               <ion-row>
                                 <ion-col class="weapon-selection">
                                   <div *ngIf="weapon.name">
-                                    <ion-text class="weapon-level" [id]="'level-'+wIdx" >{{weapon.level}}</ion-text>
+                                    <ion-text class="level" [id]="'level-'+wIdx" >{{weapon.level}}</ion-text>
                                     <ion-popover [trigger]="'level-'+wIdx" triggerAction="click">
                                       <ng-template>
                                         <ion-content class="popups">
@@ -140,75 +140,32 @@
                                     </div>
                                   </div>
                                   <div *ngIf="!weapon.name">
-                                    <ion-label class="null-weapon" (click)="weaponChange(wIdx)">Select Weapon</ion-label>
+                                    <ion-label button class="null-equip" (click)="weaponChange(wIdx)">Select Weapon</ion-label>
                                   </div>
                                 </ion-col>
                               </ion-row>
-                              <ion-row *ngIf="weapon.name!=null">
-                                <ion-col>
-                                  <ion-card class="no-margin">
-                                    <ion-card-header>
-                                      <ion-card-title>Matrix</ion-card-title>
-                                    </ion-card-header>
-                                    <ion-card-content>
-                                      <ion-list>
-                                        <ion-item lines="none" class="ion-text-wrap">
-                                          <ion-grid>
-                                            <ion-row>
-                                              <ion-col *ngFor="let m of weapon.matrix | keyvalue">
-                                                <ion-card class="no-margin">
-                                                  <ion-card-header>
-                                                    <ion-card-title>{{m.key}}</ion-card-title>
-                                                  </ion-card-header>
-                                                  <ion-card-content>
-                                                    <ion-list>
-                                                      <ion-item lines="none" class="ion-text-wrap">
-                                                        <ion-grid>
-                                                          <ion-row>
-                                                            <ion-col>
-                                                              <div *ngIf="m.value.name">
-                                                                <ion-text class="weapon-level" [id]="'level-'+wIdx" >{{weapon.level}}</ion-text>
-                                                                <ion-popover [trigger]="'level-'+wIdx" triggerAction="click">
-                                                                  <ng-template>
-                                                                    <ion-content class="popups">
-                                                                      <ion-text class="title">Adjust Level</ion-text>
-                                                                      <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="weapon.level" [min]="0" [max]="200" [pin]="true"></ion-range>
-                                                                    </ion-content>
-                                                                  </ng-template>
-                                                                </ion-popover>
-                                                                <ion-img [src]="'assets/icon/matrixs/'+m.value.name+'.png'" (click)="matrixChange(m.key,wIdx)"></ion-img>
-                                                                <div class="star">
-                                                                  <ion-icon [name]="weapon.advance>=1?'star':'star-outline'" (click)="starWeaponSet(wIdx,1)" (mouseenter)="starWeaponHover(wIdx,1)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=1?'hovered':''):''"></ion-icon>
-                                                                  <ion-icon [name]="weapon.advance>=2?'star':'star-outline'" (click)="starWeaponSet(wIdx,2)" (mouseenter)="starWeaponHover(wIdx,2)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=2?'hovered':''):''"></ion-icon>
-                                                                  <ion-icon [name]="weapon.advance>=3?'star':'star-outline'" (click)="starWeaponSet(wIdx,3)" (mouseenter)="starWeaponHover(wIdx,3)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=3?'hovered':''):''"></ion-icon>
-                                                                  <ion-icon [name]="weapon.advance>=4?'star':'star-outline'" (click)="starWeaponSet(wIdx,4)" (mouseenter)="starWeaponHover(wIdx,4)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=4?'hovered':''):''"></ion-icon>
-                                                                  <ion-icon [name]="weapon.advance>=5?'star':'star-outline'" (click)="starWeaponSet(wIdx,5)" (mouseenter)="starWeaponHover(wIdx,5)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=5?'hovered':''):''"></ion-icon>
-                                                                  <ion-icon [name]="weapon.advance==6?'star':'star-outline'" (click)="starWeaponSet(wIdx,6)" (mouseenter)="starWeaponHover(wIdx,6)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star==6?'hovered':''):''"></ion-icon>
-                                                                </div>
-                                                              </div>
-                                                              <div *ngIf="!m.value.name">
-                                                                <ion-label class="null-weapon" (click)="weaponChange(wIdx)">Select Matrix</ion-label>
-                                                              </div>
-                                                            </ion-col>
-                                                            <ion-col size="12" *ngIf="m.value.name!=null"  class="fullwidth">
-                                                              <ion-range (ionChange)="saveChanges()" color="warning"[label]="'Level: '+m.value.level" [(ngModel)]="m.value.level" [min]="0" [max]="100" [pin]="true"></ion-range>
-                                                            </ion-col>
-                                                            <ion-col size="12" *ngIf="m.value.name!=null"  class="fullwidth">
-                                                              <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Advance: '+m.value.advance" [ticks]="true" [snaps]="true" [(ngModel)]="m.value.advance" [min]="0" [max]="3" [pin]="true"></ion-range>
-                                                            </ion-col>
-                                                          </ion-row>
-                                                        </ion-grid>
-                                                      </ion-item>
-                                                    </ion-list>
-                                                  </ion-card-content>
-                                                </ion-card>
-                                              </ion-col>
-                                            </ion-row>
-                                          </ion-grid>
-                                        </ion-item>
-                                      </ion-list>
-                                    </ion-card-content>
-                                  </ion-card>
+                              <ion-row class="matrix" *ngIf="weapon.name!=null">
+                                <ion-col *ngFor="let m of weapon.matrix | keyvalue">
+                                  <div *ngIf="m.value.name">
+                                    <ion-text class="level" [id]="m.key+'-'+wIdx" >{{m.value.level}}</ion-text>
+                                    <ion-popover [trigger]="m.key+'-'+wIdx" triggerAction="click">
+                                      <ng-template>
+                                        <ion-content class="popups">
+                                          <ion-text class="title">Adjust Level</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="m.value.level" [min]="0" [max]="100" [pin]="true"></ion-range>
+                                        </ion-content>
+                                      </ng-template>
+                                    </ion-popover>
+                                    <ion-img [src]="'assets/icon/matrixs/'+m.value.name+'.png'" (click)="matrixChange(m.key,wIdx)"></ion-img>
+                                    <div class="star">
+                                      <ion-icon [name]="m.value.advance>=1?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,1)" (mouseenter)="starMatrixHover(m.key,wIdx,1)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,1)?'hovered':''"></ion-icon>
+                                      <ion-icon [name]="m.value.advance>=2?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,2)" (mouseenter)="starMatrixHover(m.key,wIdx,2)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,2)?'hovered':''"></ion-icon>
+                                      <ion-icon [name]="m.value.advance>=3?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,3)" (mouseenter)="starMatrixHover(m.key,wIdx,3)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,3)?'hovered':''"></ion-icon>
+                                    </div>
+                                  </div>
+                                  <div *ngIf="!m.value.name">
+                                    <ion-label button class="null-equip" (click)="matrixChange(m.key,wIdx)">Select Matrix</ion-label>
+                                  </div>
                                 </ion-col>
                               </ion-row>
                             </ion-grid>

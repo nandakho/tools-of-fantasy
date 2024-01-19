@@ -20,6 +20,7 @@ export class MyCharPage {
   al = augAvailable;
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
   tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
+  tempMatrixStar = [{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}}];
   constructor(
     private alert: AlertController,
     private meta: Meta,
@@ -71,7 +72,6 @@ export class MyCharPage {
       },{
         text:'OK',
         handler: async (level)=>{
-          console.log(level);
           this.char.characterInfo.weapon[index].level = level;
           await this.saveChanges();
         }
@@ -111,6 +111,53 @@ export class MyCharPage {
       }
     }
     return r;
+  }
+
+  starMatrixSet(mtype:string,index:number,star:number) {
+    const part = mtype as matrixType;
+    const cStar = this.char.characterInfo.weapon[index].matrix[part].advance;
+    this.char.characterInfo.weapon[index].matrix[part].advance = cStar==star?0:star;
+    this.tempMatrixStar[index][part].star = star;
+    this.tempMatrixStar[index][part].hovering = false;
+  }
+
+  starMatrixHover(mtype:string,index:number,star:number){
+    const part = mtype as matrixType;
+    this.tempMatrixStar[index][part].star = star;
+    this.tempMatrixStar[index][part].hovering = true;
+  }
+  
+  starMatrixStopHover(mtype:string,index:number){
+    const part = mtype as matrixType;
+    this.tempMatrixStar[index][part].hovering = false;
+  }
+
+  starMatrixIsHovering(mtype:string,index:number,star:number){
+    const part = mtype as matrixType;
+    return this.tempMatrixStar[index][part].hovering && this.tempMatrixStar[index][part].star>=star;
+  }
+
+  async levelMatrix(mtype:string,index:number){
+    const part = mtype as matrixType;
+    const alert = await this.alert.create({
+      header: `Adjust Level Weapon ${index+1}`,
+      backdropDismiss: true,
+      inputs: [{
+        label: "Level",
+        type: "number"
+      }],
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (level)=>{
+          this.char.characterInfo.weapon[index].matrix[part].level = level;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
   }
 
   matrixsRadioGenerate(part:matrixType,index:number){
@@ -153,18 +200,19 @@ export class MyCharPage {
     alert.present();
   }
 
-  async matrixChange(part:string,index:number):Promise<void>{
+  async matrixChange(mtype:string,index:number):Promise<void>{
+    const part = mtype as matrixType;
     const alert = await this.alert.create({
       header: `Select ${part} Matrix`,
       backdropDismiss: true,
-      inputs: this.matrixsRadioGenerate(part as matrixType,index),
+      inputs: this.matrixsRadioGenerate(part,index),
       mode: "ios",
       buttons: [{
         text:'Cancel'
       },{
         text:'OK',
         handler: async (newSelected)=>{
-          this.char.characterInfo.weapon[index].matrix[part as matrixType].name = newSelected;
+          this.char.characterInfo.weapon[index].matrix[part].name = newSelected;
           await this.saveChanges();
         }
       }]

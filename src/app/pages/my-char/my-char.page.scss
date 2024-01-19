@@ -125,6 +125,38 @@ ion-card {
                                 --padding-start: 10px;
                                 --highlight-color: var(--ion-color-warning);
                             }
+                            ion-text.level {
+                                padding: 0px 4px;
+                                position: absolute;
+                                cursor: pointer;
+                                border: 2px solid transparent;
+                                border-right: 2px solid var(--ion-color-medium);
+                                border-bottom: 2px solid var(--ion-color-medium);
+                                border-radius: 5px 0px 25% 0px;
+
+                            }
+                            ion-text.level:hover {
+                                border: 2px solid var(--ion-color-warning);
+                            }
+                            ion-label.null-equip {
+                                border: 1px solid var(--ion-color-medium);
+                                border-radius: 5px;
+                                padding: 5px;
+                                cursor: pointer;
+                            }
+                            div.star{
+                                width: 100%;
+                                text-align: center;
+                                border: 2px solid var(--ion-color-medium);
+                                border-top: 0px;
+                                border-radius: 0px 0px 5px 5px;
+                                ion-icon {
+                                    cursor: pointer;
+                                }
+                                ion-icon.hovered {
+                                    color:rgb(144, 144, 144);
+                                }
+                            }
                         }
                         ion-col.fullwidth {
                             width: 100%;
@@ -133,13 +165,11 @@ ion-card {
                             }
                         }
                         ion-col.weapon-selection {
-                            border: 1px solid var(--ion-color-medium);
-                            border-radius: 5px;
-                            margin: 5px;
                             padding: 0px;
                             ion-img {
-                                max-width: 128px;
-                                border: 1px solid var(--ion-color-medium);
+                                width: 192px;
+                                border: 2px solid var(--ion-color-medium);
+                                border-radius: 5px 5px 0px 0px;
                                 border-bottom: 0px;
                                 cursor: pointer;
                             }
@@ -156,30 +186,20 @@ ion-card {
                                 padding-left: 20px;
                                 padding-right: 20px;
                             }
-                            ion-text.weapon-level {
-                                padding: 0px 4px;
-                                position: absolute;
+                        }
+                    }
+                    ion-row.matrix {
+                        margin-top: 5px;
+                        margin-bottom: 6px;
+                        ion-col {
+                            padding: 0px;
+                            margin: 2px;
+                            ion-img {
+                                width: 96px;
+                                border: 2px solid var(--ion-color-medium);
+                                border-radius: 5px 5px 0px 0px;
+                                border-bottom: 0px;
                                 cursor: pointer;
-                                border: 2px solid transparent;
-                            }
-                            ion-text.weapon-level:hover {
-                                border: 2px solid var(--ion-color-warning);
-                            }
-                            ion-label.null-weapon {
-                                padding: 5px;
-                                cursor: pointer;
-                            }
-                            div.star{
-                                width: 100%;
-                                text-align: center;
-                                border: 1px solid var(--ion-color-medium);
-                                border-top: 0px;
-                                ion-icon {
-                                    cursor: pointer;
-                                }
-                                ion-icon.hovered {
-                                    color:rgb(144, 144, 144);
-                                }
                             }
                         }
                     }
@@ -202,7 +222,10 @@ ion-card.no-margin {
 }
 .weap {
     max-width: 32%;
-    min-width: 300px;
+    min-width: 220px;
+}
+.weapon-selection {
+    min-width: 120x;
 }
 ion-content.popups {
     border: 2px solid var(--ion-color-medium);
