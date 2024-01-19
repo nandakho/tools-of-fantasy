@@ -43,6 +43,11 @@
     @return "assets/icon/equipments/#{$newname} 5.png";
 }
 
+@function repl-space($name) {
+    $newname: str-replace($name, "_", " ");
+    @return "#{$newname}";
+}
+
 ion-alert {
     --backdrop-opacity: 0.7;
     .alert-wrapper {
@@ -84,7 +89,19 @@ ion-alert {
                     background-image: url(get-gear-url($name));
                 }
             }
-            [class^="element-"],[class^="gear-"] {
+            $weapon-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
+            @each $name in $weapon-names {
+                .weapon-#{$name} {
+                    background-image: url("assets/icon/weapons/#{repl-space($name)}.png");
+                }
+            }
+            $matrix-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Scylla", "Haboela", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
+            @each $name in $matrix-names {
+                .matrix-#{$name} {
+                    background-image: url("assets/icon/matrixs/#{repl-space($name)}.png");
+                }
+            }
+            [class^="element-"],[class^="gear-"],[class^="weapon-"],[class^="matrix-"] {
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable } from 'src/app/services';
+import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
+import { AlertInput, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-char',
@@ -18,7 +19,9 @@ export class MyCharPage {
   ts = titanStatList;
   al = augAvailable;
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
+  tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
   constructor(
+    private alert: AlertController,
     private meta: Meta,
     private title: Title,
     public char: CharacterService
@@ -40,6 +43,133 @@ export class MyCharPage {
     this.meta.updateTag({ property: 'twitter:title', content: `Tools of Fantasy - My Character` });
     this.meta.updateTag({ property: 'twitter:description', content: desc });
     this.meta.updateTag({ property: 'twitter:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
+  }
+
+  starWeaponSet(index:number,star:number) {
+    const cStar = this.char.characterInfo.weapon[index].advance;
+    this.char.characterInfo.weapon[index].advance = cStar==star?0:star;
+    this.tempWeaponStar[index].star = star;
+    this.tempWeaponStar[index].hovering = false;
+  }
+
+  starWeaponHover(index:number,star:number){
+    this.tempWeaponStar[index].star = star;
+    this.tempWeaponStar[index].hovering = true;
+  }
+
+  async levelWeapon(index:number){
+    const alert = await this.alert.create({
+      header: `Adjust Level Weapon ${index+1}`,
+      backdropDismiss: true,
+      inputs: [{
+        label: "Level",
+        type: "number"
+      }],
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (level)=>{
+          console.log(level);
+          this.char.characterInfo.weapon[index].level = level;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  weaponsRadioGenerate(index:number){
+    const alrdyEq = this.char.characterInfo.weapon.filter(x=>x.name).map(y=>y.name);
+    const curWeap = this.char.characterInfo.weapon[index].name;
+    var r:AlertInput[] = [{
+      label: "Unequip",
+      type: "radio",
+      value: null,
+      checked: curWeap==null,
+      cssClass: `eq-unequip`
+    }];
+    if(curWeap!=null){
+      r.push({
+        label: curWeap,
+        type: "radio",
+        value: curWeap,
+        checked: true,
+        cssClass: `weapon-${curWeap.replace(" ","_")}`
+      });
+    }
+    for(const w of this.wp){
+      if(!alrdyEq.includes(w)){
+        r.push({
+          label: w,
+          type: "radio",
+          value: w,
+          checked: w==this.char.characterInfo.weapon[index].name,
+          cssClass: `weapon-${w.replace(" ","_")}`
+        });
+      }
+    }
+    return r;
+  }
+
+  matrixsRadioGenerate(part:matrixType,index:number){
+    const curMat = this.char.characterInfo.weapon[index].matrix[part].name;
+    var r:AlertInput[] = [{
+      label: "Unequip",
+      type: "radio",
+      value: null,
+      checked: curMat==null,
+      cssClass: `eq-unequip`
+    }];
+    for(const m of this.mt){
+      r.push({
+        label: m,
+        type: "radio",
+        value: m,
+        checked: m==curMat,
+        cssClass: `matrix-${m.replace(" ","_")}`
+      });
+    }
+    return r;
+  }
+
+  async weaponChange(index:number):Promise<void>{
+    const alert = await this.alert.create({
+      header: `Select Weapon ${index+1}`,
+      backdropDismiss: true,
+      inputs: this.weaponsRadioGenerate(index),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.weapon[index].name = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  async matrixChange(part:string,index:number):Promise<void>{
+    const alert = await this.alert.create({
+      header: `Select ${part} Matrix`,
+      backdropDismiss: true,
+      inputs: this.matrixsRadioGenerate(part as matrixType,index),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.weapon[index].matrix[part as matrixType].name = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
   }
 
   async saveChanges(){
