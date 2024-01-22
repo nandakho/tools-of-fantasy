@@ -129,7 +129,9 @@
                                         </ion-content>
                                       </ng-template>
                                     </ion-popover>
-                                    <ion-img [src]="'assets/icon/weapons/'+weapon.name+'.png'" (click)="weaponChange(wIdx)"></ion-img>
+                                    <div class="wchoose">
+                                      <ion-img [src]="'assets/icon/weapons/'+weapon.name+'.png'" (click)="weaponChange(wIdx)"></ion-img>
+                                    </div>
                                     <div class="star">
                                       <ion-icon [name]="weapon.advance>=1?'star':'star-outline'" (click)="starWeaponSet(wIdx,1)" (mouseenter)="starWeaponHover(wIdx,1)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=1?'hovered':''):''"></ion-icon>
                                       <ion-icon [name]="weapon.advance>=2?'star':'star-outline'" (click)="starWeaponSet(wIdx,2)" (mouseenter)="starWeaponHover(wIdx,2)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=2?'hovered':''):''"></ion-icon>
@@ -139,32 +141,42 @@
                                       <ion-icon [name]="weapon.advance==6?'star':'star-outline'" (click)="starWeaponSet(wIdx,6)" (mouseenter)="starWeaponHover(wIdx,6)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star==6?'hovered':''):''"></ion-icon>
                                     </div>
                                   </div>
-                                  <div *ngIf="!weapon.name">
-                                    <ion-label button class="null-equip" (click)="weaponChange(wIdx)">Select Weapon</ion-label>
+                                  <div class="null-equip" *ngIf="!weapon.name" button (click)="weaponChange(wIdx)">
+                                    <div class="choose">
+                                      <ion-icon name="add-circle"></ion-icon>
+                                    </div>
+                                    <ion-label>Choose</ion-label>
                                   </div>
                                 </ion-col>
                               </ion-row>
                               <ion-row class="matrix" *ngIf="weapon.name!=null">
-                                <ion-col *ngFor="let m of weapon.matrix | keyvalue">
-                                  <div *ngIf="m.value.name">
-                                    <ion-text class="level" [id]="m.key+'-'+wIdx" >{{m.value.level}}</ion-text>
-                                    <ion-popover [trigger]="m.key+'-'+wIdx" triggerAction="click">
+                                <ion-col *ngFor="let m of matrixOrder">
+                                  <div class="choosen-matrix" *ngIf="weapon.matrix[m].name">
+                                    <ion-text class="level" [id]="m+'-'+wIdx" >{{weapon.matrix[m].level}}</ion-text>
+                                    <ion-popover [trigger]="m+'-'+wIdx" triggerAction="click">
                                       <ng-template>
                                         <ion-content class="popups">
                                           <ion-text class="title">Adjust Level</ion-text>
-                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="m.value.level" [min]="0" [max]="100" [pin]="true"></ion-range>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="weapon.matrix[m].level" [min]="0" [max]="100" [pin]="true"></ion-range>
                                         </ion-content>
                                       </ng-template>
                                     </ion-popover>
-                                    <ion-img [src]="'assets/icon/matrixs/'+m.value.name+'.png'" (click)="matrixChange(m.key,wIdx)"></ion-img>
+                                    <div class="choose">
+                                      <ion-img [src]="'assets/icon/matrixs/'+weapon.matrix[m].name+'.png'" (click)="matrixChange(m,wIdx)"></ion-img>
+                                    </div>
+                                    <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     <div class="star">
-                                      <ion-icon [name]="m.value.advance>=1?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,1)" (mouseenter)="starMatrixHover(m.key,wIdx,1)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,1)?'hovered':''"></ion-icon>
-                                      <ion-icon [name]="m.value.advance>=2?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,2)" (mouseenter)="starMatrixHover(m.key,wIdx,2)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,2)?'hovered':''"></ion-icon>
-                                      <ion-icon [name]="m.value.advance>=3?'star':'star-outline'" (click)="starMatrixSet(m.key,wIdx,3)" (mouseenter)="starMatrixHover(m.key,wIdx,3)" (mouseleave)="starMatrixStopHover(m.key,wIdx)" [ngClass]="starMatrixIsHovering(m.key,wIdx,3)?'hovered':''"></ion-icon>
+                                      <ion-icon [name]="weapon.matrix[m].advance>=1?'star':'star-outline'" (click)="starMatrixSet(m,wIdx,1)" (mouseenter)="starMatrixHover(m,wIdx,1)" (mouseleave)="starMatrixStopHover(m,wIdx)" [ngClass]="starMatrixIsHovering(m,wIdx,1)?'hovered':''"></ion-icon>
+                                      <ion-icon [name]="weapon.matrix[m].advance>=2?'star':'star-outline'" (click)="starMatrixSet(m,wIdx,2)" (mouseenter)="starMatrixHover(m,wIdx,2)" (mouseleave)="starMatrixStopHover(m,wIdx)" [ngClass]="starMatrixIsHovering(m,wIdx,2)?'hovered':''"></ion-icon>
+                                      <ion-icon [name]="weapon.matrix[m].advance>=3?'star':'star-outline'" (click)="starMatrixSet(m,wIdx,3)" (mouseenter)="starMatrixHover(m,wIdx,3)" (mouseleave)="starMatrixStopHover(m,wIdx)" [ngClass]="starMatrixIsHovering(m,wIdx,3)?'hovered':''"></ion-icon>
                                     </div>
                                   </div>
-                                  <div *ngIf="!m.value.name">
-                                    <ion-label button class="null-equip" (click)="matrixChange(m.key,wIdx)">Select Matrix</ion-label>
+                                  <div class="null-matrix" *ngIf="!weapon.matrix[m].name" button (click)="matrixChange(m,wIdx)">
+                                    <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
+                                    <div class="choose">
+                                      <ion-icon name="add-circle"></ion-icon>
+                                    </div>
+                                    <ion-label>Choose</ion-label>
                                   </div>
                                 </ion-col>
                               </ion-row>

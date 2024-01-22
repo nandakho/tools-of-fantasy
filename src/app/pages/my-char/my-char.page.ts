@@ -18,6 +18,7 @@ export class MyCharPage {
   rs = randomStatList;
   ts = titanStatList;
   al = augAvailable;
+  matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
   tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
   tempMatrixStar = [{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}}];
