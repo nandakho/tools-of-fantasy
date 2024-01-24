@@ -81,6 +81,22 @@ export class MyCharPage {
     alert.present();
   }
 
+  getEle(index:number):string{
+    const cw = this.char.characterInfo.weapon[index].name;
+    if(cw!=null){
+      return weaponAvailable[cw].Element.join("");
+    }
+    return `Flame`;
+  }
+
+  getReso(index:number):string{
+    const cw = this.char.characterInfo.weapon[index].name;
+    if(cw!=null){
+      return weaponAvailable[cw].Type;
+    }
+    return `Attack`;
+  }
+
   weaponsRadioGenerate(index:number){
     const alrdyEq = this.char.characterInfo.weapon.filter(x=>x.name).map(y=>y.name);
     const curWeap = this.char.characterInfo.weapon[index].name;

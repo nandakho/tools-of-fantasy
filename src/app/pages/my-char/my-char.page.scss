@@ -161,6 +161,10 @@ ion-card {
                                 border: 2px solid var(--ion-color-medium);
                                 border-top: 0px;
                                 border-radius: 0px 0px 5px 5px;
+                                height: 35px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
                                 ion-icon {
                                     cursor: pointer;
                                 }
@@ -189,6 +193,19 @@ ion-card {
                                     ion-img:hover {
                                         border: 2px solid var(--ion-color-warning); 
                                     }
+                                    ion-img.weapon-reso {
+                                        position: absolute;
+                                        width: 36px;
+                                        border: 0px;
+                                        right: 2px;
+                                        cursor: default;
+                                    }
+                                    ion-img.weapon-ele {
+                                        position: absolute;
+                                        width: 36px;
+                                        border: 0px;
+                                        cursor: default;
+                                    }
                                 }
                                 ion-select {
                                     text-align: center;
@@ -208,7 +225,7 @@ ion-card {
                     }
                     ion-row.matrix {
                         margin-top: 5px;
-                        margin-bottom: 6px;
+                        margin-bottom: 14px;
                         ion-col {
                             padding: 0px;
                             margin: 2px;
@@ -226,11 +243,11 @@ ion-card {
                                 }
                                 ion-img.matrix-parts {
                                     position: absolute;
-                                    width: 24px;
+                                    width: 33px;
                                     border: 0px;
                                 }
                                 div.star {
-                                    padding-left: 24px;
+                                    padding-left: 33px;
                                 }
                             }
                             div.null-matrix {
@@ -276,8 +293,12 @@ ion-card.no-margin {
     border-radius: 0px 5px 5px 0px !important;
 }
 .weap {
-    max-width: 32%;
-    min-width: 220px;
+    width: 220px;
+}
+@media (min-width: 480px) {
+    .weap {
+        width: 440px;
+    }
 }
 .weapon-selection {
     min-width: 120x;

@@ -131,6 +131,8 @@
                                     </ion-popover>
                                     <div class="wchoose">
                                       <ion-img [src]="'assets/icon/weapons/'+weapon.name+'.png'" (click)="weaponChange(wIdx)"></ion-img>
+                                      <ion-img class="weapon-reso" [src]="'assets/icon/weapons/Reso_'+getReso(wIdx)+'.png'"></ion-img>
+                                      <ion-img class="weapon-ele" [src]="'assets/icon/elements/Element_'+getEle(wIdx)+'.png'"></ion-img>
                                     </div>
                                     <div class="star">
                                       <ion-icon [name]="weapon.advance>=1?'star':'star-outline'" (click)="starWeaponSet(wIdx,1)" (mouseenter)="starWeaponHover(wIdx,1)" (mouseleave)="tempWeaponStar[wIdx].hovering=false" [ngClass]="tempWeaponStar[wIdx].hovering?(tempWeaponStar[wIdx].star>=1?'hovered':''):''"></ion-icon>
