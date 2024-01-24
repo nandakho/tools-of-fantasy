@@ -163,8 +163,8 @@
                                     </ion-popover>
                                     <div class="choose">
                                       <ion-img [src]="'assets/icon/matrixs/'+weapon.matrix[m].name+'.png'" (click)="matrixChange(m,wIdx)"></ion-img>
+                                      <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     </div>
-                                    <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     <div class="star">
                                       <ion-icon [name]="weapon.matrix[m].advance>=1?'star':'star-outline'" (click)="starMatrixSet(m,wIdx,1)" (mouseenter)="starMatrixHover(m,wIdx,1)" (mouseleave)="starMatrixStopHover(m,wIdx)" [ngClass]="starMatrixIsHovering(m,wIdx,1)?'hovered':''"></ion-icon>
                                       <ion-icon [name]="weapon.matrix[m].advance>=2?'star':'star-outline'" (click)="starMatrixSet(m,wIdx,2)" (mouseenter)="starMatrixHover(m,wIdx,2)" (mouseleave)="starMatrixStopHover(m,wIdx)" [ngClass]="starMatrixIsHovering(m,wIdx,2)?'hovered':''"></ion-icon>
@@ -172,9 +172,9 @@
                                     </div>
                                   </div>
                                   <div class="null-matrix" *ngIf="!weapon.matrix[m].name" button (click)="matrixChange(m,wIdx)">
-                                    <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     <div class="choose">
                                       <ion-icon name="add-circle"></ion-icon>
+                                      <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     </div>
                                     <ion-label>Choose</ion-label>
                                   </div>
