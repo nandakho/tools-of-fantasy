@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType } from 'src/app/services';
+import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 
@@ -19,6 +19,7 @@ export class MyCharPage {
   ts = titanStatList;
   al = augAvailable;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
+  eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
   tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
   tempMatrixStar = [{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}}];
@@ -57,28 +58,6 @@ export class MyCharPage {
   starWeaponHover(index:number,star:number){
     this.tempWeaponStar[index].star = star;
     this.tempWeaponStar[index].hovering = true;
-  }
-
-  async levelWeapon(index:number){
-    const alert = await this.alert.create({
-      header: `Adjust Level Weapon ${index+1}`,
-      backdropDismiss: true,
-      inputs: [{
-        label: "Level",
-        type: "number"
-      }],
-      mode: "ios",
-      buttons: [{
-        text:'Cancel'
-      },{
-        text:'OK',
-        handler: async (level)=>{
-          this.char.characterInfo.weapon[index].level = level;
-          await this.saveChanges();
-        }
-      }]
-    });
-    alert.present();
   }
 
   getEle(index:number):string{
@@ -130,6 +109,25 @@ export class MyCharPage {
     return r;
   }
 
+  async weaponChange(index:number):Promise<void>{
+    const alert = await this.alert.create({
+      header: `Select Weapon ${index+1}`,
+      backdropDismiss: true,
+      inputs: this.weaponsRadioGenerate(index),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.weapon[index].name = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
   starMatrixSet(mtype:string,index:number,star:number) {
     const part = mtype as matrixType;
     const cStar = this.char.characterInfo.weapon[index].matrix[part].advance;
@@ -154,29 +152,6 @@ export class MyCharPage {
     return this.tempMatrixStar[index][part].hovering && this.tempMatrixStar[index][part].star>=star;
   }
 
-  async levelMatrix(mtype:string,index:number){
-    const part = mtype as matrixType;
-    const alert = await this.alert.create({
-      header: `Adjust Level Weapon ${index+1}`,
-      backdropDismiss: true,
-      inputs: [{
-        label: "Level",
-        type: "number"
-      }],
-      mode: "ios",
-      buttons: [{
-        text:'Cancel'
-      },{
-        text:'OK',
-        handler: async (level)=>{
-          this.char.characterInfo.weapon[index].matrix[part].level = level;
-          await this.saveChanges();
-        }
-      }]
-    });
-    alert.present();
-  }
-
   matrixsRadioGenerate(part:matrixType,index:number){
     const curMat = this.char.characterInfo.weapon[index].matrix[part].name;
     var r:AlertInput[] = [{
@@ -198,25 +173,6 @@ export class MyCharPage {
     return r;
   }
 
-  async weaponChange(index:number):Promise<void>{
-    const alert = await this.alert.create({
-      header: `Select Weapon ${index+1}`,
-      backdropDismiss: true,
-      inputs: this.weaponsRadioGenerate(index),
-      mode: "ios",
-      buttons: [{
-        text:'Cancel'
-      },{
-        text:'OK',
-        handler: async (newSelected)=>{
-          this.char.characterInfo.weapon[index].name = newSelected;
-          await this.saveChanges();
-        }
-      }]
-    });
-    alert.present();
-  }
-
   async matrixChange(mtype:string,index:number):Promise<void>{
     const part = mtype as matrixType;
     const alert = await this.alert.create({
@@ -230,6 +186,48 @@ export class MyCharPage {
         text:'OK',
         handler: async (newSelected)=>{
           this.char.characterInfo.weapon[index].matrix[part].name = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  eqRadioGenerate(etype:gearTypes){
+    const rarityList = augAvailable.includes(etype)?['5','Augmented','Titan']:['5'];
+    const curRar = this.char.characterInfo.gear[etype].rarity;
+    var r:AlertInput[] = [{
+      label: "Unequip",
+      type: "radio",
+      value: null,
+      checked: curRar==null,
+      cssClass: `eq-unequip`
+    }];
+    for(const m of rarityList){
+      r.push({
+        label: m==`5`?`${m}*`:m,
+        type: "radio",
+        value: m,
+        checked: m==curRar,
+        cssClass: `gear-${etype.replace(" ","-")}-${m}`
+      });
+    }
+    return r;
+  }
+
+  async eqChange(etype:string):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Select ${part} Rarity`,
+      backdropDismiss: true,
+      inputs: this.eqRadioGenerate(part),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.gear[part].rarity = newSelected;
           await this.saveChanges();
         }
       }]

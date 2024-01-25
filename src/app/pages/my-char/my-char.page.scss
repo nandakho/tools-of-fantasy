@@ -225,13 +225,13 @@ ion-card {
                     }
                     ion-row.matrix {
                         margin-top: 5px;
-                        margin-bottom: 14px;
+                        margin-bottom: 6px;
                         ion-col {
                             padding: 0px;
                             margin: 2px;
                             div.choosen-matrix {
                                 width: 100px;
-                                height: 124px;
+                                height: 133px;
                                 div.choose {
                                     border: 2px solid var(--ion-color-medium);
                                     border-radius: 5px 5px 0px 0px;
@@ -252,7 +252,7 @@ ion-card {
                             }
                             div.null-matrix {
                                 width: 100px;
-                                height: 124px;
+                                height: 133px;
                                 border: 2px solid var(--ion-color-medium);
                                 border-radius: 5px;
                                 text-align: -webkit-center;
@@ -266,11 +266,17 @@ ion-card {
                                 }
                                 ion-img.matrix-parts {
                                     position: absolute;
-                                    width: 24px;
+                                    width: 33px;
                                     border: 0px;
                                 }
-                                ion-label {
-                                    padding-left: 24px;
+                                div.label-only {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    height: 33px;
+                                    ion-label {
+                                        padding-left: 33px;
+                                    }
                                 }
                             }
                         }
@@ -318,6 +324,9 @@ ion-content.popups {
         padding-left: 12px;
         padding-right: 12px;
     }
+    ion-select {
+        padding-top: 24px;
+    }
 }
 .choose:hover {
     ion-img {
@@ -326,5 +335,65 @@ ion-content.popups {
     ion-icon {
         opacity: 0.4;
         transition: 0.5s;
+    }
+}
+ion-col.equipments {
+    margin: 4px;
+    padding: 0px;
+    div.choosen-eq {
+        height: 124px;
+        width: 100px;
+        div.choose {
+            border: 2px solid var(--ion-color-medium); 
+            border-bottom: 0px;
+            border-radius: 5px 5px 0px 0px; 
+        }
+        div.stats {
+            width: 100%;
+            height: 26px;
+            text-align: center;
+            border: 2px solid var(--ion-color-medium);
+            border-top: 0px;
+            border-radius: 0px 0px 5px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-item {
+                min-height: 24px;
+                width: 100%;
+                ion-img {
+                    width: 24px;
+                    height: 24px;
+                    background-color: var(--ion-color-light);
+                }
+            }
+        }
+        ion-img {
+            height: 96px;
+            cursor: pointer;
+        }
+        ion-img:hover {
+            border: 2px solid var(--ion-color-warning); 
+        }
+    }
+    div.null-eq {
+        div.eq-background-null {
+            border: 2px solid var(--ion-color-medium); 
+            border-radius: 5px; 
+            height: 124px;
+            background: var(--ion-color-light);
+            border-radius: 5px; 
+            display: flex;
+            cursor: pointer;
+        }
+        div.eq-background-null:hover {
+            border: 2px solid var(--ion-color-warning); 
+            background: var(--ion-color-medium);
+            transition: 0.5s;
+        }
+        ion-img {
+            height: 96px;
+            align-self: center;
+        }
     }
 }

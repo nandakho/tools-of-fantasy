@@ -178,7 +178,9 @@
                                       <ion-icon name="add-circle"></ion-icon>
                                       <ion-img class="matrix-parts" [src]="'assets/icon/matrixs/Slot'+m+'.png'"></ion-img>
                                     </div>
-                                    <ion-label>Choose</ion-label>
+                                    <div class="label-only">
+                                      <ion-label>Choose</ion-label>
+                                    </div>
                                   </div>
                                 </ion-col>
                               </ion-row>
@@ -205,9 +207,45 @@
           <ion-list>
             <ion-item lines="none" class="ion-text-wrap">
               <ion-grid>
-                <ion-row *ngFor="let gr of char.characterInfo.gear | keyvalue">
-                  <ion-col>
-                    <ion-card class="gear-select">
+                <ion-row *ngFor="let eqType of eqOrder">
+                  <ion-col class="equipments">
+                    <div class="choosen-eq" *ngIf="char.characterInfo.gear[eqType].rarity!=null">
+                      <ion-text class="level" [id]="'eqlevel-'+eqType">{{char.characterInfo.gear[eqType].enhance}}</ion-text>
+                      <ion-popover [trigger]="'eqlevel-'+eqType" triggerAction="click">
+                        <ng-template>
+                          <ion-content class="popups">
+                            <ion-text class="title">Adjust Enhancement</ion-text>
+                            <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.characterInfo.gear[eqType].enhance" [min]="0" [max]="55" [pin]="true"></ion-range>
+                          </ion-content>
+                        </ng-template>
+                      </ion-popover>
+                      <div class="choose">
+                        <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'%20'+char.characterInfo.gear[eqType].rarity+'.png'"></ion-img>
+                      </div>
+                      <div class="stats">
+                        <ion-item lines="none" *ngFor="let eq of char.characterInfo.gear[eqType].random; index as rIdx">
+                          <ion-img [id]="'rand-'+eqType+'-'+rIdx" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
+                          <ion-img [id]="'rand-'+eqType+'-'+rIdx" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                          <ion-popover [trigger]="'rand-'+eqType+'-'+rIdx" triggerAction="click">
+                            <ng-template>
+                              <ion-content class="popups">
+                                <ion-text class="title">Change Random Stats</ion-text>
+                                <ion-select mode="ios" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[eqType].random[rIdx].type" [placeholder]="'Select Random Stat '+(rIdx+1)">
+                                  <ion-select-option [value]="null">Select Random Stat</ion-select-option>
+                                  <ion-select-option *ngFor="let stat of rs[eqType]" [value]="stat">{{stat}}</ion-select-option>
+                                </ion-select>
+                              </ion-content>
+                            </ng-template>
+                          </ion-popover>
+                        </ion-item>
+                      </div>
+                    </div>
+                    <div class="null-eq" *ngIf="char.characterInfo.gear[eqType].rarity==null">
+                      <div class="eq-background-null">
+                        <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'.png'"></ion-img>
+                      </div>
+                    </div>
+                    <!-- <ion-card class="gear-select">
                       <ion-card-header><ion-card-title>{{gr.key}}</ion-card-title></ion-card-header>
                       <ion-card-content>
                         <ion-list>
@@ -287,7 +325,7 @@
                           </ion-item>
                         </ion-list>
                       </ion-card-content>
-                    </ion-card>
+                    </ion-card> -->
                   </ion-col>
                 </ion-row>
               </ion-grid>

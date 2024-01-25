@@ -173,6 +173,7 @@ export class CharacterService {
       this.characterInfo = info;
       this.calcStat();
     }
+    console.log(this.characterInfo);
   }
 
   async saveStat(){

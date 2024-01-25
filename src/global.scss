@@ -40,7 +40,7 @@
 
 @function get-gear-url($name) {
     $newname: str-replace($name, "-", " ");
-    @return "assets/icon/equipments/#{$newname} 5.png";
+    @return "#{$newname}";
 }
 
 @function repl-space($name) {
@@ -86,22 +86,36 @@ ion-alert {
             $gear-names: "Helm", "Armor", "Belt", "Legguards", "Bracers", "Spaulders", "Sabatons", "Handguards", "Eyepiece", "Combat-Engine", "Exoskeleton", "Microreactor";
             @each $name in $gear-names {
                 .gear-#{$name} {
-                    background-image: url(get-gear-url($name));
+                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} 5.png");
                 }
             }
-            $weapon-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
+            @each $name in $gear-names {
+                .gear-#{$name}-5 {
+                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} 5.png");
+                }
+                .gear-#{$name}-Augmented {
+                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} Augmented.png");
+                }
+                .gear-#{$name}-Titan {
+                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} Titan.png");
+                }
+            }
+            $weapon-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_Lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
             @each $name in $weapon-names {
                 .weapon-#{$name} {
                     background-image: url("assets/icon/weapons/#{repl-space($name)}.png");
                 }
             }
-            $matrix-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Scylla", "Haboela", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
+            $matrix-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Scylla", "Haboela", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_Lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
             @each $name in $matrix-names {
                 .matrix-#{$name} {
                     background-image: url("assets/icon/matrixs/#{repl-space($name)}.png");
                 }
             }
-            [class^="element-"],[class^="gear-"],[class^="weapon-"],[class^="matrix-"] {
+            .eq-unequip {
+                background-image: url("assets/icon/equipments/null.svg");
+            }
+            [class^="element-"],[class^="gear-"],[class^="weapon-"],[class^="matrix-"],.eq-unequip {
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;
