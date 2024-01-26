@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes } from 'src/app/services';
+import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 
@@ -16,6 +16,7 @@ export class MyCharPage {
   });
   gr = Object.keys(gearAvailable);
   rs = randomStatList;
+  as = augStatList;
   ts = titanStatList;
   al = augAvailable;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
@@ -194,7 +195,7 @@ export class MyCharPage {
   }
 
   eqRadioGenerate(etype:gearTypes){
-    const rarityList = augAvailable.includes(etype)?['5','Augmented','Titan']:['5'];
+    const rarityList = augAvailable.includes(etype)?['5','Augment','Titan']:['5'];
     const curRar = this.char.characterInfo.gear[etype].rarity;
     var r:AlertInput[] = [{
       label: "Unequip",
@@ -233,6 +234,115 @@ export class MyCharPage {
       }]
     });
     alert.present();
+  }
+
+  eqstatRadioGenerate(etype:gearTypes,index:number,parts:"random"|"augment"){
+    const curRand = (this.char.characterInfo.gear[etype][parts][index].type);
+    let alrdSelected: any[] = [];
+    let lists: string[] = [];
+    alrdSelected = this.char.characterInfo.gear[etype].random.map(x=>x.type);
+    if(this.char.characterInfo.gear[etype].rarity=="5"){
+      lists = this.rs[etype];
+    } else {
+      lists = this.as[etype];
+      this.char.characterInfo.gear[etype].augment.map(x=>{
+        alrdSelected.push(x.type);
+      });
+    }
+    var r:AlertInput[] = [{
+      label: "Empty",
+      type: "radio",
+      value: null,
+      checked: curRand==null,
+      cssClass: `eq-unequip`
+    }];
+    if(curRand!=null){
+      r.push({
+        label: this.beautifyStatString(curRand),
+        type: "radio",
+        value: curRand,
+        checked: true,
+        cssClass: `stat-${curRand}`
+      })
+    }
+    for(const m of lists){
+      if(!alrdSelected.includes(m as any)){
+        r.push({
+          label: this.beautifyStatString(m),
+          type: "radio",
+          value: m,
+          checked: m==curRand,
+          cssClass: `stat-${m}`
+        });
+      }
+    }
+    return r;
+  }
+
+  async eqstatChange(etype:string,index:number,parts:"random"|"augment"):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Random ${index+1}`,
+      backdropDismiss: true,
+      inputs: this.eqstatRadioGenerate(part,index,parts),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.gear[part][parts][index].type = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  eqtitanRadioGenerate(etype:gearTypes){
+    const curRare = (this.char.characterInfo.gear[etype].rare.type);
+    var r:AlertInput[] = [{
+      label: "Empty",
+      type: "radio",
+      value: null,
+      checked: curRare==null,
+      cssClass: `eq-unequip`
+    }];
+    for(const m of this.ts[etype]){
+      r.push({
+        label: this.beautifyStatString(m),
+        type: "radio",
+        value: m,
+        checked: m==curRare,
+        cssClass: `stat-${m}`
+      });
+    }
+    return r;
+  }
+
+  async eqtitanChange(etype:string):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Rare ${etype}`,
+      backdropDismiss: true,
+      inputs: this.eqtitanRadioGenerate(part),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.char.characterInfo.gear[part].rare.type = newSelected;
+          await this.saveChanges();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  beautifyStatString(str:string|null):string {
+    if(!str) return `-`;
+    return (!["HP","HPPercent"].includes(str)?str.replace(/([A-Z])/g,' $1').trim():str).replace("Percent"," %");
   }
 
   async saveChanges(){

@@ -223,21 +223,61 @@
                         <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'%20'+char.characterInfo.gear[eqType].rarity+'.png'"></ion-img>
                       </div>
                       <div class="stats">
-                        <ion-item lines="none" *ngFor="let eq of char.characterInfo.gear[eqType].random; index as rIdx">
-                          <ion-img [id]="'rand-'+eqType+'-'+rIdx" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
-                          <ion-img [id]="'rand-'+eqType+'-'+rIdx" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
-                          <ion-popover [trigger]="'rand-'+eqType+'-'+rIdx" triggerAction="click">
+                        <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
+                        <ion-item lines="none" class="body" *ngFor="let eq of char.characterInfo.gear[eqType].random; index as rIdx">
+                          <ion-img (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
+                          <ion-img (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                          <ion-text [id]="'rand-'+eqType+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
+                          <ion-popover *ngIf="eq.type" [trigger]="'rand-'+eqType+'-'+rIdx+'val'" triggerAction="click">
                             <ng-template>
                               <ion-content class="popups">
-                                <ion-text class="title">Change Random Stats</ion-text>
-                                <ion-select mode="ios" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[eqType].random[rIdx].type" [placeholder]="'Select Random Stat '+(rIdx+1)">
-                                  <ion-select-option [value]="null">Select Random Stat</ion-select-option>
-                                  <ion-select-option *ngFor="let stat of rs[eqType]" [value]="stat">{{stat}}</ion-select-option>
-                                </ion-select>
+                                <ion-text class="title">Change {{beautifyStatString(eq.type)}} Value</ion-text>
+                                <ion-input type="number" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[eqType].random[rIdx].val"></ion-input>
                               </ion-content>
                             </ng-template>
                           </ion-popover>
                         </ion-item>
+                        <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
+                        <div *ngIf="char.characterInfo.gear[eqType].rarity!='5'">
+                          <ion-item lines="none" class="body" *ngFor="let eqa of char.characterInfo.gear[eqType].augment; index as arIdx">
+                            <ion-img (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type!=null && (char.characterInfo.gear[eqType].rarity=='Augment'||char.characterInfo.gear[eqType].rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
+                            <ion-img (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type==null || char.characterInfo.gear[eqType].rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                            <ion-text [id]="'randa-'+eqType+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
+                            <ion-popover *ngIf="eqa.type" [trigger]="'randa-'+eqType+'-'+arIdx+'val'" triggerAction="click">
+                              <ng-template>
+                                <ion-content class="popups">
+                                  <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
+                                  <ion-input type="number" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[eqType].augment[arIdx].val"></ion-input>
+                                </ion-content>
+                              </ng-template>
+                            </ion-popover>
+                          </ion-item>
+                        </div>
+                        <div *ngIf="char.characterInfo.gear[eqType].rarity=='5'">
+                          <ion-item lines="none" class="body-locked">
+                            <ion-icon name="lock-closed" color="medium"></ion-icon>
+                          </ion-item>
+                        </div>
+                        <div *ngIf="char.characterInfo.gear[eqType].rarity=='Titan'">
+                          <ion-item lines="none" class="body">
+                            <ion-img (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type!=null" [src]="'assets/icon/stats/'+char.characterInfo.gear[eqType].rare.type+'.png'"></ion-img>
+                            <ion-img (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                            <ion-text [id]="'rare-'+eqType">{{char.characterInfo.gear[eqType].rare.type?char.characterInfo.gear[eqType].rare.val:'-'}}</ion-text>
+                            <ion-popover *ngIf="char.characterInfo.gear[eqType].rare.type!=null" [trigger]="'rare-'+eqType" triggerAction="click">
+                              <ng-template>
+                                <ion-content class="popups">
+                                  <ion-text class="title">Change {{beautifyStatString(char.characterInfo.gear[eqType].rare.type)}} Level</ion-text>
+                                  <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.characterInfo.gear[eqType].rare.val" [min]="1" [max]="3" [pin]="true"></ion-range>
+                                </ion-content>
+                              </ng-template>
+                            </ion-popover>
+                          </ion-item>
+                        </div>
+                        <div *ngIf="char.characterInfo.gear[eqType].rarity=='Augment'">
+                          <ion-item lines="none" class="titan-locked">
+                            <ion-icon name="lock-closed" color="medium"></ion-icon>
+                          </ion-item>
+                        </div>
                       </div>
                     </div>
                     <div class="null-eq" *ngIf="char.characterInfo.gear[eqType].rarity==null">

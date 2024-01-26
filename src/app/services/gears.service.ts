@@ -110,6 +110,20 @@ export const randomStatList = {
   "Eyepiece": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent","AlterAttack","AlterResist","AlterResistPercent","CritPercent"],
   "Combat Engine": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","HPPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
 }
+export const augStatList = {
+  "Bracers": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Legguards": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Sabatons": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Spaulders": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Armor": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Handguards": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Belt": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Helm": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
+  "Exoskeleton": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+  "Microreactor": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+  "Eyepiece": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+  "Combat Engine": ["FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent"],
+}
 export const titanStatList = {
   "Bracers": ["Delay","Heal","Skill","Discharge","Damage","Weak"],
   "Legguards": ["Lifesteal","Recovery","Block","Reduction","Normal","Dodge"],

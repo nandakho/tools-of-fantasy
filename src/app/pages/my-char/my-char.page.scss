@@ -312,6 +312,7 @@ ion-card.no-margin {
 ion-content.popups {
     border: 2px solid var(--ion-color-medium);
     --background: var(--ion-color-dark-tint);
+    --keyboard-offset: 0px !important;
     ion-text.title {
         font-weight: bold;
         font-size: 0.9rem;
@@ -326,6 +327,15 @@ ion-content.popups {
     }
     ion-select {
         padding-top: 24px;
+        color: var(--ion-color-primary-contrast);
+        padding-left: 12px;
+    }
+    ion-input {
+        color: var(--ion-color-primary-contrast);
+        min-height: 30px;
+        margin-top: 32px;
+        text-align: center;
+        margin-bottom: 1px;
     }
 }
 .choose:hover {
@@ -341,7 +351,7 @@ ion-col.equipments {
     margin: 4px;
     padding: 0px;
     div.choosen-eq {
-        height: 124px;
+        height: 323px;
         width: 100px;
         div.choose {
             border: 2px solid var(--ion-color-medium); 
@@ -350,25 +360,76 @@ ion-col.equipments {
         }
         div.stats {
             width: 100%;
-            height: 26px;
+            height: 225px;
             text-align: center;
             border: 2px solid var(--ion-color-medium);
             border-top: 0px;
             border-radius: 0px 0px 5px 5px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            ion-item {
-                min-height: 24px;
+            flex-wrap: wrap;
+            ion-item.header {
+                border-top: 1px solid var(--ion-color-medium);
+                border-bottom: 1px solid var(--ion-color-medium);
+                height: 24px;
                 width: 100%;
+                place-items: flex-start;
+                ion-text {
+                    width: 100%;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: smaller;
+                    color: var(--ion-color-warning);
+                }
+            }
+            ion-item.body {
+                height: 25px;
+                width: 100%;
+                place-items: flex-start;
+                border-bottom: 1px solid var(--ion-color-medium);
+                border-left: 0px;
+                border-right: 0px;
                 ion-img {
                     width: 24px;
                     height: 24px;
                     background-color: var(--ion-color-light);
                 }
+                ion-text {
+                    width: 72px;
+                    padding-right: 2px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    font-size: smaller;
+                    cursor: pointer;
+                }
+                ion-text:hover {
+                    border: 2px solid var(--ion-color-warning);
+                }
+            }
+            ion-item.body-locked {
+                height: 75px;
+                border-bottom: 1px solid var(--ion-color-medium);
+                display: flex;
+                ion-icon {
+                    width: 96px;
+                    height: 48px;
+                }
+            }
+            ion-item.titan-locked {
+                height: 25px;
+                border-bottom: 1px solid var(--ion-color-medium);
+                display: flex;
+                ion-icon {
+                    width: 96px;
+                    height: 20px;
+                }
             }
         }
         ion-img {
+            border-bottom: 1px solid var(--ion-color-medium);
             height: 96px;
             cursor: pointer;
         }
@@ -380,7 +441,7 @@ ion-col.equipments {
         div.eq-background-null {
             border: 2px solid var(--ion-color-medium); 
             border-radius: 5px; 
-            height: 124px;
+            height: 323px;
             background: var(--ion-color-light);
             border-radius: 5px; 
             display: flex;

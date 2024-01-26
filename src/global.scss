@@ -71,7 +71,7 @@ ion-alert {
                         }
                     }
                     .alert-radio-label {
-                        font-size: 0.8rem;
+                        font-size: 0.7rem;
                         font-weight: 600;
                         color: var(--ion-color-primary-contrast);
                     }
@@ -93,8 +93,8 @@ ion-alert {
                 .gear-#{$name}-5 {
                     background-image: url("assets/icon/equipments/#{get-gear-url($name)} 5.png");
                 }
-                .gear-#{$name}-Augmented {
-                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} Augmented.png");
+                .gear-#{$name}-Augment {
+                    background-image: url("assets/icon/equipments/#{get-gear-url($name)} Augment.png");
                 }
                 .gear-#{$name}-Titan {
                     background-image: url("assets/icon/equipments/#{get-gear-url($name)} Titan.png");
@@ -105,19 +105,28 @@ ion-alert {
                 .weapon-#{$name} {
                     background-image: url("assets/icon/weapons/#{repl-space($name)}.png");
                 }
+                .matrix-#{$name} {
+                    background-image: url("assets/icon/matrixs/#{repl-space($name)}.png");
+                }
             }
-            $matrix-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Scylla", "Haboela", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_Lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey";
+            $matrix-names: "Scylla", "Haboela";
             @each $name in $matrix-names {
                 .matrix-#{$name} {
                     background-image: url("assets/icon/matrixs/#{repl-space($name)}.png");
                 }
             }
+            $stat-names: "HP","Crit","Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent","FlameDamagePercent","FrostDamagePercent","PhysicalDamagePercent","VoltDamagePercent","FlameResistPercent","FrostResistPercent","PhysicalResistPercent","VoltResistPercent","AlterAttack","AlterResist","AlterResistPercent","CritPercent","HPPercent","Delay","Heal","Normal","Skill","Damage","Weak","Dodge","Discharge","Lifesteal","Recovery","Block","Reduction";
+            @each $name in $stat-names {
+                .stat-#{$name} {
+                    background-image: url("assets/icon/stats/#{repl-space($name)}.png");
+                }
+            }
             .eq-unequip {
                 background-image: url("assets/icon/equipments/null.svg");
             }
-            [class^="element-"],[class^="gear-"],[class^="weapon-"],[class^="matrix-"],.eq-unequip {
+            [class^="element-"],[class^="gear-"],[class^="weapon-"],[class^="matrix-"],[class^="stat-"],.eq-unequip {
                 background-repeat: no-repeat;
-                background-position: center center;
+                background-position: 70% center;
                 background-size: contain;
                 background-origin: content-box;
                 padding: 4px;
