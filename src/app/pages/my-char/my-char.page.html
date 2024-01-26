@@ -281,91 +281,10 @@
                       </div>
                     </div>
                     <div class="null-eq" *ngIf="char.characterInfo.gear[eqType].rarity==null">
-                      <div class="eq-background-null">
-                        <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'.png'"></ion-img>
+                      <div (click)="eqChange(eqType)" class="eq-background-null">
+                        <ion-img [src]="'assets/icon/equipments/'+eqType+'.png'"></ion-img>
                       </div>
                     </div>
-                    <!-- <ion-card class="gear-select">
-                      <ion-card-header><ion-card-title>{{gr.key}}</ion-card-title></ion-card-header>
-                      <ion-card-content>
-                        <ion-list>
-                          <ion-item lines="none" class="ion-text-wrap">
-                            <ion-grid>
-                              <ion-row>
-                                <ion-col size="12">
-                                  <ion-select mode="ios" (ionChange)="saveChanges()" label="Rarity" [placeholder]="'Select '+(gr.key)+' rarity'" [(ngModel)]="char.characterInfo.gear[gr.key].rarity">
-                                    <ion-select-option [value]="null">Unequip</ion-select-option>
-                                    <ion-select-option [value]="5">5*</ion-select-option>
-                                    <ion-select-option *ngIf="al.includes(gr.key)" value="Augment">Augment</ion-select-option>
-                                    <ion-select-option *ngIf="al.includes(gr.key)" value="Titan">Titan</ion-select-option>
-                                  </ion-select>
-                                </ion-col>
-                                <ion-col size="12" class="fullwidth" *ngIf="char.characterInfo.gear[gr.key].rarity!=null">
-                                  <ion-range (ionChange)="saveChanges()" color="warning" [label]="'Enhance: '+char.characterInfo.gear[gr.key].enhance" [snaps]="true" [(ngModel)]="char.characterInfo.gear[gr.key].enhance" [min]="0" [max]="55" [pin]="true"></ion-range>
-                                </ion-col>
-                              </ion-row>
-                              <ion-row *ngIf="char.characterInfo.gear[gr.key].rarity!=null">
-                                <ion-col class="fullwidth">
-                                  <ion-card>
-                                    <ion-card-header><ion-card-title>Random Stat</ion-card-title></ion-card-header>
-                                    <ion-card-content>
-                                      <ion-list>
-                                        <ion-item lines="none" class="ion-text-wrap">
-                                          <ion-grid>
-                                            <ion-row *ngFor="let r of char.characterInfo.gear[gr.key].random; index as rIdx">
-                                              <ion-col size="auto">
-                                                <ion-select mode="ios" [ngClass]="r.type!=null?'border-left':''" (ionChange)="saveChanges()" [(ngModel)]="r.type" [placeholder]="'Select Random Stat '+(rIdx+1)">
-                                                  <ion-select-option [value]="null">Select Random Stat</ion-select-option>
-                                                  <ion-select-option *ngFor="let stat of rs[gr.key]" [value]="stat">{{stat}}</ion-select-option>
-                                                </ion-select>
-                                                <ion-input class="border-right" *ngIf="r.type!=null" (ionChange)="saveChanges()" type="number" min="0" [(ngModel)]="r.val"></ion-input>
-                                              </ion-col>
-                                            </ion-row>
-                                          </ion-grid>
-                                        </ion-item>
-                                      </ion-list>
-                                    </ion-card-content>
-                                  </ion-card>
-                                </ion-col>
-                              </ion-row>
-                              <ion-row *ngIf="char.characterInfo.gear[gr.key].rarity=='Augment'||char.characterInfo.gear[gr.key].rarity=='Titan'">
-                                <ion-col>
-                                  <ion-card>
-                                    <ion-card-header><ion-card-title>Augment Stat</ion-card-title></ion-card-header>
-                                    <ion-card-content>
-                                      <ion-list>
-                                        <ion-item lines="none" class="ion-text-wrap">
-                                          <ion-grid>
-                                            <ion-row *ngFor="let aug of char.characterInfo.gear[gr.key].augment; index as augIdx">
-                                              <ion-col size="auto">
-                                                <ion-select mode="ios" [ngClass]="aug.type!=null?'border-left':''" (ionChange)="saveChanges()" [(ngModel)]="aug.type" [placeholder]="'Select Augment Stat '+(augIdx+1)">
-                                                  <ion-select-option [value]="null">Select Augment Stat</ion-select-option>
-                                                  <ion-select-option *ngFor="let stat of rs[gr.key]" [value]="stat">{{stat}}</ion-select-option>
-                                                </ion-select>
-                                                <ion-input class="border-right" *ngIf="aug.type!=null" (ionChange)="saveChanges()" type="number" min="0" [(ngModel)]="aug.val"></ion-input>
-                                              </ion-col>
-                                            </ion-row>
-                                            <ion-row *ngIf="char.characterInfo.gear[gr.key].rarity=='Titan'">
-                                              <ion-col class="fullwidth">
-                                                <ion-select mode="ios" [ngClass]="char.characterInfo.gear[gr.key].rare.type!=null?'border-left':''" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[gr.key].rare.type" placeholder="Select Rare Stat">
-                                                  <ion-select-option [value]="null">Select Rare Stat</ion-select-option>
-                                                  <ion-select-option *ngFor="let tstat of ts[gr.key]" [value]="tstat">{{tstat}}</ion-select-option>
-                                                </ion-select>
-                                                <ion-range class="border-right" *ngIf="char.characterInfo.gear[gr.key].rare.type!=null" (ionChange)="saveChanges()" color="warning" [label]="'Lv.'+char.characterInfo.gear[gr.key].rare.val" [ticks]="true" [snaps]="true" [(ngModel)]="char.characterInfo.gear[gr.key].rare.val" [min]="1" [max]="3" [pin]="true"></ion-range>
-                                              </ion-col>
-                                            </ion-row>
-                                          </ion-grid>
-                                        </ion-item>
-                                      </ion-list>
-                                    </ion-card-content>
-                                  </ion-card>
-                                </ion-col>
-                              </ion-row>
-                            </ion-grid>
-                          </ion-item>
-                        </ion-list>
-                      </ion-card-content>
-                    </ion-card> -->
                   </ion-col>
                 </ion-row>
               </ion-grid>
