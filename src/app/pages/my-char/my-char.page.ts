@@ -416,4 +416,52 @@ export class MyCharPage {
   get alterRes(){
     return Math.floor((this.char.characterStat.getVal("AlterResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("AlterResistPercent")/100)));
   }
+
+  get titanBlock(){
+    return this.char.characterStat.getVal("Block");
+  }
+
+  get titanWeak(){
+    return this.char.characterStat.getVal("Weak");
+  }
+  
+  get titanLifesteal(){
+    return this.char.characterStat.getVal("Lifesteal");
+  }
+  
+  get titanRecovery(){
+    return this.char.characterStat.getVal("Recovery");
+  }
+  
+  get titanDelay(){
+    return this.char.characterStat.getVal("Delay");
+  }
+  
+  get titanNormal(){
+    return this.char.characterStat.getVal("Normal");
+  }
+  
+  get titanDodge(){
+    return this.char.characterStat.getVal("Dodge");
+  }
+  
+  get titanSkill(){
+    return this.char.characterStat.getVal("Skill");
+  }
+  
+  get titanDischarge(){
+    return this.char.characterStat.getVal("Discharge");
+  }
+  
+  get titanDamage(){
+    return this.char.characterStat.getVal("Damage");
+  }
+  
+  get titanReduction(){
+    return this.char.characterStat.getVal("Reduction");
+  }
+  
+  get titanHeal(){
+    return this.char.characterStat.getVal("Heal");
+  }
 }

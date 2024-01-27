@@ -460,3 +460,35 @@ ion-col.equipments {
         }
     }
 }
+ion-list.calculated {
+    padding-bottom: 10px !important;
+    ion-item {
+        ion-grid {
+            ion-row {
+                ion-col {
+                    align-self: center;
+                    display: block !important;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
+                    ion-item {
+                        ion-img {
+                            width: 36px;
+                            height: 36px;
+                            padding-right: 4px;
+                        }
+                        div.stat-val {
+                            flex-wrap: wrap;
+                            width: 180px;
+                            border: 0px;
+                            border-left: 2px solid var(--ion-color-medium);
+                            font-size: smaller;
+                            text-align: left;
+                            padding-left: 8px;
+                            cursor: default;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
