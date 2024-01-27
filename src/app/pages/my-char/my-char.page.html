@@ -225,8 +225,8 @@
                       <div class="stats">
                         <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
                         <ion-item lines="none" class="body" *ngFor="let eq of char.characterInfo.gear[eqType].random; index as rIdx">
-                          <ion-img (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
-                          <ion-img (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                          <ion-img class="icon" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
+                          <ion-img class="icon" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                           <ion-text [id]="'rand-'+eqType+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
                           <ion-popover *ngIf="eq.type" [trigger]="'rand-'+eqType+'-'+rIdx+'val'" triggerAction="click">
                             <ng-template>
@@ -240,8 +240,8 @@
                         <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
                         <div *ngIf="char.characterInfo.gear[eqType].rarity!='5'">
                           <ion-item lines="none" class="body" *ngFor="let eqa of char.characterInfo.gear[eqType].augment; index as arIdx">
-                            <ion-img (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type!=null && (char.characterInfo.gear[eqType].rarity=='Augment'||char.characterInfo.gear[eqType].rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
-                            <ion-img (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type==null || char.characterInfo.gear[eqType].rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                            <ion-img class="icon" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type!=null && (char.characterInfo.gear[eqType].rarity=='Augment'||char.characterInfo.gear[eqType].rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
+                            <ion-img class="icon" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type==null || char.characterInfo.gear[eqType].rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                             <ion-text [id]="'randa-'+eqType+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
                             <ion-popover *ngIf="eqa.type" [trigger]="'randa-'+eqType+'-'+arIdx+'val'" triggerAction="click">
                               <ng-template>
@@ -260,8 +260,8 @@
                         </div>
                         <div *ngIf="char.characterInfo.gear[eqType].rarity=='Titan'">
                           <ion-item lines="none" class="body">
-                            <ion-img (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type!=null" [src]="'assets/icon/stats/'+char.characterInfo.gear[eqType].rare.type+'.png'"></ion-img>
-                            <ion-img (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                            <ion-img class="icon" (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type!=null" [src]="'assets/icon/stats/'+char.characterInfo.gear[eqType].rare.type+'.png'"></ion-img>
+                            <ion-img class="icon" (click)="eqtitanChange(eqType)" *ngIf="char.characterInfo.gear[eqType].rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                             <ion-text [id]="'rare-'+eqType">{{char.characterInfo.gear[eqType].rare.type?char.characterInfo.gear[eqType].rare.val:'-'}}</ion-text>
                             <ion-popover *ngIf="char.characterInfo.gear[eqType].rare.type!=null" [trigger]="'rare-'+eqType" triggerAction="click">
                               <ng-template>

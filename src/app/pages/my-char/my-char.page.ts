@@ -96,7 +96,11 @@ export class MyCharPage {
         cssClass: `weapon-${curWeap.replace(" ","_")}`
       });
     }
-    for(const w of this.wp){
+    for(const w of this.wp.sort((a,b)=>{
+      if(a==b) return 0;
+      if(a>b) return 1;
+      return -1;
+    })){
       if(!alrdyEq.includes(w)){
         r.push({
           label: w,
@@ -162,7 +166,11 @@ export class MyCharPage {
       checked: curMat==null,
       cssClass: `eq-unequip`
     }];
-    for(const m of this.mt){
+    for(const m of this.mt.sort((a,b)=>{
+      if(a==b) return 0;
+      if(a>b) return 1;
+      return -1;
+    })){
       r.push({
         label: m,
         type: "radio",
@@ -265,7 +273,11 @@ export class MyCharPage {
         cssClass: `stat-${curRand}`
       })
     }
-    for(const m of lists){
+    for(const m of lists.sort((a,b)=>{
+      if(a==b) return 0;
+      if(a>b) return 1;
+      return -1;
+    })){
       if(!alrdSelected.includes(m as any)){
         r.push({
           label: this.beautifyStatString(m),
@@ -308,7 +320,11 @@ export class MyCharPage {
       checked: curRare==null,
       cssClass: `eq-unequip`
     }];
-    for(const m of this.ts[etype]){
+    for(const m of this.ts[etype].sort((a,b)=>{
+      if(a==b) return 0;
+      if(a>b) return 1;
+      return -1;
+    })){
       r.push({
         label: this.beautifyStatString(m),
         type: "radio",

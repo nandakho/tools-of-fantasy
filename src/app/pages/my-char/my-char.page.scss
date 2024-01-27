@@ -393,7 +393,9 @@ ion-col.equipments {
                 ion-img {
                     width: 24px;
                     height: 24px;
-                    background-color: var(--ion-color-light);
+                }
+                ion-img.icon {
+                    border-bottom: 0px;
                 }
                 ion-text {
                     width: 72px;
@@ -434,7 +436,7 @@ ion-col.equipments {
             cursor: pointer;
         }
         ion-img:hover {
-            border: 2px solid var(--ion-color-warning); 
+            border: 2px solid var(--ion-color-warning) !important; 
         }
     }
     div.null-eq {
