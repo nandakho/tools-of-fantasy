@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList } from 'src/app/services';
+import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 
@@ -20,7 +20,6 @@ export class MyCharPage {
   as = augStatList;
   ts = titanStatList;
   al = augAvailable;
-  charIndex: number = 0;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
@@ -30,7 +29,8 @@ export class MyCharPage {
     private alert: AlertController,
     private meta: Meta,
     private title: Title,
-    public char: CharacterService
+    public char: CharacterService,
+    private misc: MiscService
   ) {
     this.setTag();
   }
@@ -52,7 +52,7 @@ export class MyCharPage {
   }
 
   async reloadChar(){
-
+    await this.char.loadStat(this.char.charIndex);
   }
 
   async share(){
@@ -89,20 +89,14 @@ export class MyCharPage {
   }
 
   async loadData(){
-    console.log(`File upload here`);
     var input = document.createElement('input');
     input.type = 'file';
     input.onchange = async (_) => { 
       var fileread = ((await input.files?.item(0)?.text())??"").split("tof.nandakho.my.id:");
       if(fileread?.length==2){
-        try {
-          const data = JSON.parse(fileread[1]);
-          console.log(data);
-        } catch (err) {
-          console.log(err);
-        }
+        await this.char.loadStat(0,fileread[1]);
       } else {
-        console.log(`Unrecognized file!`);
+        this.misc.showToast(`Unrecognized file!`);
       }
     }
     input.click();
@@ -421,7 +415,7 @@ export class MyCharPage {
   }
 
   async saveChanges(){
-    await this.char.saveStat(this.charIndex);
+    await this.char.saveStat(this.char.charIndex);
   }
 
   get hp() {

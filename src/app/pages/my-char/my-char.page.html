@@ -23,8 +23,8 @@
                 <ion-grid>
                   <ion-row>
                     <ion-col>
-                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Select Character" [(ngModel)]="charIndex">
-                        <ion-select-option *ngFor="let c of char.charAvailable" [value]="c">{{c.name}}</ion-select-option>
+                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Select Character" [(ngModel)]="char.charIndex">
+                        <ion-select-option *ngFor="let c of char.charAvailable; index as cidx" [value]="cidx">{{c.name+'-'+c.uid}}</ion-select-option>
                         <ion-select-option [value]="char.charAvailable.length">New Character</ion-select-option>
                       </ion-select>
                     </ion-col>

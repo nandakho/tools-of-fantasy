@@ -6,129 +6,136 @@ import { GearsService, gearList, WeaponService, weaponList, StatsService, statTy
   providedIn: 'root'
 })
 export class CharacterService {
-  public characterInfo: characterInfo = {
-    uid: null,
-    name: null,
-    server: null,
-    weapon: [
-      {name:null,advance:0,level:0,matrix:{
-        "Mind":{name:null,level:0,advance:0},
-        "Memory":{name:null,level:0,advance:0},
-        "Faith":{name:null,level:0,advance:0},
-        "Emotion":{name:null,level:0,advance:0}}
-      },
-      {name:null,advance:0,level:0,matrix:{
-        "Mind":{name:null,level:0,advance:0},
-        "Memory":{name:null,level:0,advance:0},
-        "Faith":{name:null,level:0,advance:0},
-        "Emotion":{name:null,level:0,advance:0}}
-      },
-      {name:null,advance:0,level:0,matrix:{
-        "Mind":{name:null,level:0,advance:0},
-        "Memory":{name:null,level:0,advance:0},
-        "Faith":{name:null,level:0,advance:0},
-        "Emotion":{name:null,level:0,advance:0}}
-      }
-    ],
-    gear: {
-      "Bracers": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Legguards": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Sabatons": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Spaulders": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Armor": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Handguards": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Belt": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Helm": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      },
-      "Exoskeleton": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      }, 
-      "Microreactor": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      }, 
-      "Eyepiece": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      }, 
-      "Combat Engine": {
-        rarity: null,
-        random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
-        augment: [{type:null,val:0},{type:null,val:0}],
-        rare: {type:null,val:1},
-        enhance: 0
-      }
-    },
-    level: 1,
-    supre: null,
-    shots: {powerShot:0,sourceShot:0},
-    simul: {"4500":0,"5500":0,"7000":0}
-  };
+  public characterInfo: characterInfo;
   public characterStat = new StatsService();
   public charAvailable:any[] = [];
+  public charIndex:number = 0;
   constructor(
     private gears: GearsService,
     private weapons: WeaponService
   ) {
     this.availChar();
+    this.characterInfo = this.initCharacterInfo();
   }
+
+  initCharacterInfo(){
+    return {
+      uid: null,
+      name: null,
+      server: null,
+      weapon: [
+        {name:null,advance:0,level:0,matrix:{
+          "Mind":{name:null,level:0,advance:0},
+          "Memory":{name:null,level:0,advance:0},
+          "Faith":{name:null,level:0,advance:0},
+          "Emotion":{name:null,level:0,advance:0}}
+        },
+        {name:null,advance:0,level:0,matrix:{
+          "Mind":{name:null,level:0,advance:0},
+          "Memory":{name:null,level:0,advance:0},
+          "Faith":{name:null,level:0,advance:0},
+          "Emotion":{name:null,level:0,advance:0}}
+        },
+        {name:null,advance:0,level:0,matrix:{
+          "Mind":{name:null,level:0,advance:0},
+          "Memory":{name:null,level:0,advance:0},
+          "Faith":{name:null,level:0,advance:0},
+          "Emotion":{name:null,level:0,advance:0}}
+        }
+      ],
+      gear: {
+        "Bracers": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Legguards": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Sabatons": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Spaulders": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Armor": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Handguards": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Belt": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Helm": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        },
+        "Exoskeleton": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        }, 
+        "Microreactor": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        }, 
+        "Eyepiece": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        }, 
+        "Combat Engine": {
+          rarity: null,
+          random: [{type:null,val:0},{type:null,val:0},{type:null,val:0},{type:null,val:0}],
+          augment: [{type:null,val:0},{type:null,val:0}],
+          rare: {type:null,val:1},
+          enhance: 0
+        }
+      },
+      level: 1,
+      supre: null,
+      shots: {powerShot:0,sourceShot:0},
+      simul: {"4500":0,"5500":0,"7000":0}
+    }
+  }
+  
 
   charStat(){
     let stat = new StatsService();
@@ -170,21 +177,33 @@ export class CharacterService {
   async availChar(){
     const allChar = await Preferences.get({key:`availChar`});
     if(allChar.value) this.charAvailable = JSON.parse(allChar.value);
-    this.loadStat(this.charAvailable.findIndex(x=>x.selected==true)??0);
+    this.charIndex = this.charAvailable.findIndex(x=>x.selected==true);
+    this.loadStat(this.charIndex>=0?this.charIndex:0);
   }
 
   async loadStat(index:number,jsonString:string|null=null){
     let idx = index;
     if(jsonString!=null && this.validateJson(jsonString)){
-      let idx = this.charAvailable.length;
+      idx = this.charAvailable.length;
       await Preferences.set({key:`character_${idx}`,value:jsonString});
     }
     const c = await Preferences.get({key:`character_${idx}`});
     let info = JSON.parse(c.value??"null");
-    if(info!=null){
-      this.characterInfo = info;
-      this.calcStat();
+    for(let i=0; i<this.charAvailable.length; i++){
+      this.charAvailable[i].selected = false;
     }
+    if(jsonString!=null && this.validateJson(jsonString)){
+      this.charAvailable.push({name:info.name,uid:info.uid,selected:true});
+    }
+    this.charIndex = idx;
+    if(info!=null){
+      this.charAvailable[idx].selected = true;
+      this.characterInfo = info;
+      await Preferences.set({key:`availChar`,value:JSON.stringify(this.charAvailable)});
+    } else {
+      this.characterInfo = this.initCharacterInfo();
+    }
+    this.calcStat();
   }
   
   validateJson(jsonString:string){
@@ -194,6 +213,15 @@ export class CharacterService {
 
   async saveStat(index:number){
     await Preferences.set({key:`character_${index}`,value:JSON.stringify(this.characterInfo)});
+    for(let i=0;i<this.charAvailable.length; i++){
+      this.charAvailable[i].selected=false;
+    }
+    if(this.charAvailable.length==index){
+      this.charAvailable.push({name:this.characterInfo.name,uid:this.characterInfo.uid,selected:true});
+    } else {
+      this.charAvailable[index] = {name:this.characterInfo.name,uid:this.characterInfo.uid,selected:true};
+    }
+    await Preferences.set({key:`availChar`,value:JSON.stringify(this.charAvailable)});
     this.calcStat();
   }
 
