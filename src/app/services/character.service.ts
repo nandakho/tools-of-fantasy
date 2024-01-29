@@ -122,11 +122,12 @@ export class CharacterService {
     simul: {"4500":0,"5500":0,"7000":0}
   };
   public characterStat = new StatsService();
+  public charAvailable:any[] = [];
   constructor(
     private gears: GearsService,
     private weapons: WeaponService
   ) {
-    this.loadStat();
+    this.availChar();
   }
 
   charStat(){
@@ -166,18 +167,33 @@ export class CharacterService {
     return stat.getAll();
   }
 
-  async loadStat(){
-    const c = await Preferences.get({key:`character`});
-    const info = JSON.parse(c.value??"null");
+  async availChar(){
+    const allChar = await Preferences.get({key:`availChar`});
+    if(allChar.value) this.charAvailable = JSON.parse(allChar.value);
+    this.loadStat(this.charAvailable.findIndex(x=>x.selected==true)??0);
+  }
+
+  async loadStat(index:number,jsonString:string|null=null){
+    let idx = index;
+    if(jsonString!=null && this.validateJson(jsonString)){
+      let idx = this.charAvailable.length;
+      await Preferences.set({key:`character_${idx}`,value:jsonString});
+    }
+    const c = await Preferences.get({key:`character_${idx}`});
+    let info = JSON.parse(c.value??"null");
     if(info!=null){
       this.characterInfo = info;
       this.calcStat();
     }
-    console.log(this.characterInfo);
+  }
+  
+  validateJson(jsonString:string){
+    //tobeadded
+    return true;
   }
 
-  async saveStat(){
-    await Preferences.set({key:`character`,value:JSON.stringify(this.characterInfo)});
+  async saveStat(index:number){
+    await Preferences.set({key:`character_${index}`,value:JSON.stringify(this.characterInfo)});
     this.calcStat();
   }
 

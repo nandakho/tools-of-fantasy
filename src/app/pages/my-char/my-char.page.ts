@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { AlertInput, AlertController } from '@ionic/angular';
   styleUrls: ['./my-char.page.scss'],
 })
 export class MyCharPage {
+  @ViewChild('hiddenCanvas') editCanvas:any;
   wp = Object.keys(weaponAvailable);
   mt = matrixAvailable.List;
   sp = Object.keys(supreAvailable).map(x=>{
@@ -19,6 +20,7 @@ export class MyCharPage {
   as = augStatList;
   ts = titanStatList;
   al = augAvailable;
+  charIndex: number = 0;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
@@ -47,6 +49,63 @@ export class MyCharPage {
     this.meta.updateTag({ property: 'twitter:title', content: `Tools of Fantasy - My Character` });
     this.meta.updateTag({ property: 'twitter:description', content: desc });
     this.meta.updateTag({ property: 'twitter:image', content: 'https://tof.nandakho.my.id/assets/icon/icon.png' });
+  }
+
+  async reloadChar(){
+
+  }
+
+  async share(){
+    var canvasElement = this.editCanvas.nativeElement;
+    let ctx = canvasElement.getContext('2d');
+    ctx.canvas.width  = 768;
+    ctx.canvas.height = 432;
+    let drawing = new Image();
+    drawing.src = "assets/background/tempshare.jpg";
+    await drawing.decode();
+    ctx.drawImage(drawing,0,0);
+    ctx.font = `bold 32px sans-serif`;
+    ctx.lineWidth = 2;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.strokeText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
+    ctx.fillText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
+    let img = (await (await fetch(`${canvasElement.toDataURL('image/jpeg')}`)).blob());
+    let imgjson = new Blob([img,`tof.nandakho.my.id:${JSON.stringify(this.char.characterInfo)}`],{type:'image/jpeg'});
+    const url = window.URL.createObjectURL(imgjson);
+    this.download(url,`${this.generateName()}.jpg`);
+  }
+
+  generateName(){
+    const d = new Date();
+    return `${d.getFullYear().toString().padStart(4,"0")}${d.getUTCMonth().toString().padStart(2,"0")}${d.getDate().toString().padStart(2,"0")}${d.getHours().toString().padStart(2,"0")}${d.getMinutes().toString().padStart(2,"0")}${d.getSeconds().toString().padStart(0,"0")}`;
+  }
+
+  download(what:string,name:string){
+    var a = document.createElement("a");
+    a.href = what;
+    a.download = name;
+    a.click();
+  }
+
+  async loadData(){
+    console.log(`File upload here`);
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = async (_) => { 
+      var fileread = ((await input.files?.item(0)?.text())??"").split("tof.nandakho.my.id:");
+      if(fileread?.length==2){
+        try {
+          const data = JSON.parse(fileread[1]);
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        console.log(`Unrecognized file!`);
+      }
+    }
+    input.click();
   }
 
   starWeaponSet(index:number,star:number) {
@@ -362,7 +421,7 @@ export class MyCharPage {
   }
 
   async saveChanges(){
-    await this.char.saveStat();
+    await this.char.saveStat(this.charIndex);
   }
 
   get hp() {
