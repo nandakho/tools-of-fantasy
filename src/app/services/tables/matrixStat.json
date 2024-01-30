@@ -72,6 +72,11 @@
             "Set": 4,
             "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
             "Value": [26,30,34,38]
+        },
+        "Plotti": {
+            "Set": 2,
+            "Increase": ["FlameAttackPercent","PhysicalAttackPercent"],
+            "Value": [19,21,23,25]
         }
     }
 }
