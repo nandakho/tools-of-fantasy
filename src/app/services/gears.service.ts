@@ -95,7 +95,7 @@ export class GearsService {
   }
 }
 
-export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor"];
+export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders"];
 export const randomStatList = {
   "Bracers": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
   "Legguards": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
@@ -128,10 +128,10 @@ export const titanStatList = {
   "Bracers": ["Delay","Heal","Skill","Discharge","Damage","Weak"],
   "Legguards": ["Lifesteal","Recovery","Block","Reduction","Normal","Dodge"],
   "Sabatons": ["Lifesteal","Recovery","Block","Reduction","Normal","Skill"],
-  "Spaulders": [],
+  "Spaulders": ["Delay","Heal","Normal","Discharge","Damage","Weak"],
   "Armor": ["Delay","Heal","Dodge","Discharge","Damage","Weak"],
   "Handguards": ["Delay","Heal","Normal","Skill","Damage","Weak"],
-  "Belt": [],
+  "Belt": ["Lifesteal","Recovery","Block","Reduction","Dodge","Skill"],
   "Helm": [],
   "Exoskeleton": [],
   "Microreactor": ["Lifesteal","Recovery","Block","Reduction","Dodge","Discharge"],
