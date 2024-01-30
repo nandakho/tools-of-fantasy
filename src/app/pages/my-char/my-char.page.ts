@@ -52,7 +52,7 @@ export class MyCharPage {
   }
 
   async reloadChar(){
-    await this.char.loadStat(this.char.charIndex);
+    await this.char.loadStat(this.char.charId);
   }
 
   async share(){
@@ -73,12 +73,7 @@ export class MyCharPage {
     let img = (await (await fetch(`${canvasElement.toDataURL('image/jpeg')}`)).blob());
     let imgjson = new Blob([img,`tof.nandakho.my.id:${JSON.stringify(this.char.characterInfo)}`],{type:'image/jpeg'});
     const url = window.URL.createObjectURL(imgjson);
-    this.download(url,`${this.generateName()}.jpg`);
-  }
-
-  generateName(){
-    const d = new Date();
-    return `${d.getFullYear().toString().padStart(4,"0")}${d.getUTCMonth().toString().padStart(2,"0")}${d.getDate().toString().padStart(2,"0")}${d.getHours().toString().padStart(2,"0")}${d.getMinutes().toString().padStart(2,"0")}${d.getSeconds().toString().padStart(0,"0")}`;
+    this.download(url,`${this.char.generateTimestamp()}.jpg`);
   }
 
   download(what:string,name:string){
@@ -88,13 +83,31 @@ export class MyCharPage {
     a.click();
   }
 
+  async delChar(){
+    const alert = await this.alert.create({
+      header: `Delete This Character?`,
+      backdropDismiss: true,
+      mode: "ios",
+      buttons: [{
+        text:'Delete',
+        handler: async ()=>{
+          await this.char.delChar(this.char.charId);
+        }
+      },{
+        text:'Keep'
+      }]
+    });
+    alert.present();
+    
+  }
+
   async loadData(){
     var input = document.createElement('input');
     input.type = 'file';
     input.onchange = async (_) => { 
       var fileread = ((await input.files?.item(0)?.text())??"").split("tof.nandakho.my.id:");
       if(fileread?.length==2){
-        await this.char.loadStat(0,fileread[1]);
+        await this.char.loadStat("",fileread[1]);
       } else {
         this.misc.showToast(`Unrecognized file!`);
       }
@@ -302,7 +315,7 @@ export class MyCharPage {
     let alrdSelected: any[] = [];
     let lists: string[] = [];
     alrdSelected = this.char.characterInfo.gear[etype].random.map(x=>x.type);
-    if(this.char.characterInfo.gear[etype].rarity=="5"){
+    if(parts=="random"){
       lists = this.rs[etype];
     } else {
       lists = this.as[etype];
@@ -415,7 +428,7 @@ export class MyCharPage {
   }
 
   async saveChanges(){
-    await this.char.saveStat(this.char.charIndex);
+    await this.char.saveStat(this.char.charId);
   }
 
   get hp() {
@@ -425,7 +438,12 @@ export class MyCharPage {
   get crit() {
     return Math.floor(this.char.characterStat.getVal("Crit"));
   }
-
+  get critPCalc() {
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("Crit"),"percent",this.char.characterInfo.level))*100)/100;
+  }
+  get critBCalc() {
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("CritPercent"),"base",this.char.characterInfo.level))*100)/100;
+  }
   get critPercent() {
     return this.char.characterStat.getVal("CritPercent");
   }
@@ -433,21 +451,66 @@ export class MyCharPage {
   get physicalAtk() {
     return Math.round(Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
   }
+  get physicalAtkB() {
+    return Math.round(this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get physicalAtkP() {
+    return Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
+  }
+  get physicalDam() {
+    return Math.round(this.char.characterStat.getVal("PhysicalDamagePercent")*100)/100;
+  }
 
   get flameAtk() {
     return Math.round(Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FlameAttackPercent")/100)));
+  }
+  get flameAtkB() {
+    return Math.round(this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get flameAtkP() {
+    return Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FlameAttackPercent")/100)));
+  }
+  get flameDam() {
+    return Math.round(this.char.characterStat.getVal("FlameDamagePercent")*100)/100;
   }
 
   get frostAtk() {
     return Math.round(Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FrostAttackPercent")/100)));
   }
+  get frostAtkB() {
+    return Math.round(this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get frostAtkP() {
+    return Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FrostAttackPercent")/100)));
+  }
+  get frostDam() {
+    return Math.round(this.char.characterStat.getVal("FrostDamagePercent")*100)/100;
+  }
 
   get voltAtk() {
     return Math.round(Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("VoltAttackPercent")/100)));
   }
+  get voltAtkB() {
+    return Math.round(this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get voltAtkP() {
+    return Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("VoltAttackPercent")/100)));
+  }
+  get voltDam() {
+    return Math.round(this.char.characterStat.getVal("VoltDamagePercent")*100)/100;
+  }
 
   get alterAtk() {
     return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+this.char.characterStat.getVal("AlterAttack"));
+  }
+  get alterAtkB() {
+    return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]);
+  }
+  get alterAtkP() {
+    return Math.floor(this.char.characterStat.getVal("AlterAttack"));
+  }
+  get eleHighest() {
+    return [{name:"Physical",val:this.physicalAtk},{name:"Flame",val:this.flameAtk},{name:"Frost",val:this.frostAtk},{name:"Volt",val:this.voltAtk}].sort((a,b)=>b.val-a.val)[0].name;
   }
 
   get physicalRes(){

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes } from '.';
+import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +8,15 @@ import { GearsService, gearList, WeaponService, weaponList, StatsService, statTy
 export class CharacterService {
   public characterInfo: characterInfo;
   public characterStat = new StatsService();
-  public charAvailable:any[] = [];
-  public charIndex:number = 0;
+  public charAvailable: characterAvailable[] = [];
+  public charId:string = '';
   constructor(
     private gears: GearsService,
-    private weapons: WeaponService
+    private weapons: WeaponService,
+    private misc: MiscService
   ) {
-    this.availChar();
     this.characterInfo = this.initCharacterInfo();
+    this.availChar();
   }
 
   initCharacterInfo(){
@@ -135,7 +136,6 @@ export class CharacterService {
       simul: {"4500":0,"5500":0,"7000":0}
     }
   }
-  
 
   charStat(){
     let stat = new StatsService();
@@ -177,50 +177,106 @@ export class CharacterService {
   async availChar(){
     const allChar = await Preferences.get({key:`availChar`});
     if(allChar.value) this.charAvailable = JSON.parse(allChar.value);
-    this.charIndex = this.charAvailable.findIndex(x=>x.selected==true);
-    this.loadStat(this.charIndex>=0?this.charIndex:0);
+    this.charId = this.charAvailable.find(x=>x.selected==true)?.id??"";
+    this.loadStat(this.charId);
   }
 
-  async loadStat(index:number,jsonString:string|null=null){
-    let idx = index;
-    if(jsonString!=null && this.validateJson(jsonString)){
-      idx = this.charAvailable.length;
-      await Preferences.set({key:`character_${idx}`,value:jsonString});
+  async delChar(id:string){
+    const idx = this.charAvailable.findIndex(x=>x.id==id);
+    this.charAvailable.splice(idx,1);
+    await Preferences.set({key:`availChar`,value:JSON.stringify(this.charAvailable)});
+    await Preferences.remove({key:id});
+    this.misc.showToast(`Character deleted!`);
+    this.charId = this.charAvailable.length>0?this.charAvailable[0].id:"";
+    await this.loadStat(this.charId);
+  }
+
+  async loadStat(id:string,jsonString:string|null=null){
+    let idx = id;
+    let valid = this.validateJson(jsonString??"null");
+    if(jsonString!=null && !valid) this.misc.showToast(`Unrecognized file!`);
+    if(jsonString!=null && valid){
+      idx = this.generateTimestamp();
+      await Preferences.set({key:`char_${idx}`,value:jsonString});
     }
-    const c = await Preferences.get({key:`character_${idx}`});
+    const c = await Preferences.get({key:`char_${idx}`});
     let info = JSON.parse(c.value??"null");
     for(let i=0; i<this.charAvailable.length; i++){
       this.charAvailable[i].selected = false;
     }
-    if(jsonString!=null && this.validateJson(jsonString)){
-      this.charAvailable.push({name:info.name,uid:info.uid,selected:true});
+    if(jsonString!=null && valid){
+      this.charAvailable.push({id:idx,name:info.name,uid:info.uid,selected:true});
     }
-    this.charIndex = idx;
+    this.charId = idx;
+    const availIdx = this.charAvailable.findIndex(x=>x.id==idx);
     if(info!=null){
-      this.charAvailable[idx].selected = true;
+      this.charAvailable[availIdx].selected = true;
       this.characterInfo = info;
       await Preferences.set({key:`availChar`,value:JSON.stringify(this.charAvailable)});
     } else {
       this.characterInfo = this.initCharacterInfo();
     }
+    this.charAvailable.sort((a,b)=>{
+      if(a.name?.toLowerCase()==b.name?.toLowerCase()){
+        if(a.uid==b.uid) return 0;
+        if((a.uid??0)>(b.uid??0)) return 1;
+        return -1
+      }
+      if((a.name?.toLowerCase()??"")>(b.name?.toLowerCase()??"")) return 1;
+      return -1;
+    });
+    if(jsonString!=null && valid) this.misc.showToast(`Data loaded!`);
     this.calcStat();
   }
   
-  validateJson(jsonString:string){
-    //tobeadded
-    return true;
+  generateTimestamp(){
+    const d = new Date();
+    return `${d.getFullYear().toString().padStart(4,"0")}${(d.getMonth()+1).toString().padStart(2,"0")}${d.getDate().toString().padStart(2,"0")}${d.getHours().toString().padStart(2,"0")}${d.getMinutes().toString().padStart(2,"0")}${d.getSeconds().toString().padStart(2,"0")}${d.getMilliseconds().toString().padStart(3,"0")}`;
   }
 
-  async saveStat(index:number){
-    await Preferences.set({key:`character_${index}`,value:JSON.stringify(this.characterInfo)});
+  validateJson(jsonString:string):boolean{
+    let valid = true;
+    try {
+      const j = Object.keys(JSON.parse(jsonString));
+      const keyNeeded = Object.keys(this.initCharacterInfo());
+      for(let k of keyNeeded){
+        if(!j.includes(k)){
+          valid = false;
+        }
+      }
+    } catch (e) {
+      valid = false;
+    }
+    return valid;
+  }
+
+  async saveStat(id:string){
+    let idx = id!=""?id:this.generateTimestamp();
+    await Preferences.set({key:`char_${idx}`,value:JSON.stringify(this.characterInfo)});
     for(let i=0;i<this.charAvailable.length; i++){
       this.charAvailable[i].selected=false;
     }
-    if(this.charAvailable.length==index){
-      this.charAvailable.push({name:this.characterInfo.name,uid:this.characterInfo.uid,selected:true});
+    const availIdx = this.charAvailable.findIndex(x=>x.id==idx);
+    if(availIdx>=0){
+      this.charAvailable[availIdx] = {
+        id: idx,
+        name: this.characterInfo.name,
+        uid: this.characterInfo.uid,
+        selected: true
+      }
     } else {
-      this.charAvailable[index] = {name:this.characterInfo.name,uid:this.characterInfo.uid,selected:true};
+      this.charAvailable.push({id:idx,name:this.characterInfo.name,uid:this.characterInfo.uid,selected:true});
     }
+    this.charId = idx;
+    this.charAvailable.sort((a,b)=>{
+      if(a.name?.toLowerCase()==b.name?.toLowerCase()){
+        if(a.uid==b.uid) return 0;
+        if((a.uid??0)>(b.uid??0)) return 1;
+        return -1
+      }
+      if((a.name?.toLowerCase()??"")>(b.name?.toLowerCase()??"")) return 1;
+      return -1;
+    });
     await Preferences.set({key:`availChar`,value:JSON.stringify(this.charAvailable)});
     this.calcStat();
   }
@@ -233,6 +289,62 @@ export class CharacterService {
     this.characterStat.add(statGears);
     this.characterStat.add(statChar);
     this.characterStat.add(statWeap);
+  }
+
+  //Crit Calc
+  calcCrit(crit:number, targetType:"base"|"percent", level:number):number {
+    const crVal = crit?crit:0;
+    const lvVal = level?level:0;
+    const constant = this.getConstant(lvVal);
+    const multA = (constant.a * (lvVal * lvVal));
+    const multB = (constant.b * lvVal);
+    const multC = (constant.c);
+    const multSum = (multA + multB + multC);
+    var res = 0;
+    switch(targetType){
+      case "base":
+        res = Math.round((crVal * multSum)/100);
+        break;
+      case "percent":
+        if(multSum){
+          res = Math.ceil((crVal / multSum)*100000)/1000;
+        }
+        break;
+    }
+    return res<0?0:res;
+  }
+
+  /**
+   * This constant value is datamined from Global Client version 3.1  
+   * May or may not be accurate when version update come
+   */
+  getConstant(level:number):critConstant {
+    if(level<=9){
+      return {
+        a: 0,
+        b: 150,
+        c: 0
+      }
+    }
+    if(level<=40){
+      return {
+        a: -4,
+        b: 408,
+        c: -2078
+      }
+    }
+    if(level<=80){
+      return {
+        a: -0.163,
+        b: 285,
+        c: -3215
+      }
+    }
+    return {
+      a: -3.71,
+      b: 1151,
+      c: -49787
+    };
   }
 }
 
@@ -272,3 +384,16 @@ type supreStat = {
   }
 }
 export const supreAvailable:supreStat = require("./tables/supreStat.json");
+
+interface critConstant {
+  a: number,
+  b: number,
+  c: number
+}
+
+interface characterAvailable {
+  id: string,
+  name: string|null,
+  uid: string|null,
+  selected: boolean
+}

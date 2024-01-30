@@ -485,6 +485,27 @@ ion-list.calculated {
                             text-align: left;
                             padding-left: 8px;
                             cursor: default;
+                            .tooltip {
+                                display: none;
+                            }
+                            div.highlight {
+                                display: inline;
+                                color: var(--ion-color-warning);
+                            }
+                        }
+                        div.stat-val:hover {
+                            .tooltip {
+                                display: block;
+                                position: absolute;
+                                background: var(--ion-color-dark-tint);
+                                border: 2px solid var(--ion-color-warning);
+                                border-radius: 10px;
+                                top: 0px;
+                                padding: 4px;
+                                margin-left: 40px;
+                                font-size: smaller;
+                                font-weight: bold;
+                            }
                         }
                     }
                 }
@@ -494,4 +515,37 @@ ion-list.calculated {
 }
 .hiddencanvas {
     display: none;
+}
+
+div.char-select {
+    ion-row {
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+    ion-col.select {
+        min-width: fit-content;
+        justify-content: flex-start !important;
+    }
+    ion-col.btn {
+        justify-content: flex-end !important;
+        min-width: 165px !important;
+        div.char-btn {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+    ion-list {
+        padding: 0px !important;
+    }
+    ion-select {
+        border: 0px !important;
+        font-size: smaller;
+        font-weight: bold;
+        color: var(--ion-color-warning);
+        width: fit-content;
+    }
+    ion-select::part(label) {
+        font-size: small;
+        font-weight: bold;
+    }
 }

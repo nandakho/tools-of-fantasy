@@ -10,23 +10,26 @@
 <canvas class="hiddencanvas" #hiddenCanvas></canvas>
 <ion-content [fullscreen]="true">
   <ion-grid>
-    <div>
+    <div class="char-select">
       <ion-row>
         <ion-card>
-          <ion-card-header>
-            <ion-card-title>Select Character</ion-card-title>
-          </ion-card-header>
           <ion-card-content>
-            <ion-label class="subtitle">Which character to load?</ion-label>
             <ion-list>
               <ion-item lines="none" class="ion-text-wrap">
                 <ion-grid>
                   <ion-row>
-                    <ion-col>
-                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Select Character" [(ngModel)]="char.charIndex">
-                        <ion-select-option *ngFor="let c of char.charAvailable; index as cidx" [value]="cidx">{{c.name+'-'+c.uid}}</ion-select-option>
-                        <ion-select-option [value]="char.charAvailable.length">New Character</ion-select-option>
+                    <ion-col class="select">
+                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Select Character" [(ngModel)]="char.charId">
+                        <ion-select-option *ngFor="let c of char.charAvailable" [value]="c.id">{{[c.name??'No Name',c.uid??'Empty UID'].join(' - ')}}</ion-select-option>
+                        <ion-select-option value="">New Character</ion-select-option>
                       </ion-select>
+                    </ion-col>
+                    <ion-col class="btn">
+                      <div class="char-btn">
+                        <ion-button class="del-btn" *ngIf="char.charId!=''" (click)="delChar()" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
+                        <ion-button class="export-btn" *ngIf="char.charId!=''" (click)="share()" color="warning"><ion-icon name="save-outline"></ion-icon></ion-button>
+                        <ion-button class="import-btn" (click)="loadData()" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
+                      </div>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -117,14 +120,6 @@
                           </ion-list>
                         </ion-card-content>
                       </ion-card>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col>
-                      <ion-button (click)="share()" color="warning"><ion-icon name="save-outline"></ion-icon>&nbsp;Export Character</ion-button>
-                    </ion-col>
-                    <ion-col>
-                      <ion-button (click)="loadData()" color="tertiary"><ion-icon name="search-outline"></ion-icon>&nbsp;Import Character</ion-button>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -251,7 +246,7 @@
                           <ng-template>
                             <ion-content class="popups">
                               <ion-text class="title">Adjust Enhancement</ion-text>
-                              <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.characterInfo.gear[eqType].enhance" [min]="0" [max]="55" [pin]="true"></ion-range>
+                              <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.characterInfo.gear[eqType].enhance" [min]="0" [max]="60" [pin]="true"></ion-range>
                             </ion-content>
                           </ng-template>
                         </ion-popover>
@@ -353,6 +348,7 @@
                         <div class="stat-val">
                           <ion-text>Crit</ion-text><br>
                           <ion-text>{{crit}}</ion-text>
+                          <span class="tooltip">Against level <div class="highlight">{{char.characterInfo.level}}</div><br>Equal to <div class="highlight">{{critPCalc}}%</div></span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
@@ -360,6 +356,7 @@
                         <div class="stat-val">
                           <ion-text>Physical Attack</ion-text><br>
                           <ion-text>{{physicalAtk}}</ion-text>
+                          <span class="tooltip"><div class="highlight">{{physicalAtkB}}</div> + <div class="highlight">{{physicalAtkP}}</div><br>Physical Damage: <div class="highlight">{{physicalDam}}%</div></span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
@@ -367,6 +364,7 @@
                         <div class="stat-val">
                           <ion-text>Flame Attack</ion-text><br>
                           <ion-text>{{flameAtk}}</ion-text>
+                          <span class="tooltip"><div class="highlight">{{flameAtkB}}</div> + <div class="highlight">{{flameAtkP}}</div><br>Flame Damage: <div class="highlight">{{flameDam}}%</div></span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
@@ -374,6 +372,7 @@
                         <div class="stat-val">
                           <ion-text>Frost Attack</ion-text><br>
                           <ion-text>{{frostAtk}}</ion-text>
+                          <span class="tooltip"><div class="highlight">{{frostAtkB}}</div> + <div class="highlight">{{frostAtkP}}</div><br>Frost Damage: <div class="highlight">{{frostDam}}%</div></span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
@@ -381,6 +380,7 @@
                         <div class="stat-val">
                           <ion-text>Volt Attack</ion-text><br>
                           <ion-text>{{voltAtk}}</ion-text>
+                          <span class="tooltip"><div class="highlight">{{voltAtkB}}</div> + <div class="highlight">{{voltAtkP}}</div><br>Volt Damage: <div class="highlight">{{voltDam}}%</div></span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
@@ -388,6 +388,7 @@
                         <div class="stat-val">
                           <ion-text>Altered Attack</ion-text><br>
                           <ion-text>{{alterAtk}}</ion-text>
+                          <span class="tooltip">Highest: <div class="highlight">{{eleHighest}}</div><br><div class="highlight">{{alterAtkB}}</div> + <div class="highlight">{{alterAtkP}}</div></span>
                         </div>
                       </ion-item>
                     </ion-col>
@@ -397,6 +398,7 @@
                         <div class="stat-val">
                           <ion-text>Crit Rate</ion-text><br>
                           <ion-text>{{critPercent}}%</ion-text>
+                          <span class="tooltip">Against level <div class="highlight">{{char.characterInfo.level}}</div><br>Equal to <div class="highlight">{{critBCalc}}</div> Crit stat</span>
                         </div>
                       </ion-item>
                       <ion-item lines="none" class="ion-text-wrap">
