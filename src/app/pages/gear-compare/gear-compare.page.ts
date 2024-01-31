@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, AlertInput } from '@ionic/angular';
-import { MiscService, augStat, basicStat, gear, gearTypes } from 'src/app/services';
+import { AlertController, AlertInput, NavController } from '@ionic/angular';
+import { MiscService, augStat, basicStat, gear, gearTypes, CharacterService } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
@@ -30,12 +30,15 @@ export class GearComparePage {
   equipment: eqStats[] = [];
   equipped: number|undefined = undefined;
   helpGif: any = undefined;
+  typeSelected: string = "Manual";
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
     private title: Title,
     private alert: AlertController,
-    private misc: MiscService
+    private misc: MiscService,
+    public char: CharacterService,
+    private nav: NavController
   ) {
     this.serverSide();
   }
@@ -167,6 +170,18 @@ export class GearComparePage {
       }]
     });
     alert.present();
+  }
+
+  async goMyChar(){
+    this.nav.navigateForward('/my-char');
+  }
+
+  segmentChanged(event:any){
+    this.typeSelected = event.detail.value;
+  }
+
+  async reloadChar(){
+    await this.char.loadStat(this.char.charId);
   }
 
   async showHelp(section:any){

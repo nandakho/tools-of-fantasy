@@ -13,6 +13,23 @@ ion-header {
 
 ion-content {
     --background: var(--ion-color-dark-shade);
+    ion-segment {
+        --background: var(--ion-color-dark-tint);
+        border: 1px solid var(--ion-color-medium-shade);
+        border-radius: 10px;
+        padding: 3px;
+        margin: 0px 10px;
+        margin-bottom: 10px;
+        ion-segment-button {
+            margin: 0px;
+            margin-bottom: 2px;
+            --color: var(--ion-color-warning);
+        }
+        ion-segment-button::part(indicator-background) {
+            background: rgba(var(--ion-color-warning-rgb), 0.1);
+            border: 1px solid var(--ion-color-warning);
+        }
+    }    
 }
 
 ion-card {
@@ -250,6 +267,23 @@ ion-row.equip {
                     }
                 }
             }
+        }
+    }
+}
+
+a.link {
+    color: var(--ion-color-warning);
+    cursor: pointer;
+}
+
+ion-col.justify-mid {
+    text-align: center;
+    ion-item {
+        border: 1px solid var(--ion-color-medium);
+        border-radius: 10px;
+        ion-select::part(label) {
+            color: var(--ion-color-warning);
+            font-weight: bolder;
         }
     }
 }

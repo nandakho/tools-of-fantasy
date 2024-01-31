@@ -14,107 +14,150 @@
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
-      <ion-card>
-        <ion-card-header class="stats">
-          <ion-card-title>
-            Your Stats <ion-icon name="help-circle-outline" (click)="showHelp('stats')"></ion-icon>
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-label class="subtitle">Input your stat below</ion-label>
-          <ion-list>
-            <ion-item lines="none" class="ion-text-wrap">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-button fill="outline" (click)="changeElement()" [ngClass]="'Element_'+elementSelected">
-                      <ion-avatar slot="start"><img [src]="'assets/icon/elements/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
-                  <ion-col size="auto" class="plus_sign">+</ion-col>
-                  <ion-col size="5"><ion-input type="number" label="Bonus Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
+      <ion-segment mode="ios" [value]="typeSelected" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="Manual">
+          <ion-label>Manual</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Auto">
+          <ion-label>From My Character</ion-label>
+        </ion-segment-button>
+      </ion-segment>
     </ion-row>
-    <ion-row>
-      <ion-card>
-        <ion-card-header class="eqinfo">
-          <ion-card-title>
-            Equipment Info <ion-icon name="help-circle-outline" (click)="showHelp('eqinfo')"></ion-icon>
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-label class="subtitle">Input equipment basic stat and enhancement below</ion-label>
-          <ion-list>
-            <ion-item lines="none" class="ion-text-wrap">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-button class="gear" fill="outline" (click)="changeGear()" [ngClass]="'Element_'+elementSelected">
-                      <ion-avatar slot="start"><img [src]="'assets/icon/equipments/'+gearSelected.type+' '+gearSelected.rarity+'.png'"/></ion-avatar>{{gearSelected.type}}
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
-                  <ion-col size="auto" class="plus_sign">+</ion-col>
-                  <ion-col size="5"><ion-input type="number" label="Enhancement" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.enhanceAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="auto"><ion-input type="number" label="Enhancement Unlocked (Attack)" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-row>
-    <ion-row class="equip">
-      <ion-card class="container">
-        <ion-card-header>
-          <ion-card-title>Let's Compare!</ion-card-title>
-          <div class="btn-grp">
-            <ion-button *ngIf="equipment.length>0" color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare()"><ion-icon name="share-social-outline"></ion-icon></ion-button>
-            <ion-button *ngIf="equipment.length>0" color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(false)"><ion-icon name="link-outline"></ion-icon></ion-button>
-            <ion-button color="warning" class="btn add-btn" fill="outline" size="small" (click)="addEquipment()"><ion-icon name="add-circle-outline"></ion-icon>Add</ion-button>
-          </div>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-radio-group [allowEmptySelection]="true" [(ngModel)]="equipped" (ionChange)="changeEquipped()">
-            <ion-card *ngFor="let e of equipment; let i=index">
-              <ion-card-header>
-                <ion-card-title>Equip {{i+1}}</ion-card-title>
-                  <ion-button color="danger" class="btn del-btn" fill="outline" size="small" (click)="removeEquipment(i)"><ion-icon name="remove-circle-outline"></ion-icon>Remove</ion-button>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list>
-                  <ion-item lines="none" class="ion-text-wrap">
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col size="auto"><ion-input type="number" label="Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.attack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
-                        <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
-                        <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
-                      </ion-row>
-                      <ion-row>
-                        <ion-col size="auto"><ion-radio color="warning" labelPlacement="end" [value]="i">Equipped</ion-radio></ion-col>
-                        <ion-col size="auto"><ion-input type="text" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [value]="e.calculated.base+' + '+e.calculated.percent+' = '+e.calculated.total" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
-                        <ion-col size="auto"><ion-input type="text" [label]="'Attack Gained (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [value]="e.calculated.gain" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-item>
-                </ion-list>
-              </ion-card-content>
-            </ion-card>
-          </ion-radio-group>
-        </ion-card-content>
-      </ion-card>
-    </ion-row>
+    <div *ngIf="typeSelected=='Manual'">
+      <ion-row>
+        <ion-card>
+          <ion-card-header class="stats">
+            <ion-card-title>
+              Your Stats <ion-icon name="help-circle-outline" (click)="showHelp('stats')"></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label class="subtitle">Input your stat below</ion-label>
+            <ion-list>
+              <ion-item lines="none" class="ion-text-wrap">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-button fill="outline" (click)="changeElement()" [ngClass]="'Element_'+elementSelected">
+                        <ion-avatar slot="start"><img [src]="'assets/icon/elements/Element_'+elementSelected+'.png'"/></ion-avatar>{{elementSelected}} Attack
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
+                    <ion-col size="auto" class="plus_sign">+</ion-col>
+                    <ion-col size="5"><ion-input type="number" label="Bonus Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="yourStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row>
+        <ion-card>
+          <ion-card-header class="eqinfo">
+            <ion-card-title>
+              Equipment Info <ion-icon name="help-circle-outline" (click)="showHelp('eqinfo')"></ion-icon>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label class="subtitle">Input equipment basic stat and enhancement below</ion-label>
+            <ion-list>
+              <ion-item lines="none" class="ion-text-wrap">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-button class="gear" fill="outline" (click)="changeGear()" [ngClass]="'Element_'+elementSelected">
+                        <ion-avatar slot="start"><img [src]="'assets/icon/equipments/'+gearSelected.type+' '+gearSelected.rarity+'.png'"/></ion-avatar>{{gearSelected.type}}
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="5"><ion-input type="number" label="Base Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.baseAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
+                    <ion-col size="auto" class="plus_sign">+</ion-col>
+                    <ion-col size="5"><ion-input type="number" label="Enhancement" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.enhanceAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="auto"><ion-input type="number" label="Enhancement Unlocked (Attack)" labelPlacement="stacked" placeholder="0" [(ngModel)]="sharedStats.bonusAtk" (ionInput)="recalcEquip('all')"></ion-input></ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row class="equip">
+        <ion-card class="container">
+          <ion-card-header>
+            <ion-card-title>Let's Compare!</ion-card-title>
+            <div class="btn-grp">
+              <ion-button *ngIf="equipment.length>0" color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare()"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+              <ion-button *ngIf="equipment.length>0" color="warning" class="btn share-btn" fill="outline" size="small" (click)="urlShare(false)"><ion-icon name="link-outline"></ion-icon></ion-button>
+              <ion-button color="warning" class="btn add-btn" fill="outline" size="small" (click)="addEquipment()"><ion-icon name="add-circle-outline"></ion-icon>Add</ion-button>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-radio-group [allowEmptySelection]="true" [(ngModel)]="equipped" (ionChange)="changeEquipped()">
+              <ion-card *ngFor="let e of equipment; let i=index">
+                <ion-card-header>
+                  <ion-card-title>Equip {{i+1}}</ion-card-title>
+                    <ion-button color="danger" class="btn del-btn" fill="outline" size="small" (click)="removeEquipment(i)"><ion-icon name="remove-circle-outline"></ion-icon>Remove</ion-button>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-list>
+                    <ion-item lines="none" class="ion-text-wrap">
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="auto"><ion-input type="number" label="Attack" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.attack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
+                          <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttack" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
+                          <ion-col size="auto"><ion-input type="number" [label]="elementSelected+' Attack %'" labelPlacement="stacked" placeholder="0" [(ngModel)]="e.eleAttackPercent" (ionInput)="recalcEquip(i)"></ion-input></ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="auto"><ion-radio color="warning" labelPlacement="end" [value]="i">Equipped</ion-radio></ion-col>
+                          <ion-col size="auto"><ion-input type="text" [label]="'Total '+elementSelected+' Attack (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [value]="e.calculated.base+' + '+e.calculated.percent+' = '+e.calculated.total" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
+                          <ion-col size="auto"><ion-input type="text" [label]="'Attack Gained (Calculated)'" labelPlacement="stacked" placeholder="0" readonly [value]="e.calculated.gain" [ngClass]="'result Element_'+elementSelected"></ion-input></ion-col>
+                        </ion-row>
+                      </ion-grid>
+                    </ion-item>
+                  </ion-list>
+                </ion-card-content>
+              </ion-card>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </div>
+    <div *ngIf="typeSelected=='Auto'">
+      <ion-row>
+        <ion-card>
+          <ion-card-header class="stats">
+            <ion-card-title>Your Character</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label class="subtitle">Edit in <a class="link" (click)="goMyChar()">My Character</a></ion-label>
+            <ion-list>
+              <ion-item lines="none" class="ion-text-wrap">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12" class="justify-mid" *ngIf="char.charAvailable.length>0">
+                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Selected Character" [(ngModel)]="char.charId">
+                        <ion-select-option *ngFor="let c of char.charAvailable" [value]="c.id">{{[c.name??'No Name',c.uid??'Empty UID'].join(' - ')}}</ion-select-option>
+                      </ion-select>
+                    </ion-col>
+                    <ion-col size="12" class="justify-mid" *ngIf="char.charAvailable.length==0">
+                      <ion-label>No character available!<br>Configure it first <a class="link" (click)="goMyChar()">over here</a></ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row *ngIf="char.charId!=''">
+        Hai
+      </ion-row>
+    </div>
   </ion-grid>
 </ion-content>
