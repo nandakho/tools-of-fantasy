@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
+import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
 
 @Component({
   selector: 'app-my-char',
@@ -70,10 +71,9 @@ export class MyCharPage {
     ctx.strokeStyle = "#000000";
     ctx.strokeText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
     ctx.fillText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
-    let img = (await (await fetch(`${canvasElement.toDataURL('image/jpeg')}`)).blob());
-    let imgjson = new Blob([img,`tof.nandakho.my.id:${JSON.stringify(this.char.characterInfo)}`],{type:'image/jpeg'});
-    const url = window.URL.createObjectURL(imgjson);
-    this.download(url,`${this.char.generateTimestamp()}.jpg`);
+    let strData = this.misc.encodeString(JSON.stringify(this.char.characterInfo));
+    const imgjson = addMetadataFromBase64DataURI(canvasElement.toDataURL('image/png'),'tof.nandakho.my.id',strData);
+    this.download(imgjson,`${this.char.generateTimestamp()}.png`);
   }
 
   download(what:string,name:string){
@@ -105,11 +105,21 @@ export class MyCharPage {
     var input = document.createElement('input');
     input.type = 'file';
     input.onchange = async (_) => { 
-      var fileread = ((await input.files?.item(0)?.text())??"").split("tof.nandakho.my.id:");
-      if(fileread?.length==2){
-        await this.char.loadStat("",fileread[1]);
-      } else {
-        this.misc.showToast(`Unrecognized file!`);
+      const fr = new FileReader();
+      const item = await input.files?.item(0);
+      if(item!=null){
+        fr.readAsArrayBuffer(item);
+        fr.onload = async (e) =>{
+          const loaded = e?.target?.result;
+          if(loaded!=null){
+            const dataArray = new Uint8Array(loaded as ArrayBuffer);
+            const metadata = getMetadata(dataArray,"tof.nandakho.my.id");
+            if(metadata){
+              const decoded = this.misc.decodeString(metadata);
+              await this.char.loadStat("",decoded);
+            }
+          }
+        }
       }
     }
     input.click();

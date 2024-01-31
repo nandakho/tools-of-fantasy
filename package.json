@@ -37,6 +37,7 @@
     "@nguniversal/express-engine": "^16.2.0",
     "express": "^4.15.2",
     "ionicons": "^7.0.0",
+    "meta-png": "^1.0.6",
     "rxjs": "~7.8.0",
     "swiper": "^10.0.4",
     "tslib": "^2.3.0",

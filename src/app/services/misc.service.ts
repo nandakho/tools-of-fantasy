@@ -30,4 +30,15 @@ export class MiscService {
     newToast.style.opacity = "100%";
     return Promise.resolve();
   }
+
+  decodeString(str:string):string{
+    const d = new TextDecoder();
+    const arr = Uint8Array.from(str.split(",").map(x=>parseInt(x)));
+    return d.decode(arr);
+  }
+
+  encodeString(str:string):string{
+    const e = new TextEncoder();
+    return Array.from(e.encode(str)).join(",");
+  }
 }
