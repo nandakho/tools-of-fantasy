@@ -21,6 +21,7 @@ export class MyCharPage {
   as = augStatList;
   ts = titanStatList;
   al = augAvailable;
+  saving:boolean = false;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
@@ -57,23 +58,192 @@ export class MyCharPage {
   }
 
   async share(){
+    this.saving = true;
+    const imgSize = {
+      width: 1920,
+      height: 1080
+    }
+    const colors = {
+      white:"#ffffff",
+      black:"#000000",
+      warning:"#ffc409",
+      medium:"#92949c",
+      dark:"#1e2023",
+    }
+    const fontSize = (size:number) => {
+      ctx.font = `bold ${size}px Sans-serif`;
+    }
+    const color = {
+      fill: (color:string) => {
+        ctx.fillStyle = color;
+      },
+      stroke: (color:string) => {
+        ctx.strokeStyle = color;
+      }
+    }
+    const strokedText = (text:string,lineWidth:number,x:number,y:number) => {
+      ctx.lineWidth = lineWidth;
+      ctx.lineJoin = "miter";
+	    ctx.miterLimit = 2;
+      color.stroke(colors.medium);
+      color.fill(colors.white);
+      ctx.strokeText(text, x, y);
+      ctx.fillText(text, x, y);
+    }
+    const insertIcon = async (src:string,size:{zoom?:number,w?:number,h?:number},x:number,y:number) => {
+      let drawing = new Image();
+      drawing.src = src;
+      await drawing.decode();
+      let newW;
+      let newH;
+      if(size.w) newW=size.w;
+      if(size.h) newH=size.h;
+      if(size.zoom){
+        newW = drawing.width*size.zoom;
+        newH = drawing.height*size.zoom;
+      }
+      ctx.drawImage(drawing,x,y,newW,newH);
+    }
+    const insertBorder = (w:number,h:number,x:number,y:number) => {
+      ctx.roundRect(x, y, w, h, 5);
+      ctx.stroke();
+    }
     var canvasElement = this.editCanvas.nativeElement;
     let ctx = canvasElement.getContext('2d');
-    ctx.canvas.width  = 768;
-    ctx.canvas.height = 432;
-    let drawing = new Image();
-    drawing.src = "assets/background/tempshare.jpg";
-    await drawing.decode();
-    ctx.drawImage(drawing,0,0);
-    ctx.font = `bold 32px sans-serif`;
-    ctx.lineWidth = 2;
-    ctx.fillStyle = "#ffffff";
-    ctx.strokeStyle = "#000000";
-    ctx.strokeText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
-    ctx.fillText(`${this.char.characterInfo.name} ${this.char.characterInfo.uid}`, 5, 30);
+    ctx.canvas.width  = imgSize.width;
+    ctx.canvas.height = imgSize.height;
+    //full background
+    color.fill(colors.dark);
+    ctx.fillRect(0, 0, imgSize.width, imgSize.height);
+    //nickname
+    fontSize(72);
+    strokedText(`${this.char.characterInfo.name}`,8, 10, 65);
+    //level & supre
+    fontSize(48);
+    strokedText(`Level: ${this.char.characterInfo.level}`, 8, 10, 140);
+    if(this.char.characterInfo.supre!=null){
+      await insertIcon(`assets/icon/suppressors/${this.char.characterInfo.supre}.png`, {zoom:1.5}, 310, 100);
+    }
+    //server & uid
+    fontSize(32);
+    const suid = `Server: ${this.char.characterInfo.server??'-'}   UID: ${this.char.characterInfo.uid??'-'}`
+    const suidMetrics = ctx.measureText(suid);
+    strokedText(suid, 6, (imgSize.width-suidMetrics.width-12), 1067);
+    //unlocked - shots&simul
+    fontSize(32);
+    strokedText(`Shots:`, 6, 10, 210);
+    await insertIcon(`assets/icon/items/PowerShot.png`, {zoom:0.4}, 110, 145);
+    strokedText(`x ${this.char.characterInfo.shots.powerShot}`, 6, 200, 225);
+    await insertIcon(`assets/icon/items/SourceShot.png`, {zoom:0.4}, 260, 145);
+    strokedText(`x ${this.char.characterInfo.shots.sourceShot}`, 6, 350, 225);
+    fontSize(32);
+    strokedText(`Simulacra:`, 6, 10, 280);
+    strokedText(`4500: ${this.char.characterInfo.simul[4500]}x   5500: ${this.char.characterInfo.simul[5500]}x   7000: ${this.char.characterInfo.simul[7000]}x`, 6, 20, 320);
+    //weapons & matrixs
+    let widx = 0;
+    for(let w of this.char.characterInfo.weapon){
+      ctx.lineWidth = 4;
+      insertBorder(200,380,20+(widx*200)+(widx*10),380);
+      if(w.name!=null){
+        await insertIcon(`assets/icon/weapons/${w.name}.png`, {zoom:0.6}, 20+(widx*200)+(widx*10), 380);
+        await insertIcon(`assets/icon/elements/Element_${this.getEle(widx)}.png`, {zoom:0.8}, 22+(widx*200)+(widx*10), 382);
+        await insertIcon(`assets/icon/weapons/Reso_${this.getReso(widx)}.png`, {zoom:0.8}, 68+(widx*200)+(widx*10), 382);
+        fontSize(24);
+        strokedText(`${w.level} (${w.advance}★)`, 4, 120+(widx*200)+(widx*10), 405);
+        const matEmo = w.matrix.Emotion;
+        const matMind = w.matrix.Mind;
+        const matFaith = w.matrix.Faith;
+        const matMemory = w.matrix.Memory;
+        if(matEmo.name!=null){
+          await insertIcon(`assets/icon/matrixs/${matEmo.name}.png`, {zoom:0.25}, 15+(widx*200)+(widx*10), 520);
+          fontSize(16);
+          strokedText(`${matEmo.level} (${matEmo.advance}★)`, 2, 48+(widx*200)+(widx*10), 638);
+        } else {
+          await insertIcon(`assets/icon/equipments/null.svg`, {zoom:0.5}, 50+(widx*200)+(widx*10), 553);
+        }
+        if(matMind.name!=null){
+          await insertIcon(`assets/icon/matrixs/${matMind.name}.png`, {zoom:0.25}, 95+(widx*200)+(widx*10), 520);
+          fontSize(16);
+          strokedText(`${matMind.level} (${matMind.advance}★)`, 2, 132+(widx*200)+(widx*10), 638);
+        } else {
+          await insertIcon(`assets/icon/equipments/null.svg`, {zoom:0.5}, 115+(widx*200)+(widx*10), 553);
+        }
+        if(matFaith.name!=null){
+          await insertIcon(`assets/icon/matrixs/${matFaith.name}.png`, {zoom:0.25}, 15+(widx*200)+(widx*10), 630);
+          fontSize(16);
+          strokedText(`${matFaith.level} (${matFaith.advance}★)`, 2, 48+(widx*200)+(widx*10), 748);
+        } else {
+          await insertIcon(`assets/icon/equipments/null.svg`, {zoom:0.5}, 35+(widx*200)+(widx*10), 663);
+        }
+        if(matMemory.name!=null){
+          await insertIcon(`assets/icon/matrixs/${matMemory.name}.png`, {zoom:0.25}, 95+(widx*200)+(widx*10), 630);
+          fontSize(16);
+          strokedText(`${matMemory.level} (${matMemory.advance}★)`, 2, 132+(widx*200)+(widx*10), 748);
+        } else {
+          await insertIcon(`assets/icon/equipments/null.svg`, {zoom:0.5}, 115+(widx*200)+(widx*10), 663);
+        }
+      } else {
+        await insertIcon(`assets/icon/equipments/null.svg`, {zoom:1.2}, 30+(widx*200)+(widx*10), 480);
+      }
+      widx++;
+    }
+    //equipments
+    let gidx = 0;
+    for(let gtype of this.eqOrder){
+      ctx.lineWidth = 2;
+      insertBorder(220,84,670,14+(gidx*84)+(gidx*4));
+      const g = this.char.characterInfo.gear[gtype as gearTypes];
+      if(g.rarity!=null){
+        fontSize(16);
+        strokedText(`${g.enhance}`, 2, 673, 31+(gidx*84)+(gidx*4));
+        await insertIcon(`assets/icon/equipments/${gtype} ${g.rarity}.png`,{zoom:0.3}, 670, 24+(gidx*84)+(gidx*4));
+        let ridx = 0;
+        let hrd = 23;
+        if(g.rarity=="5") hrd = 39;
+        for(let r of g.random){
+          if(r.type!=null){
+            await insertIcon(`assets/icon/stats/${r.type}.png`,{zoom:0.8}, 740+(ridx*34)+(ridx*2), hrd+(gidx*84)+(gidx*4));
+          } else {
+            await insertIcon(`assets/icon/equipments/null.svg`,{zoom:0.2}, 740+(ridx*42)+(ridx*2), (hrd+4)+(gidx*84)+(gidx*4));
+          }
+          ridx++;
+        }
+        let aidx = 0;
+        if(g.rarity!="5"){
+          for(let a of g.augment){
+            if(a.type!=null){
+              await insertIcon(`assets/icon/stats/${a.type}.png`,{zoom:0.8}, 740+(aidx*34)+(aidx*2), (hrd+34)+(gidx*84)+(gidx*4));
+            } else {
+              await insertIcon(`assets/icon/equipments/null.svg`,{zoom:0.2}, 740+(aidx*42)+(aidx*2), (hrd+38)+(gidx*84)+(gidx*4));
+            }
+            aidx++;
+          }
+          if(g.rarity=="Titan"){
+            await insertIcon(`assets/icon/stats/${g.rare.type}.png`,{zoom:0.8}, 740+(aidx*34)+(aidx*2), (hrd+34)+(gidx*84)+(gidx*4));
+          }
+        }
+      } else {
+        await insertIcon(`assets/icon/equipments/null.svg`, {zoom:0.45}, 747, 24+(gidx*84)+(gidx*4));
+        await insertIcon(`assets/icon/equipments/${gtype}.png`, {zoom:0.7}, 747, 24+(gidx*84)+(gidx*4));
+      }
+      gidx++;
+    }
+    //stats
+    //qr
+    await insertIcon(`assets/icon/siteqr.png`, {zoom:0.6}, 10, 895);
+    fontSize(16);
+    strokedText(`This image contains Metadata, load it in the site to view more detailed info!`, 2, 10, 800);
+    strokedText(`Notes:`, 2, 10, 830);
+    strokedText(`Some media sharing apps 'might' strip image Metadata`, 2, 10, 850);
+    strokedText(`It is advised to send as 'files' if the option is available`, 2, 10, 870);
+    fontSize(24);
+    strokedText(`Generate your own at:`, 2, 200, 1039);
+    strokedText(`https://tof.nandakho.my.id`, 2, 200, 1067);
+    console.log(this.char.characterInfo);
     let strData = this.misc.encodeString(JSON.stringify(this.char.characterInfo));
     const imgjson = addMetadataFromBase64DataURI(canvasElement.toDataURL('image/png'),'tof.nandakho.my.id',strData);
     this.download(imgjson,`${this.char.generateTimestamp()}.png`);
+    this.saving = false;
   }
 
   download(what:string,name:string){
@@ -89,16 +259,15 @@ export class MyCharPage {
       backdropDismiss: true,
       mode: "ios",
       buttons: [{
+        text:'Keep'
+      },{
         text:'Delete',
         handler: async ()=>{
           await this.char.delChar(this.char.charId);
         }
-      },{
-        text:'Keep'
       }]
     });
     alert.present();
-    
   }
 
   async loadData(){
@@ -117,6 +286,8 @@ export class MyCharPage {
             if(metadata){
               const decoded = this.misc.decodeString(metadata);
               await this.char.loadStat("",decoded);
+            } else {
+              this.misc.showToast("Unrecognized file!");
             }
           }
         }

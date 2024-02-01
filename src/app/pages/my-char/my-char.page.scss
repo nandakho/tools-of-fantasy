@@ -532,6 +532,12 @@ div.char-select {
         div.char-btn {
             padding-left: 10px;
             padding-right: 10px;
+            .export-btn {
+                ion-spinner {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
         }
     }
     ion-list {

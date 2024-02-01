@@ -27,7 +27,7 @@
                     <ion-col class="btn">
                       <div class="char-btn">
                         <ion-button class="del-btn" *ngIf="char.charId!=''" (click)="delChar()" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
-                        <ion-button class="export-btn" *ngIf="char.charId!=''" (click)="share()" color="warning"><ion-icon name="save-outline"></ion-icon></ion-button>
+                        <ion-button class="export-btn" *ngIf="char.charId!=''" [disabled]="saving" (click)="share()" color="warning"><ion-icon *ngIf="!saving" name="save-outline"></ion-icon><ion-spinner *ngIf="saving" name="crescent"></ion-spinner></ion-button>
                         <ion-button class="import-btn" (click)="loadData()" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
                       </div>
                     </ion-col>
