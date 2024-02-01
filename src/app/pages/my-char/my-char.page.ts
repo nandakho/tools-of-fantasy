@@ -281,13 +281,17 @@ export class MyCharPage {
         fr.onload = async (e) =>{
           const loaded = e?.target?.result;
           if(loaded!=null){
-            const dataArray = new Uint8Array(loaded as ArrayBuffer);
-            const metadata = getMetadata(dataArray,"tof.nandakho.my.id");
-            if(metadata){
-              const decoded = this.misc.decodeString(metadata);
-              await this.char.loadStat("",decoded);
-            } else {
-              this.misc.showToast("Unrecognized file!");
+            try {
+              const dataArray = new Uint8Array(loaded as ArrayBuffer);
+              const metadata = getMetadata(dataArray,"tof.nandakho.my.id");
+              if(metadata){
+                const decoded = this.misc.decodeString(metadata);
+                await this.char.loadStat("",decoded);
+              } else {
+                this.misc.showToast("Metadata not found!");
+              }
+            } catch (err) {
+              this.misc.showToast('Unrecognized file!');
             }
           }
         }
