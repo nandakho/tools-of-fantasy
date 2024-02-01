@@ -1201,7 +1201,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "VoltAttackPercent":15
+                    "VoltAttackPercent":15,
+                    "VoltResistPercent":25
                 },
                 "Overrides":[]
             },
@@ -1213,7 +1214,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "FrostAttackPercent":15
+                    "FrostAttackPercent":15,
+                    "FrostResistPercent":25
                 },
                 "Overrides":[]
             }
@@ -1247,7 +1249,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "FlameAttackPercent":15
+                    "FlameAttackPercent":15,
+                    "FlameResistPercent":25
                 },
                 "Overrides":[]
             },
@@ -1259,7 +1262,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "PhysicalAttackPercent":15
+                    "PhysicalAttackPercent":15,
+                    "PhysicalResistPercent":25
                 },
                 "Overrides":[]
             }
@@ -1293,7 +1297,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "FrostAttackPercent":15
+                    "FrostAttackPercent":15,
+                    "FrostResistPercent":25
                 },
                 "Overrides":[]
             },
@@ -1305,7 +1310,8 @@
                     "Number":2
                 },
                 "Boost": {
-                    "VoltAttackPercent":15
+                    "VoltAttackPercent":15,
+                    "VoltResistPercent":25
                 },
                 "Overrides":[]
             }
