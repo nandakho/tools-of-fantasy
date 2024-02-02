@@ -160,3 +160,9 @@ ion-toast::part(message){
 .toast-wrapper{
     background: none;
 }
+
+ion-alert {
+    .del-btn {
+        color: var(--ion-color-danger) !important;
+    }
+}

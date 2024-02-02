@@ -194,15 +194,17 @@ export class MyCharPage {
       insertBorder(220,84,670,14+(gidx*84)+(gidx*4));
       const g = this.char.characterInfo.gear[gtype as gearTypes];
       if(g.rarity!=null){
-        fontSize(16);
-        strokedText(`${g.enhance}`, 2, 673, 31+(gidx*84)+(gidx*4));
+        fontSize(24);
+        strokedText(`${g.enhance}`, 2, 673, 36+(gidx*84)+(gidx*4));
         await insertIcon(`assets/icon/equipments/${gtype} ${g.rarity}.png`,{zoom:0.3}, 670, 24+(gidx*84)+(gidx*4));
         let ridx = 0;
-        let hrd = 23;
-        if(g.rarity=="5") hrd = 39;
+        let hrd = 26;
+        if(g.rarity=="5") hrd = 42;
         for(let r of g.random){
           if(r.type!=null){
-            await insertIcon(`assets/icon/stats/${r.type}.png`,{zoom:0.8}, 740+(ridx*34)+(ridx*2), hrd+(gidx*84)+(gidx*4));
+            await insertIcon(`assets/icon/stats/${r.type}.png`,{zoom:0.7}, 740+(ridx*34)+(ridx*2), hrd+(gidx*84)+(gidx*4));
+            fontSize(10);
+            strokedText(`${r.val}`, 1, 740+(ridx*34)+(ridx*2), hrd+(gidx*84)+(gidx*4));
           } else {
             await insertIcon(`assets/icon/equipments/null.svg`,{zoom:0.2}, 740+(ridx*42)+(ridx*2), (hrd+4)+(gidx*84)+(gidx*4));
           }
@@ -212,14 +214,18 @@ export class MyCharPage {
         if(g.rarity!="5"){
           for(let a of g.augment){
             if(a.type!=null){
-              await insertIcon(`assets/icon/stats/${a.type}.png`,{zoom:0.8}, 740+(aidx*34)+(aidx*2), (hrd+34)+(gidx*84)+(gidx*4));
+              await insertIcon(`assets/icon/stats/${a.type}.png`,{zoom:0.7}, 740+(aidx*34)+(aidx*2), (hrd+40)+(gidx*84)+(gidx*4));
+              fontSize(10);
+              strokedText(`${a.val}`, 1, 740+(aidx*34)+(aidx*2), (hrd+40)+(gidx*84)+(gidx*4));
             } else {
-              await insertIcon(`assets/icon/equipments/null.svg`,{zoom:0.2}, 740+(aidx*42)+(aidx*2), (hrd+38)+(gidx*84)+(gidx*4));
+              await insertIcon(`assets/icon/equipments/null.svg`,{zoom:0.2}, 740+(aidx*42)+(aidx*2), (hrd+44)+(gidx*84)+(gidx*4));
             }
             aidx++;
           }
           if(g.rarity=="Titan"){
-            await insertIcon(`assets/icon/stats/${g.rare.type}.png`,{zoom:0.8}, 740+(aidx*34)+(aidx*2), (hrd+34)+(gidx*84)+(gidx*4));
+            await insertIcon(`assets/icon/stats/${g.rare.type}.png`,{zoom:0.7}, 740+(aidx*34)+(aidx*2), (hrd+40)+(gidx*84)+(gidx*4));
+            fontSize(10);
+            strokedText(`${g.rare.val}`, 1, 740+(aidx*34)+(aidx*2), (hrd+40)+(gidx*84)+(gidx*4));
           }
         }
       } else {
@@ -229,6 +235,162 @@ export class MyCharPage {
       gidx++;
     }
     //stats
+    let statOffset = {
+      x: 60,
+      y: 95,
+      idx: 0
+    }
+    ctx.lineWidth = 4;
+    insertBorder(940,990,statOffset.x+890,statOffset.y+(-65));
+    fontSize(36);
+    strokedText(`Stats`, 4, statOffset.x+910, statOffset.y+(-14));
+    strokedText(`Specials`, 4, statOffset.x+1410, statOffset.y+(-14));
+    await insertIcon(`assets/icon/stats/HP.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`HP`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.hp}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Crit.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Crit`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const scrit = ctx.measureText(this.crit);
+    strokedText(`${this.crit}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(Equals ${this.critPCalc}%)`, 2, 970+(scrit.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/CritPercent.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Crit Rate`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const scritp = ctx.measureText(`${this.critPercent}%`);
+    strokedText(`${this.critPercent}%`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(Equals ${this.critBCalc})`, 2, 970+(scritp.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/PhysicalAttack.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Physical Attack`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const spa = ctx.measureText(`${this.physicalAtk}`);
+    strokedText(`${this.physicalAtk}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(${this.physicalAtkB} + ${this.physicalAtkP}) (Damage: ${this.physicalDam}%)`, 2, 970+(spa.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/FlameAttack.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Flame Attack`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const spfl = ctx.measureText(`${this.flameAtk}`);
+    strokedText(`${this.flameAtk}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(${this.flameAtkB} + ${this.flameAtkB}) (Damage: ${this.flameDam}%)`, 2, 970+(spfl.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/FrostAttack.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Frost Attack`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const spfr = ctx.measureText(`${this.frostAtk}`);
+    strokedText(`${this.frostAtk}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(${this.frostAtkB} + ${this.frostAtkP}) (Damage: ${this.frostDam}%)`, 2, 970+(spfr.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/VoltAttack.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Volt Attack`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const spv = ctx.measureText(`${this.voltAtk}`);
+    strokedText(`${this.voltAtk}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(${this.voltAtkB} + ${this.voltAtkP}) (Damage: ${this.voltDam}%)`, 2, 970+(spv.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/AlterAttack.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Altered Attack`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    const spal = ctx.measureText(`${this.alterAtk}`);
+    strokedText(`${this.alterAtk}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    fontSize(16);
+    strokedText(`(${this.alterAtkB} + ${this.alterAtkP})`, 2, 970+(spal.width+10)+statOffset.x, 58+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/PhysicalResist.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Physical Resist`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.physicalRes}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/FlameResist.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Flame Resist`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.flameRes}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/FrostResist.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Frost Resist`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.frostRes}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/VoltResist.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Volt Resist`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.voltRes}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/AlterResist.png`, {zoom:1.5}, 900+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Altered Resist`, 2, 970+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.alterRes}`, 2, 970+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx = 0;
+    //titan special
+    await insertIcon(`assets/icon/stats/Block.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Block`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanBlock}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Weak.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Weak Point Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanWeak}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Lifesteal.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Lifesteal`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanLifesteal}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Recovery.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`HP Recovery`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanRecovery}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Delay.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Delay`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanDelay}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Normal.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Normal Attack Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanNormal}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Dodge.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Dodge Attack Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanDodge}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Skill.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Skill Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanSkill}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Discharge.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Discharge Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanDischarge}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Damage.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Damage Boost`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanDamage}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Reduction.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Damage Reduction`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanReduction}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
+    statOffset.idx++;
+    await insertIcon(`assets/icon/stats/Heal.png`, {zoom:1.5}, 1400+statOffset.x, 10+(statOffset.idx*70)+statOffset.y);
+    fontSize(24);
+    strokedText(`Increased Healing`, 2, 1470+statOffset.x, 36+(statOffset.idx*70)+statOffset.y);
+    strokedText(`${this.titanHeal}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
     //qr
     await insertIcon(`assets/icon/siteqr.png`, {zoom:0.6}, 10, 895);
     fontSize(16);
@@ -239,7 +401,6 @@ export class MyCharPage {
     fontSize(24);
     strokedText(`Generate your own at:`, 2, 200, 1039);
     strokedText(`https://tof.nandakho.my.id`, 2, 200, 1067);
-    console.log(this.char.characterInfo);
     let strData = this.misc.encodeString(JSON.stringify(this.char.characterInfo));
     const imgjson = addMetadataFromBase64DataURI(canvasElement.toDataURL('image/png'),'tof.nandakho.my.id',strData);
     this.download(imgjson,`${this.char.generateTimestamp()}.png`);
@@ -262,6 +423,7 @@ export class MyCharPage {
         text:'Keep'
       },{
         text:'Delete',
+        cssClass: `del-btn`,
         handler: async ()=>{
           await this.char.delChar(this.char.charId);
         }
