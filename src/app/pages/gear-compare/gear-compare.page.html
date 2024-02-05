@@ -142,6 +142,7 @@
                   <ion-row>
                     <ion-col size="12" class="justify-mid" *ngIf="char.charAvailable.length>0">
                       <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Selected Character" [(ngModel)]="char.charId">
+                        <ion-select-option value="">Select Character</ion-select-option>
                         <ion-select-option *ngFor="let c of char.charAvailable" [value]="c.id">{{[c.name??'No Name',c.uid??'Empty UID'].join(' - ')}}</ion-select-option>
                       </ion-select>
                     </ion-col>
@@ -155,16 +156,327 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <ion-row *ngIf="char.charId!=''">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>To Be Added!</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-label class="subtitle">Coming soon...</ion-label>
-          </ion-card-content>
-        </ion-card>
-      </ion-row>
+      <div *ngIf="char.charId!=''">
+        <ion-row>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Equipment</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" class="changed-stat">Multi type compare</ion-toggle>
+              <ion-list *ngIf="multiType">
+                <ion-item lines="none" class="ion-text-wrap">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-row *ngFor="let eqType of eqOrder">
+                        <ion-col class="equipments">
+                          <div class="choosen-eq" *ngIf="curChar.gear[eqType].rarity!=null">
+                            <div class="choose">
+                              <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'%20'+curChar.gear[eqType].rarity+'.png'"></ion-img>
+                            </div>
+                            <div class="stats">
+                              <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
+                              <ion-item lines="none" class="body" *ngFor="let eq of curChar.gear[eqType].random; index as rIdx">
+                                <ion-img class="icon" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
+                                <ion-img class="icon" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                <ion-text [id]="'rand-'+eqType+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
+                                <ion-popover *ngIf="eq.type" [trigger]="'rand-'+eqType+'-'+rIdx+'val'" triggerAction="click">
+                                  <ng-template>
+                                    <ion-content class="popups">
+                                      <ion-text class="title">Change {{beautifyStatString(eq.type)}} Value</ion-text>
+                                      <ion-input type="number" [(ngModel)]="curChar.gear[eqType].random[rIdx].val"></ion-input>
+                                    </ion-content>
+                                  </ng-template>
+                                </ion-popover>
+                              </ion-item>
+                              <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
+                              <div *ngIf="curChar.gear[eqType].rarity!='5'">
+                                <ion-item lines="none" class="body" *ngFor="let eqa of curChar.gear[eqType].augment; index as arIdx">
+                                  <ion-img class="icon" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type!=null && (curChar.gear[eqType].rarity=='Augment'||curChar.gear[eqType].rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
+                                  <ion-img class="icon" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type==null || curChar.gear[eqType].rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                  <ion-text [id]="'randa-'+eqType+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
+                                  <ion-popover *ngIf="eqa.type" [trigger]="'randa-'+eqType+'-'+arIdx+'val'" triggerAction="click">
+                                    <ng-template>
+                                      <ion-content class="popups">
+                                        <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
+                                        <ion-input type="number" [(ngModel)]="curChar.gear[eqType].augment[arIdx].val"></ion-input>
+                                      </ion-content>
+                                    </ng-template>
+                                  </ion-popover>
+                                </ion-item>
+                              </div>
+                              <div *ngIf="curChar.gear[eqType].rarity=='5'">
+                                <ion-item lines="none" class="body-locked">
+                                  <ion-icon name="lock-closed" color="medium"></ion-icon>
+                                </ion-item>
+                              </div>
+                              <div *ngIf="curChar.gear[eqType].rarity=='Titan'">
+                                <ion-item lines="none" class="body">
+                                  <ion-img class="icon" (click)="eqtitanChange(eqType)" *ngIf="curChar.gear[eqType].rare.type!=null" [src]="'assets/icon/stats/'+curChar.gear[eqType].rare.type+'.png'"></ion-img>
+                                  <ion-img class="icon" (click)="eqtitanChange(eqType)" *ngIf="curChar.gear[eqType].rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                  <ion-text [id]="'rare-'+eqType">{{curChar.gear[eqType].rare.type?curChar.gear[eqType].rare.val:'-'}}</ion-text>
+                                  <ion-popover *ngIf="curChar.gear[eqType].rare.type!=null" [trigger]="'rare-'+eqType" triggerAction="click">
+                                    <ng-template>
+                                      <ion-content class="popups">
+                                        <ion-text class="title">Change {{beautifyStatString(curChar.gear[eqType].rare.type)}} Level</ion-text>
+                                        <ion-range color="warning" [(ngModel)]="curChar.gear[eqType].rare.val" [min]="1" [max]="3" [pin]="true"></ion-range>
+                                      </ion-content>
+                                    </ng-template>
+                                  </ion-popover>
+                                </ion-item>
+                              </div>
+                              <div *ngIf="curChar.gear[eqType].rarity=='Augment'">
+                                <ion-item lines="none" class="titan-locked">
+                                  <ion-icon name="lock-closed" color="medium"></ion-icon>
+                                </ion-item>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="null-eq" *ngIf="curChar.gear[eqType].rarity==null">
+                            <div (click)="eqChange(eqType)" class="eq-background-null">
+                              <ion-img [src]="'assets/icon/equipments/'+eqType+'.png'"></ion-img>
+                            </div>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+        <ion-row>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Stats (Calculated)</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="changedOnly" class="changed-stat">Show changed stats only</ion-toggle>
+              <ion-list class="calculated">
+                <ion-item *ngIf="!changedOnly" lines="none" class="ion-text-wrap">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/HP.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>HP</ion-text><br>
+                            <ion-text>{{hp}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Crit.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Crit</ion-text><br>
+                            <ion-text>{{crit}}</ion-text>
+                            <span class="tooltip">Against level <div class="highlight">{{curChar.level}}</div><br>Equal to <div class="highlight">{{critPCalc}}%</div></span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/PhysicalAttack.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Physical Attack</ion-text><br>
+                            <ion-text>{{physicalAtk}}</ion-text>
+                            <span class="tooltip"><div class="highlight">{{physicalAtkB}}</div> + <div class="highlight">{{physicalAtkP}}</div><br>Physical Damage: <div class="highlight">{{physicalDam}}%</div></span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/FlameAttack.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Flame Attack</ion-text><br>
+                            <ion-text>{{flameAtk}}</ion-text>
+                            <span class="tooltip"><div class="highlight">{{flameAtkB}}</div> + <div class="highlight">{{flameAtkP}}</div><br>Flame Damage: <div class="highlight">{{flameDam}}%</div></span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/FrostAttack.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Frost Attack</ion-text><br>
+                            <ion-text>{{frostAtk}}</ion-text>
+                            <span class="tooltip"><div class="highlight">{{frostAtkB}}</div> + <div class="highlight">{{frostAtkP}}</div><br>Frost Damage: <div class="highlight">{{frostDam}}%</div></span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/VoltAttack.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Volt Attack</ion-text><br>
+                            <ion-text>{{voltAtk}}</ion-text>
+                            <span class="tooltip"><div class="highlight">{{voltAtkB}}</div> + <div class="highlight">{{voltAtkP}}</div><br>Volt Damage: <div class="highlight">{{voltDam}}%</div></span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/AlterAttack.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Altered Attack</ion-text><br>
+                            <ion-text>{{alterAtk}}</ion-text>
+                            <span class="tooltip">Highest: <div class="highlight">{{eleHighest}}</div><br><div class="highlight">{{alterAtkB}}</div> + <div class="highlight">{{alterAtkP}}</div></span>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/CritPercent.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Crit Rate</ion-text><br>
+                            <ion-text>{{critPercent}}%</ion-text>
+                            <span class="tooltip">Against level <div class="highlight">{{curChar.level}}</div><br>Equal to <div class="highlight">{{critBCalc}}</div> Crit stat</span>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/PhysicalResist.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Physical Resistance</ion-text><br>
+                            <ion-text>{{physicalRes}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/FlameResist.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Flame Resistance</ion-text><br>
+                            <ion-text>{{flameRes}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/FrostResist.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Frost Resistance</ion-text><br>
+                            <ion-text>{{frostRes}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/VoltResist.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Volt Resistance</ion-text><br>
+                            <ion-text>{{voltRes}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/AlterResist.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Altered Resistance</ion-text><br>
+                            <ion-text>{{alterRes}}</ion-text>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Block.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Block</ion-text><br>
+                            <ion-text>{{titanBlock}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Weak.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Weak Point Damage Boost</ion-text><br>
+                            <ion-text>{{titanWeak}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Lifesteal.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Lifesteal</ion-text><br>
+                            <ion-text>{{titanLifesteal}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Recovery.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>HP Recovery</ion-text><br>
+                            <ion-text>{{titanRecovery}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Delay.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Delay</ion-text><br>
+                            <ion-text>{{titanDelay}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Normal.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Normal Attack Damage Boost</ion-text><br>
+                            <ion-text>{{titanNormal}}</ion-text>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Dodge.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Dodge Attack Damage Boost</ion-text><br>
+                            <ion-text>{{titanDodge}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Skill.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Skill Damage Boost</ion-text><br>
+                            <ion-text>{{titanSkill}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Discharge.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Discharge Damage Boost</ion-text><br>
+                            <ion-text>{{titanDischarge}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Damage.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Damage Boost</ion-text><br>
+                            <ion-text>{{titanDamage}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Reduction.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Damage Reduction</ion-text><br>
+                            <ion-text>{{titanReduction}}</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/Heal.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Increased Healing</ion-text><br>
+                            <ion-text>{{titanHeal}}</ion-text>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+                <ion-item *ngIf="changedOnly" lines="none" class="ion-text-wrap">
+                  <ion-grid class="stats">
+                    <ion-row>
+                      <ion-col *ngIf="changedStats.length==0">
+                        <ion-item lines="none" class="ion-text-wrap">
+                          <div class="stat-val">
+                            <ion-text><i>Nothing changed yet...</i></ion-text><br>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col *ngIf="changedStats.length>0">
+                        <ion-item *ngFor="let s of changedStats" lines="none" class="ion-text-wrap">
+                          <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>{{s.name}}</ion-text><br>
+                            <ion-text>{{s.val}}</ion-text>
+                          </div>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </div>
     </div>
   </ion-grid>
 </ion-content>

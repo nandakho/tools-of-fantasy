@@ -467,6 +467,7 @@ export class MyCharPage {
     this.char.characterInfo.weapon[index].advance = cStar==star?0:star;
     this.tempWeaponStar[index].star = star;
     this.tempWeaponStar[index].hovering = false;
+    this.saveChanges();
   }
 
   starWeaponHover(index:number,star:number){
@@ -552,6 +553,7 @@ export class MyCharPage {
     this.char.characterInfo.weapon[index].matrix[part].advance = cStar==star?0:star;
     this.tempMatrixStar[index][part].star = star;
     this.tempMatrixStar[index][part].hovering = false;
+    this.saveChanges();
   }
 
   starMatrixHover(mtype:string,index:number,star:number){
@@ -779,7 +781,7 @@ export class MyCharPage {
   }
 
   get hp() {
-    return Math.round(this.char.characterStat.getVal("HP"));
+    return Math.round(this.char.characterStat.getVal("HP")*(1+(this.char.characterStat.getVal("HPPercent")/100)));
   }
 
   get crit() {
