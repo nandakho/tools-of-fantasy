@@ -38,9 +38,11 @@ export class GearComparePage {
   changedOnly: boolean = false;
   changedStats: any[] = [];
   curChar: characterInfo = this.char.initCharacterInfo();
+  gearsCompare: any[] = [];
   curStat = new StatsService();
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   multiType: boolean = false;
+  singleType: gearTypes = "Helm";
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
@@ -69,11 +71,80 @@ export class GearComparePage {
       this.curStat.addVal(k as statTypes,(-v));
     }
     this.curStat.add(this.gears.calc(this.curChar.gear));
-    for(let [kk,vv] of Object.entries(this.char.characterStat.getAll())){
-      const cv = this.curStat.getVal(kk as statTypes);
-      if(cv!=vv){
-        console.log(`${kk} changed from ${vv} to ${cv}`);
-      }
+    if(this.hp!=this.hpOld){
+      this.changedStats.push({iconname:'HP',name:'HP',val:this.hp,increase:this.hp-this.hpOld});
+    }
+    if(this.crit!=this.critOld){
+      this.changedStats.push({iconname:'Crit',name:'Crit',val:this.crit,increase:this.crit-this.critOld});
+    }
+    if(this.critPercent!=this.critPercentOld){
+      this.changedStats.push({iconname:'CritPercent',name:'Crit Rate',val:`${this.critPercent}%`,increase:this.critPercent-this.critPercentOld});
+    }
+    if(this.physicalAtk!=this.physicalAtkOld){
+      this.changedStats.push({iconname:'PhysicalAttack',name:'Physical Attack',val:this.physicalAtk,increase:this.physicalAtk-this.physicalAtkOld});
+    }
+    if(this.flameAtk!=this.flameAtkOld){
+      this.changedStats.push({iconname:'FlameAttack',name:'Flame Attack',val:this.flameAtk,increase:this.flameAtk-this.flameAtkOld});
+    }
+    if(this.frostAtk!=this.frostAtkOld){
+      this.changedStats.push({iconname:'FrostAttack',name:'Frost Attack',val:this.frostAtk,increase:this.frostAtk-this.frostAtkOld});
+    }
+    if(this.voltAtk!=this.voltAtkOld){
+      this.changedStats.push({iconname:'VoltAttack',name:'Volt Attack',val:this.voltAtk,increase:this.voltAtk-this.voltAtkOld});
+    }
+    if(this.alterAtk!=this.alterAtkOld){
+      this.changedStats.push({iconname:'AlterAttack',name:'Altered Attack',val:this.alterAtk,increase:this.alterAtk-this.alterAtkOld});
+    }
+    if(this.physicalRes!=this.physicalResOld){
+      this.changedStats.push({iconname:'PhysicalResist',name:'Physical Resistance',val:this.physicalRes,increase:this.physicalRes-this.physicalResOld});
+    }
+    if(this.flameRes!=this.flameResOld){
+      this.changedStats.push({iconname:'FlameResist',name:'Flame Resistance',val:this.flameRes,increase:this.frostRes-this.frostResOld});
+    }
+    if(this.frostRes!=this.frostResOld){
+      this.changedStats.push({iconname:'FrostResist',name:'Frost Resistance',val:this.frostRes,increase:this.frostRes-this.frostResOld});
+    }
+    if(this.voltRes!=this.voltResOld){
+      this.changedStats.push({iconname:'VoltResist',name:'Volt Resistance',val:this.voltRes,increase:this.voltRes-this.voltResOld});
+    }
+    if(this.alterRes!=this.alterResOld){
+      this.changedStats.push({iconname:'AlterResist',name:'Altered Resistance',val:this.alterRes,increase:this.alterRes-this.alterResOld});
+    }
+    if(this.titanBlock!=this.titanBlockOld){
+      this.changedStats.push({iconname:'Block',name:'Block',val:this.titanBlock,increase:this.titanBlock-this.titanBlockOld});
+    }
+    if(this.titanWeak!=this.titanWeakOld){
+      this.changedStats.push({iconname:'Weak',name:'Weak Point Damage Boost',val:this.titanWeak,increase:this.titanWeak-this.titanWeakOld});
+    }
+    if(this.titanLifesteal!=this.titanLifestealOld){
+      this.changedStats.push({iconname:'Lifesteal',name:'Lifesteal',val:this.titanLifesteal,increase:this.titanLifesteal-this.titanLifestealOld});
+    }
+    if(this.titanRecovery!=this.titanRecoveryOld){
+      this.changedStats.push({iconname:'Recovery',name:'HP Recovery',val:this.titanRecovery,increase:this.titanRecovery-this.titanRecoveryOld});
+    }
+    if(this.titanDelay!=this.titanDelayOld){
+      this.changedStats.push({iconname:'Delay',name:'Delay',val:this.titanDelay,increase:this.titanDelay-this.titanDelayOld});
+    }
+    if(this.titanNormal!=this.titanNormalOld){
+      this.changedStats.push({iconname:'Normal',name:'Normal Attack Damage Boost',val:this.titanNormal,increase:this.titanNormal-this.titanNormalOld});
+    }
+    if(this.titanDodge!=this.titanDodgeOld){
+      this.changedStats.push({iconname:'Dodge',name:'Dodge Attack Damage Boost',val:this.titanDodge,increase:this.titanDodge-this.titanDodgeOld});
+    }
+    if(this.titanSkill!=this.titanSkillOld){
+      this.changedStats.push({iconname:'Skill',name:'Skill Damage Boost',val:this.titanSkill,increase:this.titanSkill-this.titanSkillOld});
+    }
+    if(this.titanDischarge!=this.titanDischargeOld){
+      this.changedStats.push({iconname:'Discharge',name:'Discharge Damage Boost',val:this.titanDischarge,increase:this.titanDischarge-this.titanDischargeOld});
+    }
+    if(this.titanDamage!=this.titanDamageOld){
+      this.changedStats.push({iconname:'Damage',name:'Damage Boost',val:this.titanDamage,increase:this.titanDamage-this.titanDamageOld});
+    }
+    if(this.titanReduction!=this.titanReductionOld){
+      this.changedStats.push({iconname:'Reduction',name:'Damage Reduction',val:this.titanReduction,increase:this.titanReduction-this.titanReductionOld});
+    }
+    if(this.titanHeal!=this.titanHealOld){
+      this.changedStats.push({iconname:'Heal',name:'Increased Healing',val:this.titanHeal,increase:this.titanHeal-this.titanHealOld});
     }
   }
 
@@ -317,6 +388,9 @@ export class GearComparePage {
   get hp() {
     return Math.round(this.curStat.getVal("HP")*(1+(this.curStat.getVal("HPPercent")/100)));
   }
+  get hpOld() {
+    return Math.round(this.char.characterStat.getVal("HP")*(1+(this.char.characterStat.getVal("HPPercent")/100)));
+  }
 
   get crit() {
     return Math.floor(this.curStat.getVal("Crit"));
@@ -329,6 +403,18 @@ export class GearComparePage {
   }
   get critPercent() {
     return this.curStat.getVal("CritPercent");
+  }
+  get critOld() {
+    return Math.floor(this.char.characterStat.getVal("Crit"));
+  }
+  get critPCalcOld() {
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("Crit"),"percent",this.char.characterInfo.level))*100)/100;
+  }
+  get critBCalcOld() {
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("CritPercent"),"base",this.char.characterInfo.level))*100)/100;
+  }
+  get critPercentOld() {
+    return this.char.characterStat.getVal("CritPercent");
   }
 
   get physicalAtk() {
@@ -343,6 +429,18 @@ export class GearComparePage {
   get physicalDam() {
     return Math.round(this.curStat.getVal("PhysicalDamagePercent")*100)/100;
   }
+  get physicalAtkOld() {
+    return Math.round(Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.curStat.getVal("PhysicalAttackPercent")/100)));
+  }
+  get physicalAtkBOld() {
+    return Math.round(this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get physicalAtkPOld() {
+    return Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.curStat.getVal("PhysicalAttackPercent")/100)));
+  }
+  get physicalDamOld() {
+    return Math.round(this.char.characterStat.getVal("PhysicalDamagePercent")*100)/100;
+  }
 
   get flameAtk() {
     return Math.round(Math.round((this.curStat.getVal("FlameAttack")+this.curStat.getVal("Attack")))*(1+(this.curStat.getVal("FlameAttackPercent")/100)));
@@ -355,6 +453,18 @@ export class GearComparePage {
   }
   get flameDam() {
     return Math.round(this.curStat.getVal("FlameDamagePercent")*100)/100;
+  }
+  get flameAtkOld() {
+    return Math.round(Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.curStat.getVal("FlameAttackPercent")/100)));
+  }
+  get flameAtkBOld() {
+    return Math.round(this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get flameAtkPOld() {
+    return Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FlameAttackPercent")/100)));
+  }
+  get flameDamOld() {
+    return Math.round(this.char.characterStat.getVal("FlameDamagePercent")*100)/100;
   }
 
   get frostAtk() {
@@ -369,6 +479,18 @@ export class GearComparePage {
   get frostDam() {
     return Math.round(this.curStat.getVal("FrostDamagePercent")*100)/100;
   }
+  get frostAtkOld() {
+    return Math.round(Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FrostAttackPercent")/100)));
+  }
+  get frostAtkBOld() {
+    return Math.round(this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get frostAtkPOld() {
+    return Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FrostAttackPercent")/100)));
+  }
+  get frostDamOld() {
+    return Math.round(this.char.characterStat.getVal("FrostDamagePercent")*100)/100;
+  }
 
   get voltAtk() {
     return Math.round(Math.round((this.curStat.getVal("VoltAttack")+this.curStat.getVal("Attack")))*(1+(this.curStat.getVal("VoltAttackPercent")/100)));
@@ -382,6 +504,18 @@ export class GearComparePage {
   get voltDam() {
     return Math.round(this.curStat.getVal("VoltDamagePercent")*100)/100;
   }
+  get voltAtkOld() {
+    return Math.round(Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("VoltAttackPercent")/100)));
+  }
+  get voltAtkBOld() {
+    return Math.round(this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"));
+  }
+  get voltAtkPOld() {
+    return Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("VoltAttackPercent")/100)));
+  }
+  get voltDamOld() {
+    return Math.round(this.char.characterStat.getVal("VoltDamagePercent")*100)/100;
+  }
 
   get alterAtk() {
     return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+this.curStat.getVal("AlterAttack"));
@@ -392,6 +526,15 @@ export class GearComparePage {
   get alterAtkP() {
     return Math.floor(this.curStat.getVal("AlterAttack"));
   }
+  get alterAtkOld() {
+    return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+this.char.characterStat.getVal("AlterAttack"));
+  }
+  get alterAtkBOld() {
+    return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]);
+  }
+  get alterAtkPOld() {
+    return Math.floor(this.char.characterStat.getVal("AlterAttack"));
+  }
   get eleHighest() {
     return [{name:"Physical",val:this.physicalAtk},{name:"Flame",val:this.flameAtk},{name:"Frost",val:this.frostAtk},{name:"Volt",val:this.voltAtk}].sort((a,b)=>b.val-a.val)[0].name;
   }
@@ -399,69 +542,164 @@ export class GearComparePage {
   get physicalRes(){
     return Math.floor((this.curStat.getVal("PhysicalResist")+this.curStat.getVal("Resist"))*(1+(this.curStat.getVal("PhysicalResistPercent")/100)));
   }
+  get physicalResOld(){
+    return Math.floor((this.char.characterStat.getVal("PhysicalResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("PhysicalResistPercent")/100)));
+  }
 
   get flameRes(){
     return Math.floor((this.curStat.getVal("FlameResist")+this.curStat.getVal("Resist"))*(1+(this.curStat.getVal("FlameResistPercent")/100)));
+  }
+  get flameResOld(){
+    return Math.floor((this.char.characterStat.getVal("FlameResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("FlameResistPercent")/100)));
   }
 
   get frostRes(){
     return Math.floor((this.curStat.getVal("FrostResist")+this.curStat.getVal("Resist"))*(1+(this.curStat.getVal("FrostResistPercent")/100)));
   }
+  get frostResOld(){
+    return Math.floor((this.char.characterStat.getVal("FrostResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("FrostResistPercent")/100)));
+  }
 
   get voltRes(){
     return Math.floor((this.curStat.getVal("VoltResist")+this.curStat.getVal("Resist"))*(1+(this.curStat.getVal("VoltResistPercent")/100)));
+  }
+  get voltResOld(){
+    return Math.floor((this.char.characterStat.getVal("VoltResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("VoltResistPercent")/100)));
   }
 
   get alterRes(){
     return Math.floor((this.curStat.getVal("AlterResist")+this.curStat.getVal("Resist"))*(1+(this.curStat.getVal("AlterResistPercent")/100)));
   }
+  get alterResOld(){
+    return Math.floor((this.char.characterStat.getVal("AlterResist")+this.char.characterStat.getVal("Resist"))*(1+(this.char.characterStat.getVal("AlterResistPercent")/100)));
+  }
 
   get titanBlock(){
     return this.curStat.getVal("Block");
+  }
+  get titanBlockOld(){
+    return this.char.characterStat.getVal("Block");
   }
 
   get titanWeak(){
     return this.curStat.getVal("Weak");
   }
+  get titanWeakOld(){
+    return this.char.characterStat.getVal("Weak");
+  }
   
   get titanLifesteal(){
     return this.curStat.getVal("Lifesteal");
+  }
+  get titanLifestealOld(){
+    return this.char.characterStat.getVal("Lifesteal");
   }
   
   get titanRecovery(){
     return this.curStat.getVal("Recovery");
   }
+  get titanRecoveryOld(){
+    return this.char.characterStat.getVal("Recovery");
+  }
   
   get titanDelay(){
     return this.curStat.getVal("Delay");
+  }
+  get titanDelayOld(){
+    return this.char.characterStat.getVal("Delay");
   }
   
   get titanNormal(){
     return this.curStat.getVal("Normal");
   }
+  get titanNormalOld(){
+    return this.char.characterStat.getVal("Normal");
+  }
   
   get titanDodge(){
     return this.curStat.getVal("Dodge");
+  }
+  get titanDodgeOld(){
+    return this.char.characterStat.getVal("Dodge");
   }
   
   get titanSkill(){
     return this.curStat.getVal("Skill");
   }
+  get titanSkillOld(){
+    return this.char.characterStat.getVal("Skill");
+  }
   
   get titanDischarge(){
     return this.curStat.getVal("Discharge");
+  }
+  get titanDischargeOld(){
+    return this.char.characterStat.getVal("Discharge");
   }
   
   get titanDamage(){
     return this.curStat.getVal("Damage");
   }
+  get titanDamageOld(){
+    return this.char.characterStat.getVal("Damage");
+  }
   
   get titanReduction(){
     return this.curStat.getVal("Reduction");
   }
+  get titanReductionOld(){
+    return this.char.characterStat.getVal("Reduction");
+  }
   
   get titanHeal(){
     return this.curStat.getVal("Heal");
+  }
+  get titanHealOld(){
+    return this.char.characterStat.getVal("Heal");
+  }
+
+  newCompare(){
+    const prevGear = this.curChar.gear[this.singleType];
+    this.gearsCompare.push({
+      id: (this.gearsCompare[this.gearsCompare.length-1]?.id??0)+1,
+      rarity: "5",
+      random: prevGear.random,
+      augment: prevGear.augment,
+      rare: prevGear.rare,
+      enhance: prevGear.enhance
+    })
+  }
+
+  eqTypeGenerate(){
+    var r:AlertInput[] = [];
+    for(const eq of this.eqOrder){
+      r.push({
+        label: eq,
+        type: "radio",
+        value: eq,
+        checked: eq==this.singleType,
+        cssClass: `gear-${eq.replace(" ","-")}-5`
+      });
+    }
+    return r;
+  }
+
+  async typeChange(){
+    const alert = await this.alert.create({
+      header: `Select Part`,
+      backdropDismiss: true,
+      inputs: this.eqTypeGenerate(),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.singleType = newSelected;
+        }
+      }]
+    });
+    alert.present();
   }
 
   eqRadioGenerate(etype:gearTypes){

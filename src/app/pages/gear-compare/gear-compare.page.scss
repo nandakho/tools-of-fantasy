@@ -218,7 +218,13 @@ ion-col.equipments {
         div.choose {
             border: 2px solid var(--ion-color-medium); 
             border-bottom: 0px;
-            border-radius: 5px 5px 0px 0px; 
+            border-radius: 5px 5px 0px 0px;
+            ion-text {
+                position: absolute;
+                padding-left: 3px;
+                font-size: larger;
+                cursor: default;
+            }
         }
         div.stats {
             width: 100%;
@@ -269,7 +275,7 @@ ion-col.equipments {
                     font-size: smaller;
                     cursor: pointer;
                 }
-                ion-text:hover {
+                ion-text:not(.nochange):hover {
                     border: 2px solid var(--ion-color-warning);
                 }
             }
@@ -297,11 +303,12 @@ ion-col.equipments {
             height: 96px;
             cursor: pointer;
         }
-        ion-img:hover {
+        ion-img:not(.nochange):hover {
             border: 2px solid var(--ion-color-warning) !important; 
         }
     }
     div.null-eq {
+        width: 100px;
         div.eq-background-null {
             border: 2px solid var(--ion-color-medium); 
             border-radius: 5px; 
@@ -311,7 +318,7 @@ ion-col.equipments {
             display: flex;
             cursor: pointer;
         }
-        div.eq-background-null:hover {
+        div.eq-background-null:not(.nochange):hover {
             border: 2px solid var(--ion-color-warning); 
             background: var(--ion-color-medium);
             transition: 0.5s;
@@ -320,6 +327,70 @@ ion-col.equipments {
             height: 96px;
             align-self: center;
         }
+    }
+    div.new-eq {
+        border: 2px solid var(--ion-color-medium); 
+        border-radius: 5px; 
+        height: 323px;
+        width: 100px;
+        border-radius: 5px; 
+        display: flex;
+        cursor: pointer;
+        ion-icon {
+            font-size: 84px;
+            align-self: center;
+            flex: auto;
+            color: var(--ion-color-light);
+        }
+    }
+    div.new-eq:not(.nochange):hover {
+        border: 2px solid var(--ion-color-warning); 
+        background: var(--ion-color-dark-tint);
+        transition: 0.5s;
+        ion-icon {
+            color: var(--ion-color-medium-shade);
+            transition: 0.5s;
+        }
+    }
+}
+
+ion-icon.type-change{
+    position: absolute;
+    font-size: x-large;
+    cursor: pointer;
+}
+ion-icon.type-change:hover{
+    border: 2px solid var(--ion-color-warning);
+    border-radius: 5px 0px 5px 0px; 
+}
+
+ion-content.popups {
+    border: 2px solid var(--ion-color-medium);
+    --background: var(--ion-color-dark-tint);
+    --keyboard-offset: 0px !important;
+    ion-text.title {
+        font-weight: bold;
+        font-size: 0.9rem;
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        color: var(--ion-color-warning);
+    }
+    ion-range {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    ion-select {
+        padding-top: 24px;
+        color: var(--ion-color-primary-contrast);
+        padding-left: 12px;
+    }
+    ion-input {
+        color: var(--ion-color-primary-contrast);
+        min-height: 30px;
+        margin-top: 32px;
+        text-align: center;
+        margin-bottom: 1px;
     }
 }
 
@@ -458,7 +529,7 @@ a.link {
 ion-col.justify-mid {
     text-align: center;
     ion-select {
-        border: 2px solid var(--ion-color-medium);
+        border: 1px solid var(--ion-color-medium);
         border-radius: 10px;
         padding-left: 10px;
         padding-right: 10px;
@@ -470,4 +541,21 @@ ion-col.justify-mid {
         font-weight: bolder;
         color: var(--ion-color-warning);
     }
+}
+
+.increase-val {
+    color: var(--ion-color-success);
+}
+.decrease-val {
+    color: var(--ion-color-danger);
+}
+.stat-diff {
+    padding-left: 8px;
+    font-size: smaller;
+}
+.nochange {
+    cursor: default !important;
+}
+ion-select.part-select {
+    color: rgba(var(--ion-color-primary-contrast-rgb), 0.75);
 }
