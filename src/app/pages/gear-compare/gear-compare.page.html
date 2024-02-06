@@ -248,11 +248,12 @@
                       <ion-row>
                         <ion-col class="equipments">
                           <div class="choosen-eq" *ngIf="char.characterInfo.gear[singleType].rarity!=null">
-                            <div class="choose">
+                            <div class="choose" [ngClass]="gearsCompare.length>0?'showstats':''">
                               <ion-icon (click)="typeChange()" class="type-change" name="settings-outline"></ion-icon>
                               <ion-img class="nochange" [src]="'assets/icon/equipments/'+singleType+'%20'+char.characterInfo.gear[singleType].rarity+'.png'"></ion-img>
+                              <ion-text class="equipped-text">Equipped</ion-text>
                             </div>
-                            <div class="stats">
+                            <div class="stats" [ngClass]="gearsCompare.length>0?'showstats':''">
                               <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
                               <ion-item lines="none" class="body" *ngFor="let eq of char.characterInfo.gear[singleType].random; index as rIdx">
                                 <ion-img class="icon nochange" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
@@ -287,23 +288,36 @@
                             </div>
                           </div>
                           <div class="null-eq" *ngIf="char.characterInfo.gear[singleType].rarity==null">
-                            <div class="nochange eq-background-null">
+                            <div class="nochange eq-background-null" [ngClass]="gearsCompare.length>0?'showstats':''">
                               <ion-icon (click)="typeChange()" color="dark" class="type-change" name="settings"></ion-icon>
                               <ion-img [src]="'assets/icon/equipments/'+singleType+'.png'"></ion-img>
                             </div>
                           </div>
+                          <div class="eqstats" *ngIf="gearsCompare.length>0">
+                            <ion-item lines="none" *ngIf="compareStats.length==0">
+                              <ion-text><i>Nothing changed yet...</i></ion-text><br>
+                            </ion-item>
+                            <ion-item *ngFor="let s of compareStats" lines="none" class="ion-text-wrap">
+                              <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
+                              <div class="stat-val">
+                                <ion-text>{{s.name}}</ion-text><br>
+                                <ion-text>{{s.val}}</ion-text>
+                                <ion-text class="stat-diff" [ngClass]="s.increase>0?'increase-val':'decrease-val'"><ion-icon [name]="s.increase>0?'caret-up':'caret-down'"></ion-icon>{{s.increase}}</ion-text>
+                              </div>
+                            </ion-item>
+                          </div>
                         </ion-col>
                         <ion-col class="equipments" *ngFor="let eqcompare of gearsCompare; index as gIdx">
                           <div class="choosen-eq" *ngIf="eqcompare.rarity!=null">
-                            <div class="choose">
+                            <div class="choose showstats">
                               <ion-text>{{gIdx+1}}</ion-text>
-                              <ion-img (click)="eqChange(singleType)" [src]="'assets/icon/equipments/'+singleType+'%20'+eqcompare.rarity+'.png'"></ion-img>
+                              <ion-img (click)="eqcompareChange(singleType,eqcompare.id)" [src]="'assets/icon/equipments/'+singleType+'%20'+eqcompare.rarity+'.png'"></ion-img>
                             </div>
-                            <div class="stats">
+                            <div class="stats showstats">
                               <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
                               <ion-item lines="none" class="body" *ngFor="let eq of eqcompare.random; index as rIdx">
-                                <ion-img class="icon" (click)="eqstatChange(singleType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
-                                <ion-img class="icon" (click)="eqstatChange(singleType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                <ion-img class="icon" (click)="eqcomparestatChange(singleType,rIdx,'random',eqcompare.id)" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
+                                <ion-img class="icon" (click)="eqcomparestatChange(singleType,rIdx,'random',eqcompare.id)" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                                 <ion-text [ngClass]="(eqcompare.random[rIdx].val>char.characterInfo.gear[singleType].random[rIdx].val)?'increase-val':(eqcompare.random[rIdx].val<char.characterInfo.gear[singleType].random[rIdx].val)?'decrease-val':''" [id]="'rand-'+singleType+eqcompare.id+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
                                 <ion-popover *ngIf="eq.type" [trigger]="'rand-'+singleType+eqcompare.id+'-'+rIdx+'val'" triggerAction="click">
                                   <ng-template>
@@ -317,8 +331,8 @@
                               <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
                               <div *ngIf="eqcompare.rarity!='5'">
                                 <ion-item lines="none" class="body" *ngFor="let eqa of eqcompare.augment; index as arIdx">
-                                  <ion-img class="icon" (click)="eqstatChange(singleType,arIdx,'augment')" *ngIf="eqa.type!=null && (eqcompare.rarity=='Augment'||eqcompare.rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
-                                  <ion-img class="icon" (click)="eqstatChange(singleType,arIdx,'augment')" *ngIf="eqa.type==null || eqcompare.rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                  <ion-img class="icon" (click)="eqcomparestatChange(singleType,arIdx,'augment',eqcompare.id)" *ngIf="eqa.type!=null && (eqcompare.rarity=='Augment'||eqcompare.rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
+                                  <ion-img class="icon" (click)="eqcomparestatChange(singleType,arIdx,'augment',eqcompare.id)" *ngIf="eqa.type==null || eqcompare.rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                                   <ion-text [ngClass]="(eqcompare.augment[arIdx].val>char.characterInfo.gear[singleType].augment[arIdx].val)||(char.characterInfo.gear[singleType].rarity=='5')?'increase-val':(eqcompare.augment[arIdx].val<char.characterInfo.gear[singleType].augment[arIdx].val)?'decrease-val':''" [id]="'randa-'+singleType+eqcompare.id+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
                                   <ion-popover *ngIf="eqa.type" [trigger]="'randa-'+singleType+eqcompare.id+'-'+arIdx+'val'" triggerAction="click">
                                     <ng-template>
@@ -337,8 +351,8 @@
                               </div>
                               <div *ngIf="eqcompare.rarity=='Titan'">
                                 <ion-item lines="none" class="body">
-                                  <ion-img class="icon" (click)="eqtitanChange(singleType)" *ngIf="eqcompare.rare.type!=null" [src]="'assets/icon/stats/'+eqcompare.rare.type+'.png'"></ion-img>
-                                  <ion-img class="icon" (click)="eqtitanChange(singleType)" *ngIf="eqcompare.rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
+                                  <ion-img class="icon" (click)="eqcomparetitanChange(singleType,eqcompare.id)" *ngIf="eqcompare.rare.type!=null" [src]="'assets/icon/stats/'+eqcompare.rare.type+'.png'"></ion-img>
+                                  <ion-img class="icon" (click)="eqcomparetitanChange(singleType,eqcompare.id)" *ngIf="eqcompare.rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
                                   <ion-text [ngClass]="((eqcompare.rare.val>char.characterInfo.gear[singleType].rare.val)||(char.characterInfo.gear[singleType].rarity!='Titan'))?'increase-val':(eqcompare.rare.val<char.characterInfo.gear[singleType].rare.val)?'decrease-val':''" [id]="'rare-'+singleType+eqcompare.id">{{eqcompare.rare.type?eqcompare.rare.val:'-'}}</ion-text>
                                   <ion-popover *ngIf="eqcompare.rare.type!=null" [trigger]="'rare-'+singleType+eqcompare.id" triggerAction="click">
                                     <ng-template>
@@ -358,9 +372,22 @@
                             </div>
                           </div>
                           <div class="null-eq" *ngIf="eqcompare.rarity==null">
-                            <div (click)="eqChange(singleType)" class="eq-background-null">
+                            <div (click)="eqcompareChange(singleType,eqcompare.id)" class="eq-background-null showstats">
                               <ion-img [src]="'assets/icon/equipments/'+singleType+'.png'"></ion-img>
                             </div>
+                          </div>
+                          <div class="eqstats">
+                            <ion-item lines="none" *ngIf="eqcompare.compareStats.length==0">
+                              <ion-text><i>Nothing changed yet...</i></ion-text><br>
+                            </ion-item>
+                            <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="ion-text-wrap">
+                              <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
+                              <div class="stat-val">
+                                <ion-text>{{s.name}}</ion-text><br>
+                                <ion-text>{{s.val}}</ion-text>
+                                <ion-text class="stat-diff" [ngClass]="s.increase>0?'increase-val':'decrease-val'"><ion-icon [name]="s.increase>0?'caret-up':'caret-down'"></ion-icon>{{s.increase}}</ion-text>
+                              </div>
+                            </ion-item>
                           </div>
                         </ion-col>
                         <ion-col class="equipments">
@@ -376,7 +403,7 @@
             </ion-card-content>
           </ion-card>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="multiType">
           <ion-card>
             <ion-card-header>
               <ion-card-title>Stats (Calculated)</ion-card-title>

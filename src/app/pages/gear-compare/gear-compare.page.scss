@@ -363,6 +363,11 @@ ion-icon.type-change:hover{
     border: 2px solid var(--ion-color-warning);
     border-radius: 5px 0px 5px 0px; 
 }
+ion-text.equipped-text {
+    top: 74px;
+    color: var(--ion-color-warning);
+    font-size: medium !important;
+}
 
 ion-content.popups {
     border: 2px solid var(--ion-color-medium);
@@ -558,4 +563,23 @@ ion-col.justify-mid {
 }
 ion-select.part-select {
     color: rgba(var(--ion-color-primary-contrast-rgb), 0.75);
+}
+div.choosen-eq {
+    .choose.showstats {
+        border-radius: 5px 0px 0px 0px !important;
+    }
+    .stats.showstats {
+        border-radius: 0px 0px 0px 5px !important;
+    }
+}
+div.eq-background-null.showstats {
+    border-radius: 5px 0px 0px 5px !important;
+}
+div.eqstats{
+    width: 250px;
+    height: 100%;
+    border: 2px solid var(--ion-color-medium);
+    border-radius: 0px 5px 5px 0px;
+    border-left: 0px;
+    padding-left: 8px;
 }

@@ -35,13 +35,14 @@ export class GearComparePage {
   equipped: number|undefined = undefined;
   helpGif: any = undefined;
   typeSelected: string = "Manual";
-  changedOnly: boolean = false;
+  changedOnly: boolean = true;
   changedStats: any[] = [];
+  compareStats: any[] = [];
   curChar: characterInfo = this.char.initCharacterInfo();
   gearsCompare: any[] = [];
   curStat = new StatsService();
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
-  multiType: boolean = false;
+  multiType: boolean = true;
   singleType: gearTypes = "Helm";
   constructor(
     private route: ActivatedRoute,
@@ -146,6 +147,53 @@ export class GearComparePage {
     if(this.titanHeal!=this.titanHealOld){
       this.changedStats.push({iconname:'Heal',name:'Increased Healing',val:this.titanHeal,increase:this.titanHeal-this.titanHealOld});
     }
+  }
+
+  recalcCompareStat(){
+    this.compareStats = [];
+    let cs = new StatsService();
+    cs.add(this.char.characterStat.getAll());
+    for(let rand of this.char.characterInfo.gear[this.singleType].random){
+      if(rand.type!=null){
+        cs.addVal(rand.type,-(rand.val));
+      }
+    }
+    for(let a of this.char.characterInfo.gear[this.singleType].augment){
+      if(a.type!=null){
+        cs.addVal(a.type,-(a.val));
+      }
+    }
+    let rare = this.char.characterInfo.gear[this.singleType].rare;
+    if(rare.type!=null) cs.addVal(rare.type,-(rare.val));
+    for(let gear of this.gearsCompare){
+      let ncs = new StatsService();
+      ncs.add(cs.getAll());
+    }
+    /* this.changedStats.push({iconname:'HP',name:'HP',val:this.hp,increase:this.hp-this.hpOld});
+    this.changedStats.push({iconname:'Crit',name:'Crit',val:this.crit,increase:this.crit-this.critOld});
+    this.changedStats.push({iconname:'CritPercent',name:'Crit Rate',val:`${this.critPercent}%`,increase:this.critPercent-this.critPercentOld});
+    this.changedStats.push({iconname:'PhysicalAttack',name:'Physical Attack',val:this.physicalAtk,increase:this.physicalAtk-this.physicalAtkOld});
+    this.changedStats.push({iconname:'FlameAttack',name:'Flame Attack',val:this.flameAtk,increase:this.flameAtk-this.flameAtkOld});
+    this.changedStats.push({iconname:'FrostAttack',name:'Frost Attack',val:this.frostAtk,increase:this.frostAtk-this.frostAtkOld});
+    this.changedStats.push({iconname:'VoltAttack',name:'Volt Attack',val:this.voltAtk,increase:this.voltAtk-this.voltAtkOld});
+    this.changedStats.push({iconname:'AlterAttack',name:'Altered Attack',val:this.alterAtk,increase:this.alterAtk-this.alterAtkOld});
+    this.changedStats.push({iconname:'PhysicalResist',name:'Physical Resistance',val:this.physicalRes,increase:this.physicalRes-this.physicalResOld});
+    this.changedStats.push({iconname:'FlameResist',name:'Flame Resistance',val:this.flameRes,increase:this.frostRes-this.frostResOld});
+    this.changedStats.push({iconname:'FrostResist',name:'Frost Resistance',val:this.frostRes,increase:this.frostRes-this.frostResOld});
+    this.changedStats.push({iconname:'VoltResist',name:'Volt Resistance',val:this.voltRes,increase:this.voltRes-this.voltResOld});
+    this.changedStats.push({iconname:'AlterResist',name:'Altered Resistance',val:this.alterRes,increase:this.alterRes-this.alterResOld});
+    this.changedStats.push({iconname:'Block',name:'Block',val:this.titanBlock,increase:this.titanBlock-this.titanBlockOld});
+    this.changedStats.push({iconname:'Weak',name:'Weak Point Damage Boost',val:this.titanWeak,increase:this.titanWeak-this.titanWeakOld});
+    this.changedStats.push({iconname:'Lifesteal',name:'Lifesteal',val:this.titanLifesteal,increase:this.titanLifesteal-this.titanLifestealOld});
+    this.changedStats.push({iconname:'Recovery',name:'HP Recovery',val:this.titanRecovery,increase:this.titanRecovery-this.titanRecoveryOld});
+    this.changedStats.push({iconname:'Delay',name:'Delay',val:this.titanDelay,increase:this.titanDelay-this.titanDelayOld});
+    this.changedStats.push({iconname:'Normal',name:'Normal Attack Damage Boost',val:this.titanNormal,increase:this.titanNormal-this.titanNormalOld});
+    this.changedStats.push({iconname:'Dodge',name:'Dodge Attack Damage Boost',val:this.titanDodge,increase:this.titanDodge-this.titanDodgeOld});
+    this.changedStats.push({iconname:'Skill',name:'Skill Damage Boost',val:this.titanSkill,increase:this.titanSkill-this.titanSkillOld});
+    this.changedStats.push({iconname:'Discharge',name:'Discharge Damage Boost',val:this.titanDischarge,increase:this.titanDischarge-this.titanDischargeOld});
+    this.changedStats.push({iconname:'Damage',name:'Damage Boost',val:this.titanDamage,increase:this.titanDamage-this.titanDamageOld});
+    this.changedStats.push({iconname:'Reduction',name:'Damage Reduction',val:this.titanReduction,increase:this.titanReduction-this.titanReductionOld});
+    this.changedStats.push({iconname:'Heal',name:'Increased Healing',val:this.titanHeal,increase:this.titanHeal-this.titanHealOld}); */
   }
 
   validLength(length:number): boolean {
@@ -660,14 +708,15 @@ export class GearComparePage {
 
   newCompare(){
     const prevGear = this.curChar.gear[this.singleType];
-    this.gearsCompare.push({
+    this.gearsCompare.push(JSON.parse(JSON.stringify({
       id: (this.gearsCompare[this.gearsCompare.length-1]?.id??0)+1,
-      rarity: "5",
+      rarity: prevGear.rarity,
       random: prevGear.random,
       augment: prevGear.augment,
       rare: prevGear.rare,
-      enhance: prevGear.enhance
-    })
+      enhance: prevGear.enhance,
+      compareStats: []
+    })));
   }
 
   eqTypeGenerate(){
@@ -702,9 +751,9 @@ export class GearComparePage {
     alert.present();
   }
 
-  eqRadioGenerate(etype:gearTypes){
+  eqRadioGenerate(etype:gearTypes,id:number=0){
     const rarityList = augAvailable.includes(etype)?['5','Augment','Titan']:['5'];
-    const curRar = this.curChar.gear[etype].rarity;
+    const curRar = id==0?this.curChar.gear[etype].rarity:this.gearsCompare.find(x=>x.id==id).rarity;
     var r:AlertInput[] = [{
       label: "Unequip",
       type: "radio",
@@ -744,8 +793,28 @@ export class GearComparePage {
     alert.present();
   }
 
-  eqstatRadioGenerate(etype:gearTypes,index:number,parts:"random"|"augment"){
-    const curRand = (this.curChar.gear[etype][parts][index].type);
+  async eqcompareChange(etype:string,id:number):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Select ${part} Rarity`,
+      backdropDismiss: true,
+      inputs: this.eqRadioGenerate(part,id),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.gearsCompare.find(x=>x.id==id).rarity = newSelected;
+          this.recalcStat();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  eqstatRadioGenerate(etype:gearTypes,index:number,parts:"random"|"augment",id:number=0){
+    const curRand = id==0?(this.curChar.gear[etype][parts][index].type):this.gearsCompare.find(x=>x.id==id)[parts][index].type;
     let alrdSelected: any[] = [];
     let lists: string[] = [];
     alrdSelected = this.curChar.gear[etype].random.map(x=>x.type);
@@ -811,8 +880,28 @@ export class GearComparePage {
     alert.present();
   }
 
-  eqtitanRadioGenerate(etype:gearTypes){
-    const curRare = (this.curChar.gear[etype].rare.type);
+  async eqcomparestatChange(etype:string,index:number,parts:"random"|"augment",id:number):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Random ${index+1}`,
+      backdropDismiss: true,
+      inputs: this.eqstatRadioGenerate(part,index,parts,id),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.gearsCompare.find(x=>x.id==id)[parts][index].type = newSelected;
+          this.recalcStat();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  eqtitanRadioGenerate(etype:gearTypes,id:number=0){
+    const curRare = id==0?(this.curChar.gear[etype].rare.type):this.gearsCompare.find(x=>x.id==id).rare.type;
     var r:AlertInput[] = [{
       label: "Empty",
       type: "radio",
@@ -849,6 +938,26 @@ export class GearComparePage {
         text:'OK',
         handler: async (newSelected)=>{
           this.curChar.gear[part].rare.type = newSelected;
+          this.recalcStat();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  async eqcomparetitanChange(etype:string,id:number):Promise<void>{
+    const part = etype as gearTypes;
+    const alert = await this.alert.create({
+      header: `Rare ${etype}`,
+      backdropDismiss: true,
+      inputs: this.eqtitanRadioGenerate(part,id),
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (newSelected)=>{
+          this.gearsCompare.find(x=>x.id==id).rare.type = newSelected;
           this.recalcStat();
         }
       }]
