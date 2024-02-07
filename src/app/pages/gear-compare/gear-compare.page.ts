@@ -164,7 +164,12 @@ export class GearComparePage {
       FrostDamagePercent: Math.round(cs.getVal("FrostDamagePercent")*100)/100,
       VoltAttack: Math.round(Math.round((cs.getVal("VoltAttack")+cs.getVal("Attack")))*(1+(cs.getVal("VoltAttackPercent")/100))),
       VoltDamagePercent: Math.round(cs.getVal("VoltDamagePercent")*100)/100,
-      AlterAttack: Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+cs.getVal("AlterAttack")),
+      AlterAttack: Math.floor([
+        Math.round(Math.round((cs.getVal("PhysicalAttack")+cs.getVal("Attack")))*(1+(cs.getVal("PhysicalAttackPercent")/100))),
+        Math.round(Math.round((cs.getVal("FlameAttack")+cs.getVal("Attack")))*(1+(cs.getVal("FlameAttackPercent")/100))),
+        Math.round(Math.round((cs.getVal("FrostAttack")+cs.getVal("Attack")))*(1+(cs.getVal("FrostAttackPercent")/100))),
+        Math.round(Math.round((cs.getVal("VoltAttack")+cs.getVal("Attack")))*(1+(cs.getVal("VoltAttackPercent")/100)))
+      ].sort((a,b)=>b-a)[0]+cs.getVal("AlterAttack")),
       PhysicalResist: Math.floor((cs.getVal("PhysicalResist")+cs.getVal("Resist"))*(1+(cs.getVal("PhysicalResistPercent")/100))),
       FlameResist: Math.floor((cs.getVal("FlameResist")+cs.getVal("Resist"))*(1+(cs.getVal("FlameResistPercent")/100))),
       FrostResist: Math.floor((cs.getVal("FrostResist")+cs.getVal("Resist"))*(1+(cs.getVal("FrostResistPercent")/100))),
@@ -210,7 +215,12 @@ export class GearComparePage {
         FrostDamagePercent: Math.round(xcs.getVal("FrostDamagePercent")*100)/100,
         VoltAttack: Math.round(Math.round((xcs.getVal("VoltAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("VoltAttackPercent")/100))),
         VoltDamagePercent: Math.round(xcs.getVal("VoltDamagePercent")*100)/100,
-        AlterAttack: Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+xcs.getVal("AlterAttack")),
+        AlterAttack: Math.floor([
+          Math.round(Math.round((xcs.getVal("PhysicalAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("PhysicalAttackPercent")/100))),
+          Math.round(Math.round((xcs.getVal("FlameAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("FlameAttackPercent")/100))),
+          Math.round(Math.round((xcs.getVal("FrostAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("FrostAttackPercent")/100))),
+          Math.round(Math.round((xcs.getVal("VoltAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("VoltAttackPercent")/100)))
+        ].sort((a,b)=>b-a)[0]+xcs.getVal("AlterAttack")),
         PhysicalResist: Math.floor((xcs.getVal("PhysicalResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("PhysicalResistPercent")/100))),
         FlameResist: Math.floor((xcs.getVal("FlameResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("FlameResistPercent")/100))),
         FrostResist: Math.floor((xcs.getVal("FrostResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("FrostResistPercent")/100))),
