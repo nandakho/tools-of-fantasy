@@ -38,6 +38,7 @@ export class GearComparePage {
   changedOnly: boolean = true;
   changedStats: any[] = [];
   compareStats: any[] = [];
+  selectedChar: any = "";
   curChar: characterInfo = this.char.initCharacterInfo();
   gearsCompare: any[] = [];
   curStat = new StatsService();
@@ -399,6 +400,7 @@ export class GearComparePage {
   }
 
   async reloadChar(){
+    this.char.charId = this.selectedChar;
     await this.char.loadStat(this.char.charId);
     this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
   }

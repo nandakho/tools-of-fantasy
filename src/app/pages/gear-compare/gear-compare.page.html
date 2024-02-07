@@ -141,7 +141,7 @@
                 <ion-grid>
                   <ion-row>
                     <ion-col size="12" class="justify-mid" *ngIf="char.charAvailable.length>0">
-                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Selected Character" [(ngModel)]="char.charId">
+                      <ion-select mode="ios" (ionChange)="reloadChar()" justify="space-between" label="Selected Character" [(ngModel)]="selectedChar">
                         <ion-select-option value="">Select Character</ion-select-option>
                         <ion-select-option *ngFor="let c of char.charAvailable" [value]="c.id">{{[c.name??'No Name',c.uid??'Empty UID'].join(' - ')}}</ion-select-option>
                       </ion-select>
