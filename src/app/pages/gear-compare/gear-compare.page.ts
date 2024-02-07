@@ -545,13 +545,13 @@ export class GearComparePage {
     return Math.round(this.curStat.getVal("PhysicalDamagePercent")*100)/100;
   }
   get physicalAtkOld() {
-    return Math.round(Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.curStat.getVal("PhysicalAttackPercent")/100)));
+    return Math.round(Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
   }
   get physicalAtkBOld() {
     return Math.round(this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"));
   }
   get physicalAtkPOld() {
-    return Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.curStat.getVal("PhysicalAttackPercent")/100)));
+    return Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
   }
   get physicalDamOld() {
     return Math.round(this.char.characterStat.getVal("PhysicalDamagePercent")*100)/100;
@@ -570,7 +570,7 @@ export class GearComparePage {
     return Math.round(this.curStat.getVal("FlameDamagePercent")*100)/100;
   }
   get flameAtkOld() {
-    return Math.round(Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.curStat.getVal("FlameAttackPercent")/100)));
+    return Math.round(Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FlameAttackPercent")/100)));
   }
   get flameAtkBOld() {
     return Math.round(this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"));
@@ -642,10 +642,10 @@ export class GearComparePage {
     return Math.floor(this.curStat.getVal("AlterAttack"));
   }
   get alterAtkOld() {
-    return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+this.char.characterStat.getVal("AlterAttack"));
+    return Math.floor([this.physicalAtkOld,this.flameAtkOld,this.frostAtkOld,this.voltAtkOld].sort((a,b)=>b-a)[0]+this.char.characterStat.getVal("AlterAttack"));
   }
   get alterAtkBOld() {
-    return Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]);
+    return Math.floor([this.physicalAtkOld,this.flameAtkOld,this.frostAtkOld,this.voltAtkOld].sort((a,b)=>b-a)[0]);
   }
   get alterAtkPOld() {
     return Math.floor(this.char.characterStat.getVal("AlterAttack"));

@@ -297,7 +297,7 @@
                             <ion-item lines="none" *ngIf="compareStats.length==0">
                               <ion-text><i>Nothing changed yet...</i></ion-text><br>
                             </ion-item>
-                            <ion-item *ngFor="let s of compareStats" lines="none" class="ion-text-wrap">
+                            <ion-item *ngFor="let s of compareStats" lines="none" class="ion-text-wrap comparing-single">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
                               <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
@@ -380,7 +380,7 @@
                             <ion-item lines="none" *ngIf="eqcompare.compareStats.length==0">
                               <ion-text><i>Nothing changed yet...</i></ion-text><br>
                             </ion-item>
-                            <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="ion-text-wrap">
+                            <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="ion-text-wrap comparing-single">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
                               <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
