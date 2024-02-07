@@ -248,12 +248,12 @@
                       <ion-row>
                         <ion-col class="equipments">
                           <div class="choosen-eq" *ngIf="char.characterInfo.gear[singleType].rarity!=null">
-                            <div class="choose" [ngClass]="gearsCompare.length>0?'showstats':''">
+                            <div class="choose showstats">
                               <ion-icon (click)="typeChange()" class="type-change" name="settings-outline"></ion-icon>
                               <ion-img class="nochange" [src]="'assets/icon/equipments/'+singleType+'%20'+char.characterInfo.gear[singleType].rarity+'.png'"></ion-img>
                               <ion-text class="equipped-text">Equipped</ion-text>
                             </div>
-                            <div class="stats" [ngClass]="gearsCompare.length>0?'showstats':''">
+                            <div class="stats showstats">
                               <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
                               <ion-item lines="none" class="body" *ngFor="let eq of char.characterInfo.gear[singleType].random; index as rIdx">
                                 <ion-img class="icon nochange" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
@@ -288,12 +288,12 @@
                             </div>
                           </div>
                           <div class="null-eq" *ngIf="char.characterInfo.gear[singleType].rarity==null">
-                            <div class="nochange eq-background-null" [ngClass]="gearsCompare.length>0?'showstats':''">
+                            <div class="nochange eq-background-null showstats">
                               <ion-icon (click)="typeChange()" color="dark" class="type-change" name="settings"></ion-icon>
                               <ion-img [src]="'assets/icon/equipments/'+singleType+'.png'"></ion-img>
                             </div>
                           </div>
-                          <div class="eqstats" *ngIf="gearsCompare.length>0">
+                          <div class="eqstats">
                             <ion-item lines="none" *ngIf="compareStats.length==0">
                               <ion-text><i>Nothing changed yet...</i></ion-text><br>
                             </ion-item>
@@ -302,7 +302,6 @@
                               <div class="stat-val">
                                 <ion-text>{{s.name}}</ion-text><br>
                                 <ion-text>{{s.val}}</ion-text>
-                                <ion-text class="stat-diff" [ngClass]="s.increase>0?'increase-val':'decrease-val'"><ion-icon [name]="s.increase>0?'caret-up':'caret-down'"></ion-icon>{{s.increase}}</ion-text>
                               </div>
                             </ion-item>
                           </div>
@@ -310,8 +309,9 @@
                         <ion-col class="equipments" *ngFor="let eqcompare of gearsCompare; index as gIdx">
                           <div class="choosen-eq" *ngIf="eqcompare.rarity!=null">
                             <div class="choose showstats">
-                              <ion-text>{{gIdx+1}}</ion-text>
+                              <ion-text>New: {{gIdx+1}}</ion-text>
                               <ion-img (click)="eqcompareChange(singleType,eqcompare.id)" [src]="'assets/icon/equipments/'+singleType+'%20'+eqcompare.rarity+'.png'"></ion-img>
+                              <ion-icon (click)="delCompare(eqcompare.id)" class="del-btn" name="trash-bin-outline"></ion-icon>
                             </div>
                             <div class="stats showstats">
                               <ion-item lines="none" class="header"><ion-text>Random</ion-text></ion-item>
@@ -323,7 +323,7 @@
                                   <ng-template>
                                     <ion-content class="popups">
                                       <ion-text class="title">Change {{beautifyStatString(eq.type)}} Value</ion-text>
-                                      <ion-input (ionChange)="recalcStat()" type="number" [(ngModel)]="eqcompare.random[rIdx].val"></ion-input>
+                                      <ion-input (ionChange)="recalcCompareStat()" type="number" [(ngModel)]="eqcompare.random[rIdx].val"></ion-input>
                                     </ion-content>
                                   </ng-template>
                                 </ion-popover>
@@ -338,7 +338,7 @@
                                     <ng-template>
                                       <ion-content class="popups">
                                         <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
-                                        <ion-input (ionChange)="recalcStat()" type="number" [(ngModel)]="eqcompare.augment[arIdx].val"></ion-input>
+                                        <ion-input (ionChange)="recalcCompareStat()" type="number" [(ngModel)]="eqcompare.augment[arIdx].val"></ion-input>
                                       </ion-content>
                                     </ng-template>
                                   </ion-popover>
@@ -358,7 +358,7 @@
                                     <ng-template>
                                       <ion-content class="popups">
                                         <ion-text class="title">Change {{beautifyStatString(eqcompare.rare.type)}} Level</ion-text>
-                                        <ion-range (ionChange)="recalcStat()" color="warning" [(ngModel)]="eqcompare.rare.val" [min]="1" [max]="3" [pin]="true"></ion-range>
+                                        <ion-range (ionChange)="recalcCompareStat()" color="warning" [(ngModel)]="eqcompare.rare.val" [min]="1" [max]="3" [pin]="true"></ion-range>
                                       </ion-content>
                                     </ng-template>
                                   </ion-popover>

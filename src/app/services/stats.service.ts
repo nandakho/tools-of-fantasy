@@ -25,6 +25,12 @@ export class StatsService {
     }
   }
 
+  sub(stats:stats):void{
+    for(let [k,v] of Object.entries(stats)){
+      this.addVal(k as statTypes,-(v));
+    }
+  }
+
   addVal(what:statTypes,val:number):void{
     this.stats[what] = (this.stats[what]??0)+val;
   }

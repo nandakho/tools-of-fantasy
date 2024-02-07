@@ -220,10 +220,22 @@ ion-col.equipments {
             border-bottom: 0px;
             border-radius: 5px 5px 0px 0px;
             ion-text {
+                top: 78px;
+                color: var(--ion-color-warning);
+                font-size: smaller !important;
                 position: absolute;
                 padding-left: 3px;
-                font-size: larger;
                 cursor: default;
+            }
+            ion-icon.del-btn {
+                position: absolute;
+                font-size: x-large;
+                top: 2px;
+                cursor: pointer;
+            }
+            ion-icon.del-btn:hover {
+                border: 2px solid var(--ion-color-danger);
+                border-radius: 5px 0px 5px 0px; 
             }
         }
         div.stats {
@@ -332,7 +344,7 @@ ion-col.equipments {
         border: 2px solid var(--ion-color-medium); 
         border-radius: 5px; 
         height: 323px;
-        width: 100px;
+        width: 380px;
         border-radius: 5px; 
         display: flex;
         cursor: pointer;
@@ -364,9 +376,9 @@ ion-icon.type-change:hover{
     border-radius: 5px 0px 5px 0px; 
 }
 ion-text.equipped-text {
-    top: 74px;
+    top: 78px;
     color: var(--ion-color-warning);
-    font-size: medium !important;
+    font-size: smaller !important;
 }
 
 ion-content.popups {
@@ -576,10 +588,51 @@ div.eq-background-null.showstats {
     border-radius: 5px 0px 0px 5px !important;
 }
 div.eqstats{
-    width: 250px;
-    height: 100%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    width: 280px;
+    height: 323px;
+    overflow-x: auto;
     border: 2px solid var(--ion-color-medium);
     border-radius: 0px 5px 5px 0px;
     border-left: 0px;
-    padding-left: 8px;
+    padding-left: 12px;
+    ion-item {
+        ion-img {
+            width: 36px;
+            height: 36px;
+            padding-right: 4px;
+        }
+        div.stat-val {
+            flex-wrap: wrap;
+            width: 200px;
+            border: 0px;
+            border-left: 2px solid var(--ion-color-medium);
+            font-size: smaller;
+            text-align: left;
+            padding-left: 8px;
+            cursor: default;
+            .tooltip {
+                display: none;
+            }
+            div.highlight {
+                display: inline;
+                color: var(--ion-color-warning);
+            }
+        }
+        div.stat-val:hover {
+            .tooltip {
+                display: block;
+                position: absolute;
+                background: var(--ion-color-dark-tint);
+                border: 2px solid var(--ion-color-warning);
+                border-radius: 10px;
+                top: 0px;
+                padding: 4px;
+                margin-left: 40px;
+                font-size: smaller;
+                font-weight: bold;
+            }
+        }
+    }
 }

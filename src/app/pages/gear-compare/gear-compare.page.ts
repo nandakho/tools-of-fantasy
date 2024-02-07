@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, AlertInput, NavController } from '@ionic/angular';
-import { MiscService, augStat, basicStat, statTypes, gear, gearTypes, CharacterService, characterInfo, randomStatList, augStatList, titanStatList, augAvailable, StatsService, GearsService } from 'src/app/services';
+import { MiscService, augStat, basicStat, statTypes, gear, gearTypes, CharacterService, characterInfo, randomStatList, augStatList, titanStatList, augAvailable, StatsService, GearsService, gearList } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
@@ -68,9 +68,7 @@ export class GearComparePage {
     this.curStat.add(this.char.characterStat.getAll());
     let oldGear = new StatsService();
     oldGear.add(this.gears.calc(this.char.characterInfo.gear));
-    for(let [k,v] of Object.entries(oldGear.getAll())){
-      this.curStat.addVal(k as statTypes,(-v));
-    }
+    this.curStat.sub(oldGear.getAll());
     this.curStat.add(this.gears.calc(this.curChar.gear));
     if(this.hp!=this.hpOld){
       this.changedStats.push({iconname:'HP',name:'HP',val:this.hp,increase:this.hp-this.hpOld});
@@ -153,47 +151,114 @@ export class GearComparePage {
     this.compareStats = [];
     let cs = new StatsService();
     cs.add(this.char.characterStat.getAll());
-    for(let rand of this.char.characterInfo.gear[this.singleType].random){
-      if(rand.type!=null){
-        cs.addVal(rand.type,-(rand.val));
+    const statsOld = {
+      HP: Math.round(cs.getVal("HP")*(1+(cs.getVal("HPPercent")/100))),
+      Crit: Math.floor(cs.getVal("Crit")),
+      CritPercent: cs.getVal("CritPercent"),
+      PhysicalAttack: Math.round(Math.round((cs.getVal("PhysicalAttack")+cs.getVal("Attack")))*(1+(cs.getVal("PhysicalAttackPercent")/100))),
+      PhysicalDamagePercent: Math.round(cs.getVal("PhysicalDamagePercent")*100)/100,
+      FlameAttack: Math.round(Math.round((cs.getVal("FlameAttack")+cs.getVal("Attack")))*(1+(cs.getVal("FlameAttackPercent")/100))),
+      FlameDamagePercent: Math.round(cs.getVal("FlameDamagePercent")*100)/100,
+      FrostAttack: Math.round(Math.round((cs.getVal("FrostAttack")+cs.getVal("Attack")))*(1+(cs.getVal("FrostAttackPercent")/100))),
+      FrostDamagePercent: Math.round(cs.getVal("FrostDamagePercent")*100)/100,
+      VoltAttack: Math.round(Math.round((cs.getVal("VoltAttack")+cs.getVal("Attack")))*(1+(cs.getVal("VoltAttackPercent")/100))),
+      VoltDamagePercent: Math.round(cs.getVal("VoltDamagePercent")*100)/100,
+      AlterAttack: Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+cs.getVal("AlterAttack")),
+      PhysicalResist: Math.floor((cs.getVal("PhysicalResist")+cs.getVal("Resist"))*(1+(cs.getVal("PhysicalResistPercent")/100))),
+      FlameResist: Math.floor((cs.getVal("FlameResist")+cs.getVal("Resist"))*(1+(cs.getVal("FlameResistPercent")/100))),
+      FrostResist: Math.floor((cs.getVal("FrostResist")+cs.getVal("Resist"))*(1+(cs.getVal("FrostResistPercent")/100))),
+      VoltResist: Math.floor((cs.getVal("VoltResist")+cs.getVal("Resist"))*(1+(cs.getVal("VoltResistPercent")/100))),
+      AlterResist: Math.floor((cs.getVal("AlterResist")+cs.getVal("Resist"))*(1+(cs.getVal("AlterResistPercent")/100))),
+      Block: cs.getVal("Block"),
+      Weak: cs.getVal("Weak"),
+      Lifesteal: cs.getVal("Lifesteal"),
+      Recovery: cs.getVal("Recovery"),
+      Delay: cs.getVal("Delay"),
+      Normal: cs.getVal("Normal"),
+      Dodge: cs.getVal("Dodge"),
+      Skill: cs.getVal("Skill"),
+      Discharge: cs.getVal("Discharge"),
+      Damage: cs.getVal("Damage"),
+      Reduction: cs.getVal("Reduction"),
+      Heal: cs.getVal("Heal")
+    }
+    for(let x of this.gearsCompare){
+      x.compareStats = [];
+      let xcs = new StatsService();
+      xcs.initAll();
+      xcs.add(this.char.characterStat.getAll());
+      xcs.sub(this.gears.calc(this.char.characterInfo.gear));
+      let newGearset:gearList = JSON.parse(JSON.stringify(this.char.characterInfo.gear));
+      newGearset[this.singleType] = {
+        enhance: x.enhance,
+        rarity: x.rarity,
+        augment: x.augment,
+        random: x.random,
+        rare: x.rare
       }
-    }
-    for(let a of this.char.characterInfo.gear[this.singleType].augment){
-      if(a.type!=null){
-        cs.addVal(a.type,-(a.val));
+      xcs.add(this.gears.calc(newGearset));
+      const statsNew = {
+        HP: Math.round(xcs.getVal("HP")*(1+(xcs.getVal("HPPercent")/100))),
+        Crit: Math.floor(xcs.getVal("Crit")),
+        CritPercent: xcs.getVal("CritPercent"),
+        PhysicalAttack: Math.round(Math.round((xcs.getVal("PhysicalAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("PhysicalAttackPercent")/100))),
+        PhysicalDamagePercent: Math.round(xcs.getVal("PhysicalDamagePercent")*100)/100,
+        FlameAttack: Math.round(Math.round((xcs.getVal("FlameAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("FlameAttackPercent")/100))),
+        FlameDamagePercent: Math.round(xcs.getVal("FlameDamagePercent")*100)/100,
+        FrostAttack: Math.round(Math.round((xcs.getVal("FrostAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("FrostAttackPercent")/100))),
+        FrostDamagePercent: Math.round(xcs.getVal("FrostDamagePercent")*100)/100,
+        VoltAttack: Math.round(Math.round((xcs.getVal("VoltAttack")+xcs.getVal("Attack")))*(1+(xcs.getVal("VoltAttackPercent")/100))),
+        VoltDamagePercent: Math.round(xcs.getVal("VoltDamagePercent")*100)/100,
+        AlterAttack: Math.floor([this.physicalAtk,this.flameAtk,this.frostAtk,this.voltAtk].sort((a,b)=>b-a)[0]+xcs.getVal("AlterAttack")),
+        PhysicalResist: Math.floor((xcs.getVal("PhysicalResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("PhysicalResistPercent")/100))),
+        FlameResist: Math.floor((xcs.getVal("FlameResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("FlameResistPercent")/100))),
+        FrostResist: Math.floor((xcs.getVal("FrostResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("FrostResistPercent")/100))),
+        VoltResist: Math.floor((xcs.getVal("VoltResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("VoltResistPercent")/100))),
+        AlterResist: Math.floor((xcs.getVal("AlterResist")+xcs.getVal("Resist"))*(1+(xcs.getVal("AlterResistPercent")/100))),
+        Block: xcs.getVal("Block"),
+        Weak: xcs.getVal("Weak"),
+        Lifesteal: xcs.getVal("Lifesteal"),
+        Recovery: xcs.getVal("Recovery"),
+        Delay: xcs.getVal("Delay"),
+        Normal: xcs.getVal("Normal"),
+        Dodge: xcs.getVal("Dodge"),
+        Skill: xcs.getVal("Skill"),
+        Discharge: xcs.getVal("Discharge"),
+        Damage: xcs.getVal("Damage"),
+        Reduction: xcs.getVal("Reduction"),
+        Heal: xcs.getVal("Heal")
       }
+      if(statsOld.HP!=statsNew.HP) x.compareStats.push({iconname:'HP',name:'HP',val:statsNew.HP,increase:statsNew.HP-statsOld.HP});
+      if(statsOld.Crit!=statsNew.Crit) x.compareStats.push({iconname:'Crit',name:'Crit',val:statsNew.Crit,increase:statsNew.Crit-statsOld.Crit});
+      if(statsOld.CritPercent!=statsNew.CritPercent) x.compareStats.push({iconname:'CritPercent',name:'Crit Rate',val:`${statsNew.CritPercent}%`,increase:statsNew.CritPercent-statsOld.CritPercent});
+      if(statsOld.PhysicalAttack!=statsNew.PhysicalAttack) x.compareStats.push({iconname:'PhysicalAttack',name:'Physical Attack',val:statsNew.PhysicalAttack,increase:statsNew.PhysicalAttack-statsOld.PhysicalAttack});
+      if(statsOld.FlameAttack!=statsNew.FlameAttack) x.compareStats.push({iconname:'FlameAttack',name:'Flame Attack',val:statsNew.FlameAttack,increase:statsNew.FlameAttack-statsOld.FlameAttack});
+      if(statsOld.FrostAttack!=statsNew.FrostAttack) x.compareStats.push({iconname:'FrostAttack',name:'Frost Attack',val:statsNew.FrostAttack,increase:statsNew.FrostAttack-statsOld.FrostAttack});
+      if(statsOld.VoltAttack!=statsNew.VoltAttack) x.compareStats.push({iconname:'VoltAttack',name:'Volt Attack',val:statsNew.VoltAttack,increase:statsNew.VoltAttack-statsOld.VoltAttack});
+      if(statsOld.AlterAttack!=statsNew.AlterAttack) x.compareStats.push({iconname:'AlterAttack',name:'Altered Attack',val:statsNew.AlterAttack,increase:statsNew.AlterAttack-statsOld.AlterAttack});
+      if(statsOld.PhysicalResist!=statsNew.PhysicalResist) x.compareStats.push({iconname:'PhysicalResist',name:'Physical Resistance',val:statsNew.PhysicalResist,increase:statsNew.PhysicalResist-statsOld.PhysicalResist});
+      if(statsOld.FlameResist!=statsNew.FlameResist) x.compareStats.push({iconname:'FlameResist',name:'Flame Resistance',val:statsNew.FlameResist,increase:statsNew.FlameResist-statsOld.FlameResist});
+      if(statsOld.FrostResist!=statsNew.FrostResist) x.compareStats.push({iconname:'FrostResist',name:'Frost Resistance',val:statsNew.FrostResist,increase:statsNew.FrostResist-statsOld.FrostResist});
+      if(statsOld.VoltResist!=statsNew.VoltResist) x.compareStats.push({iconname:'VoltResist',name:'Volt Resistance',val:statsNew.VoltResist,increase:statsNew.VoltResist-statsOld.VoltResist});
+      if(statsOld.AlterResist!=statsNew.AlterResist) x.compareStats.push({iconname:'AlterResist',name:'Altered Resistance',val:statsNew.AlterResist,increase:statsNew.AlterResist-statsOld.AlterResist});
+      if(statsOld.Block!=statsNew.Block) x.compareStats.push({iconname:'Block',name:'Block',val:statsNew.Block,increase:statsNew.Block-statsOld.Block});
+      if(statsOld.Weak!=statsNew.Weak) x.compareStats.push({iconname:'Weak',name:'Weak Point Damage Boost',val:statsNew.Weak,increase:statsNew.Weak-statsOld.Weak});
+      if(statsOld.Lifesteal!=statsNew.Lifesteal) x.compareStats.push({iconname:'Lifesteal',name:'Lifesteal',val:statsNew.Lifesteal,increase:statsNew.Lifesteal-statsOld.Lifesteal});
+      if(statsOld.Recovery!=statsNew.Recovery) x.compareStats.push({iconname:'Recovery',name:'HP Recovery',val:statsNew.Recovery,increase:statsNew.Recovery-statsOld.Recovery});
+      if(statsOld.Delay!=statsNew.Delay) x.compareStats.push({iconname:'Delay',name:'Delay',val:statsNew.Delay,increase:statsNew.Delay-statsOld.Delay});
+      if(statsOld.Normal!=statsNew.Normal) x.compareStats.push({iconname:'Normal',name:'Normal Attack Damage Boost',val:statsNew.Normal,increase:statsNew.Normal-statsOld.Normal});
+      if(statsOld.Dodge!=statsNew.Dodge) x.compareStats.push({iconname:'Dodge',name:'Dodge Attack Damage Boost',val:statsNew.Dodge,increase:statsNew.Dodge-statsOld.Dodge});
+      if(statsOld.Skill!=statsNew.Skill) x.compareStats.push({iconname:'Skill',name:'Skill Damage Boost',val:statsNew.Skill,increase:statsNew.Skill-statsOld.Skill});
+      if(statsOld.Discharge!=statsNew.Discharge) x.compareStats.push({iconname:'Discharge',name:'Discharge Damage Boost',val:statsNew.Discharge,increase:statsNew.Discharge-statsOld.Discharge});
+      if(statsOld.Damage!=statsNew.Damage) x.compareStats.push({iconname:'Damage',name:'Damage Boost',val:statsNew.Damage,increase:statsNew.Damage-statsOld.Damage});
+      if(statsOld.Reduction!=statsNew.Reduction) x.compareStats.push({iconname:'Reduction',name:'Damage Reduction',val:statsNew.Reduction,increase:statsNew.Reduction-statsOld.Reduction});
+      if(statsOld.Heal!=statsNew.Heal) x.compareStats.push({iconname:'Heal',name:'Increased Healing',val:statsNew.Heal,increase:statsNew.Heal-statsOld.Heal});
+      x.compareStats.map((y:any)=>{
+        let v = statsOld as any;
+        if(this.compareStats.findIndex(c=>c.iconname==y.iconname)==-1) this.compareStats.push({ iconname: y.iconname, name: y.name, val: v[y.iconname] });
+      });
     }
-    let rare = this.char.characterInfo.gear[this.singleType].rare;
-    if(rare.type!=null) cs.addVal(rare.type,-(rare.val));
-    for(let gear of this.gearsCompare){
-      let ncs = new StatsService();
-      ncs.add(cs.getAll());
-    }
-    /* this.changedStats.push({iconname:'HP',name:'HP',val:this.hp,increase:this.hp-this.hpOld});
-    this.changedStats.push({iconname:'Crit',name:'Crit',val:this.crit,increase:this.crit-this.critOld});
-    this.changedStats.push({iconname:'CritPercent',name:'Crit Rate',val:`${this.critPercent}%`,increase:this.critPercent-this.critPercentOld});
-    this.changedStats.push({iconname:'PhysicalAttack',name:'Physical Attack',val:this.physicalAtk,increase:this.physicalAtk-this.physicalAtkOld});
-    this.changedStats.push({iconname:'FlameAttack',name:'Flame Attack',val:this.flameAtk,increase:this.flameAtk-this.flameAtkOld});
-    this.changedStats.push({iconname:'FrostAttack',name:'Frost Attack',val:this.frostAtk,increase:this.frostAtk-this.frostAtkOld});
-    this.changedStats.push({iconname:'VoltAttack',name:'Volt Attack',val:this.voltAtk,increase:this.voltAtk-this.voltAtkOld});
-    this.changedStats.push({iconname:'AlterAttack',name:'Altered Attack',val:this.alterAtk,increase:this.alterAtk-this.alterAtkOld});
-    this.changedStats.push({iconname:'PhysicalResist',name:'Physical Resistance',val:this.physicalRes,increase:this.physicalRes-this.physicalResOld});
-    this.changedStats.push({iconname:'FlameResist',name:'Flame Resistance',val:this.flameRes,increase:this.frostRes-this.frostResOld});
-    this.changedStats.push({iconname:'FrostResist',name:'Frost Resistance',val:this.frostRes,increase:this.frostRes-this.frostResOld});
-    this.changedStats.push({iconname:'VoltResist',name:'Volt Resistance',val:this.voltRes,increase:this.voltRes-this.voltResOld});
-    this.changedStats.push({iconname:'AlterResist',name:'Altered Resistance',val:this.alterRes,increase:this.alterRes-this.alterResOld});
-    this.changedStats.push({iconname:'Block',name:'Block',val:this.titanBlock,increase:this.titanBlock-this.titanBlockOld});
-    this.changedStats.push({iconname:'Weak',name:'Weak Point Damage Boost',val:this.titanWeak,increase:this.titanWeak-this.titanWeakOld});
-    this.changedStats.push({iconname:'Lifesteal',name:'Lifesteal',val:this.titanLifesteal,increase:this.titanLifesteal-this.titanLifestealOld});
-    this.changedStats.push({iconname:'Recovery',name:'HP Recovery',val:this.titanRecovery,increase:this.titanRecovery-this.titanRecoveryOld});
-    this.changedStats.push({iconname:'Delay',name:'Delay',val:this.titanDelay,increase:this.titanDelay-this.titanDelayOld});
-    this.changedStats.push({iconname:'Normal',name:'Normal Attack Damage Boost',val:this.titanNormal,increase:this.titanNormal-this.titanNormalOld});
-    this.changedStats.push({iconname:'Dodge',name:'Dodge Attack Damage Boost',val:this.titanDodge,increase:this.titanDodge-this.titanDodgeOld});
-    this.changedStats.push({iconname:'Skill',name:'Skill Damage Boost',val:this.titanSkill,increase:this.titanSkill-this.titanSkillOld});
-    this.changedStats.push({iconname:'Discharge',name:'Discharge Damage Boost',val:this.titanDischarge,increase:this.titanDischarge-this.titanDischargeOld});
-    this.changedStats.push({iconname:'Damage',name:'Damage Boost',val:this.titanDamage,increase:this.titanDamage-this.titanDamageOld});
-    this.changedStats.push({iconname:'Reduction',name:'Damage Reduction',val:this.titanReduction,increase:this.titanReduction-this.titanReductionOld});
-    this.changedStats.push({iconname:'Heal',name:'Increased Healing',val:this.titanHeal,increase:this.titanHeal-this.titanHealOld}); */
+    this.compareStats.sort((a,b)=>Object.keys(statsOld).indexOf(a.iconname)-Object.keys(statsOld).indexOf(b.iconname));
   }
 
   validLength(length:number): boolean {
@@ -706,8 +771,28 @@ export class GearComparePage {
     return this.char.characterStat.getVal("Heal");
   }
 
+  async delCompare(id:number){
+    const alert = await this.alert.create({
+      header: `Delete This Gear?`,
+      backdropDismiss: true,
+      mode: "ios",
+      buttons: [{
+        text:'Keep'
+      },{
+        text:'Delete',
+        cssClass: `del-btn`,
+        handler: async ()=>{
+          const idx = this.gearsCompare.findIndex(x=>x.id==id);
+          this.gearsCompare.splice(idx,1);
+          this.recalcCompareStat();
+        }
+      }]
+    });
+    alert.present();
+  }
+
   newCompare(){
-    const prevGear = this.curChar.gear[this.singleType];
+    const prevGear = this.char.characterInfo.gear[this.singleType];
     this.gearsCompare.push(JSON.parse(JSON.stringify({
       id: (this.gearsCompare[this.gearsCompare.length-1]?.id??0)+1,
       rarity: prevGear.rarity,
@@ -745,6 +830,8 @@ export class GearComparePage {
         text:'OK',
         handler: async (newSelected)=>{
           this.singleType = newSelected;
+          this.gearsCompare = [];
+          this.recalcCompareStat();
         }
       }]
     });
@@ -806,7 +893,7 @@ export class GearComparePage {
         text:'OK',
         handler: async (newSelected)=>{
           this.gearsCompare.find(x=>x.id==id).rarity = newSelected;
-          this.recalcStat();
+          this.recalcCompareStat();
         }
       }]
     });
@@ -817,14 +904,20 @@ export class GearComparePage {
     const curRand = id==0?(this.curChar.gear[etype][parts][index].type):this.gearsCompare.find(x=>x.id==id)[parts][index].type;
     let alrdSelected: any[] = [];
     let lists: string[] = [];
-    alrdSelected = this.curChar.gear[etype].random.map(x=>x.type);
+    alrdSelected = id==0?this.curChar.gear[etype].random.map(x=>x.type):this.gearsCompare.find(x=>x.id==id).random.map((y:any)=>y.type);
     if(parts=="random"){
       lists = this.rs[etype];
     } else {
       lists = this.as[etype];
-      this.curChar.gear[etype].augment.map(x=>{
-        alrdSelected.push(x.type);
-      });
+      if(id==0){
+        this.curChar.gear[etype].augment.map(x=>{
+          alrdSelected.push(x.type);
+        });
+      } else {
+        this.gearsCompare.find(x=>x.id==id).augment.map((y:any)=>{
+          alrdSelected.push(y.type);
+        });
+      }
     }
     var r:AlertInput[] = [{
       label: "Empty",
@@ -893,7 +986,7 @@ export class GearComparePage {
         text:'OK',
         handler: async (newSelected)=>{
           this.gearsCompare.find(x=>x.id==id)[parts][index].type = newSelected;
-          this.recalcStat();
+          this.recalcCompareStat();
         }
       }]
     });
@@ -958,7 +1051,7 @@ export class GearComparePage {
         text:'OK',
         handler: async (newSelected)=>{
           this.gearsCompare.find(x=>x.id==id).rare.type = newSelected;
-          this.recalcStat();
+          this.recalcCompareStat();
         }
       }]
     });
