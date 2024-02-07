@@ -299,7 +299,7 @@
                             </ion-item>
                             <ion-item *ngFor="let s of compareStats" lines="none" class="ion-text-wrap">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
-                              <div class="stat-val">
+                              <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
                                 <ion-text>{{s.val}}</ion-text>
                               </div>
@@ -382,7 +382,7 @@
                             </ion-item>
                             <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="ion-text-wrap">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
-                              <div class="stat-val">
+                              <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
                                 <ion-text>{{s.val}}</ion-text>
                                 <ion-text class="stat-diff" [ngClass]="s.increase>0?'increase-val':'decrease-val'"><ion-icon [name]="s.increase>0?'caret-up':'caret-down'"></ion-icon>{{s.increase}}</ion-text>
