@@ -340,12 +340,24 @@ ion-col.equipments {
             height: 96px;
             align-self: center;
         }
+        ion-icon.del-btn {
+            color: var(--ion-color-dark);
+            position: absolute;
+            font-size: x-large;
+            padding: 2px;
+            cursor: pointer;
+        }
+        ion-icon.del-btn:hover {
+            border: 2px solid var(--ion-color-danger);
+            border-radius: 5px 0px 5px 0px; 
+        }
     }
     div.new-eq {
         border: 2px solid var(--ion-color-medium); 
         border-radius: 5px; 
         height: 323px;
-        width: 300px;
+        width: 100%;
+        min-width: 200px;
         border-radius: 5px; 
         display: flex;
         cursor: pointer;
@@ -590,15 +602,17 @@ div.eq-background-null.showstats {
     border-radius: 5px 0px 0px 5px !important;
 }
 div.eqstats{
-    width: 200px;
+    width: 150px;
     height: 323px;
-    overflow-x: auto;
+    overflow: auto;
     border: 2px solid var(--ion-color-medium);
     border-radius: 0px 5px 5px 0px;
     border-left: 0px;
     padding-left: 6px;
     font-size: 0.8rem;
+    white-space: nowrap;
     ion-item {
+        width: 200px;
         ion-img {
             width: 36px;
             height: 36px;
@@ -606,7 +620,7 @@ div.eqstats{
         }
         div.stat-val {
             flex-wrap: wrap;
-            width: 200px;
+            width: 100%;
             border: 0px;
             border-left: 2px solid var(--ion-color-medium);
             font-size: smaller;
@@ -643,4 +657,20 @@ div.eqstats{
 
 ion-item.comparing-single {
     --min-height: 28px;
+}
+
+@media (min-width: 390px) {
+    div.new-eq {
+        width: 300px !important;
+    }
+    div.eqstats{
+        width: 200px !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+        ion-item {
+            div.stat-val {
+                width: 200px !important;
+            }
+        }
+    }
 }

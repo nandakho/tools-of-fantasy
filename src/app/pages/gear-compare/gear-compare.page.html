@@ -297,7 +297,7 @@
                             <ion-item lines="none" *ngIf="compareStats.length==0">
                               <ion-text><i>Nothing changed yet...</i></ion-text><br>
                             </ion-item>
-                            <ion-item *ngFor="let s of compareStats" lines="none" class="ion-text-wrap comparing-single">
+                            <ion-item *ngFor="let s of compareStats" lines="none" class="comparing-single">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
                               <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
@@ -372,6 +372,7 @@
                             </div>
                           </div>
                           <div class="null-eq" *ngIf="eqcompare.rarity==null">
+                            <ion-icon (click)="delCompare(eqcompare.id)" class="del-btn" name="trash-bin"></ion-icon>
                             <div (click)="eqcompareChange(singleType,eqcompare.id)" class="eq-background-null showstats">
                               <ion-img [src]="'assets/icon/equipments/'+singleType+'.png'"></ion-img>
                             </div>
@@ -380,7 +381,7 @@
                             <ion-item lines="none" *ngIf="eqcompare.compareStats.length==0">
                               <ion-text><i>Nothing changed yet...</i></ion-text><br>
                             </ion-item>
-                            <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="ion-text-wrap comparing-single">
+                            <ion-item *ngFor="let s of eqcompare.compareStats" lines="none" class="comparing-single">
                               <ion-img [src]="'assets/icon/stats/'+s.iconname+'.png'"></ion-img>
                               <div class="stat-val singlegear">
                                 <ion-text>{{s.name}}</ion-text><br>
