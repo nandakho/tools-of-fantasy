@@ -26,7 +26,15 @@
       </ion-content>
       <ion-footer class="ion-no-border">
         <p><ion-label>Created by nandakho</ion-label></p>
-        <a [href]="gitLink" target="_blank"><ion-icon name="logo-github"></ion-icon><p><ion-label> Find this project on Github!</ion-label></p></a>
+        <div *ngIf="con.mode=='web'">
+          <a [href]="gitLink" target="_blank"><ion-icon name="logo-github"></ion-icon><p><ion-label> Find this project on Github!</ion-label></p></a>
+          <a [href]="psLink" target="_blank"><ion-icon name="logo-google-playstore"></ion-icon><p><ion-label> Android version now available!</ion-label></p></a>
+        </div>
+        <div *ngIf="con.mode!='web'">
+          <a (click)="visit('Github')"><ion-icon name="logo-github"></ion-icon><p><ion-label> Github Page</ion-label></p></a>
+          <a (click)="visit('Playstore')"><ion-icon name="logo-google-playstore"></ion-icon><p><ion-label> Playstore</ion-label></p></a>
+          <p><ion-label>{{con.modeCapitalize}} Client v{{con.verString}}</ion-label></p>
+        </div>
       </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService } from 'src/app/services';
+import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -32,7 +32,8 @@ export class MyCharPage {
     private meta: Meta,
     private title: Title,
     public char: CharacterService,
-    private misc: MiscService
+    private misc: MiscService,
+    private con: ConstService
   ) {
     this.setTag();
   }
@@ -393,6 +394,8 @@ export class MyCharPage {
     strokedText(`${this.titanHeal}`, 2, 1470+statOffset.x, 61+(statOffset.idx*70)+statOffset.y);
     //qr
     await insertIcon(`assets/icon/siteqr.png`, {zoom:0.6}, 10, 895);
+    //icon
+    await insertIcon(`assets/icon/icon.png`, {zoom:0.2}, 200, 905);
     fontSize(16);
     strokedText(`This image contains Metadata, load it in the site to view more detailed info!`, 2, 10, 800);
     strokedText(`Notes:`, 2, 10, 830);
@@ -407,11 +410,22 @@ export class MyCharPage {
     this.saving = false;
   }
 
-  download(what:string,name:string){
-    var a = document.createElement("a");
-    a.href = what;
-    a.download = name;
-    a.click();
+  async download(what:string,name:string){
+    if(this.con.mode=="web"){
+      var a = document.createElement("a");
+      a.href = what;
+      a.download = name;
+      a.click();
+    } else {
+      try {
+        let p = 'tof.nandakho.my.id/';
+        await this.misc.writeFile(what,name,{path:p});
+        this.misc.showToast(`File saved in Documents!`);
+      } catch (err) {
+        let e = err as string;
+        this.misc.showToast(e);
+      }
+    }
   }
 
   async delChar(){

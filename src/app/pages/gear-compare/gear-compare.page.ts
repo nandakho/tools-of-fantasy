@@ -83,14 +83,26 @@ export class GearComparePage {
     if(this.physicalAtk!=this.physicalAtkOld){
       this.changedStats.push({iconname:'PhysicalAttack',name:'Physical Attack',val:this.physicalAtk,increase:this.physicalAtk-this.physicalAtkOld});
     }
+    if(this.physicalDam!=this.physicalDamOld){
+      this.changedStats.push({iconname:'PhysicalDamagePercent',name:'Physical Damage',val:`${this.physicalDam}%`,increase:this.physicalDam-this.physicalDamOld});
+    }
     if(this.flameAtk!=this.flameAtkOld){
       this.changedStats.push({iconname:'FlameAttack',name:'Flame Attack',val:this.flameAtk,increase:this.flameAtk-this.flameAtkOld});
+    }
+    if(this.flameDam!=this.flameDamOld){
+      this.changedStats.push({iconname:'FlameDamagePercent',name:'Flame Damage',val:`${this.flameDam}%`,increase:this.flameDam-this.flameDamOld});
     }
     if(this.frostAtk!=this.frostAtkOld){
       this.changedStats.push({iconname:'FrostAttack',name:'Frost Attack',val:this.frostAtk,increase:this.frostAtk-this.frostAtkOld});
     }
+    if(this.frostDam!=this.frostDamOld){
+      this.changedStats.push({iconname:'FrostDamagePercent',name:'Frost Damage',val:`${this.frostDam}%`,increase:this.frostDam-this.frostDamOld});
+    }
     if(this.voltAtk!=this.voltAtkOld){
       this.changedStats.push({iconname:'VoltAttack',name:'Volt Attack',val:this.voltAtk,increase:this.voltAtk-this.voltAtkOld});
+    }
+    if(this.voltDam!=this.voltDamOld){
+      this.changedStats.push({iconname:'VoltDamagePercent',name:'Volt Damage',val:`${this.voltDam}%`,increase:this.voltDam-this.voltDamOld});
     }
     if(this.alterAtk!=this.alterAtkOld){
       this.changedStats.push({iconname:'AlterAttack',name:'Altered Attack',val:this.alterAtk,increase:this.alterAtk-this.alterAtkOld});
@@ -149,6 +161,7 @@ export class GearComparePage {
   }
 
   recalcCompareStat(){
+    let addPct = ["PhysicalDamagePercent","FlameDamagePercent","FrostDamagePercent","VoltDamagePercent","CritPercent"];
     this.compareStats = [];
     let cs = new StatsService();
     cs.add(this.char.characterStat.getAll());
@@ -247,6 +260,10 @@ export class GearComparePage {
       if(statsOld.FrostAttack!=statsNew.FrostAttack) x.compareStats.push({iconname:'FrostAttack',name:'Frost Attack',val:statsNew.FrostAttack,increase:statsNew.FrostAttack-statsOld.FrostAttack});
       if(statsOld.VoltAttack!=statsNew.VoltAttack) x.compareStats.push({iconname:'VoltAttack',name:'Volt Attack',val:statsNew.VoltAttack,increase:statsNew.VoltAttack-statsOld.VoltAttack});
       if(statsOld.AlterAttack!=statsNew.AlterAttack) x.compareStats.push({iconname:'AlterAttack',name:'Altered Attack',val:statsNew.AlterAttack,increase:statsNew.AlterAttack-statsOld.AlterAttack});
+      if(statsOld.PhysicalDamagePercent!=statsNew.PhysicalDamagePercent) x.compareStats.push({iconname:'PhysicalDamagePercent',name:'Physical Damage',val:`${statsNew.PhysicalDamagePercent}%`,increase:statsNew.PhysicalDamagePercent-statsOld.PhysicalDamagePercent});
+      if(statsOld.FlameDamagePercent!=statsNew.FlameDamagePercent) x.compareStats.push({iconname:'FlameDamagePercent',name:'Flame Damage',val:`${statsNew.FlameDamagePercent}%`,increase:statsNew.FlameDamagePercent-statsOld.FlameDamagePercent});
+      if(statsOld.FrostDamagePercent!=statsNew.FrostDamagePercent) x.compareStats.push({iconname:'FrostDamagePercent',name:'Frost Damage',val:`${statsNew.FrostDamagePercent}%`,increase:statsNew.FrostDamagePercent-statsOld.FrostDamagePercent});
+      if(statsOld.VoltDamagePercent!=statsNew.VoltDamagePercent) x.compareStats.push({iconname:'VoltDamagePercent',name:'Volt Damage',val:`${statsNew.VoltDamagePercent}%`,increase:statsNew.VoltDamagePercent-statsOld.VoltDamagePercent});
       if(statsOld.PhysicalResist!=statsNew.PhysicalResist) x.compareStats.push({iconname:'PhysicalResist',name:'Physical Resistance',val:statsNew.PhysicalResist,increase:statsNew.PhysicalResist-statsOld.PhysicalResist});
       if(statsOld.FlameResist!=statsNew.FlameResist) x.compareStats.push({iconname:'FlameResist',name:'Flame Resistance',val:statsNew.FlameResist,increase:statsNew.FlameResist-statsOld.FlameResist});
       if(statsOld.FrostResist!=statsNew.FrostResist) x.compareStats.push({iconname:'FrostResist',name:'Frost Resistance',val:statsNew.FrostResist,increase:statsNew.FrostResist-statsOld.FrostResist});
@@ -266,7 +283,7 @@ export class GearComparePage {
       if(statsOld.Heal!=statsNew.Heal) x.compareStats.push({iconname:'Heal',name:'Increased Healing',val:statsNew.Heal,increase:statsNew.Heal-statsOld.Heal});
       x.compareStats.map((y:any)=>{
         let v = statsOld as any;
-        if(this.compareStats.findIndex(c=>c.iconname==y.iconname)==-1) this.compareStats.push({ iconname: y.iconname, name: y.name, val: v[y.iconname] });
+        if(this.compareStats.findIndex(c=>c.iconname==y.iconname)==-1) this.compareStats.push({ iconname: y.iconname, name: y.name, val: addPct.includes(y.iconname)?`${v[y.iconname]}%`:v[y.iconname] });
       });
     }
     this.compareStats.sort((a,b)=>Object.keys(statsOld).indexOf(a.iconname)-Object.keys(statsOld).indexOf(b.iconname));

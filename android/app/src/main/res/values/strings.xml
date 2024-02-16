@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tools of Fantasy</string>
+    <string name="title_activity_main">Tools of Fantasy</string>
+    <string name="package_name">id.my.nandakho.tofu</string>
+    <string name="custom_url_scheme">id.my.nandakho.tofu</string>
+</resources>

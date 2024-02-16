@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,28 @@ export class MiscService {
     }
     newToast.style.opacity = "100%";
     return Promise.resolve();
+  }
+
+  async writeFile(data:string, name:string, opt?:{directory?:Directory, path?:string}):Promise<string>{
+    return new Promise(async (resolve,reject)=>{
+      let path = ``;
+      if(opt?.path){
+        if(opt.path!=''){
+          path = `${opt.path}`;
+          if(!opt.path.endsWith("/")) path+=`/`;
+        }
+      }
+      try {
+        const status = await Filesystem.checkPermissions();
+        if(status.publicStorage!="granted"){
+          await Filesystem.requestPermissions();
+        }
+        const uri = await Filesystem.writeFile({data:data,directory:(opt?.directory??Directory.Documents),path:`${path}${name}`,recursive:true});
+        return resolve(uri.uri);
+      } catch (err) {
+        return reject(err);
+      }
+    });
   }
 
   decodeString(str:string):string{
