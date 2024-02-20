@@ -163,7 +163,7 @@
               <ion-card-title>Equipment</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" class="changed-stat">Multi parts compare</ion-toggle>
+              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" (ionChange)="graphRefresh()" class="changed-stat">Multi parts compare</ion-toggle>
               <ion-list *ngIf="multiType">
                 <ion-item lines="none" class="ion-text-wrap">
                   <ion-grid>
@@ -675,9 +675,9 @@
           <ion-card-header>
             <ion-card-title>Estimated Damage</ion-card-title>
           </ion-card-header>
-          <ion-card-content>
+          <ion-card-content class="graph">
             <ion-label class="subtitle">Matrix set effects not added yet</ion-label>
-            <canvas #graphcanvas height="300"></canvas>
+            <canvas #graphcanvas height="100"></canvas>
           </ion-card-content>
         </ion-card>
       </ion-row>

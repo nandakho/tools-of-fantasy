@@ -678,3 +678,8 @@ ion-item.comparing-single {
 .hidden {
     display: none;
 }
+ion-card-content.graph {
+    min-height: 250px;
+    max-height: 400px;
+    margin-bottom: 15px;
+}

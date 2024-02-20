@@ -296,6 +296,7 @@ export class GearComparePage {
   }
 
   graphInit(){
+    if(this.char.charAvailable.length==0) return;
     var canvasElement = this.editCanvas.nativeElement;
     let ctx = canvasElement.getContext('2d');
     let d = this.char.calcDamage(this.char.characterStat.getAll());
@@ -336,6 +337,7 @@ export class GearComparePage {
         }]
       },
       options: {
+        maintainAspectRatio: false,
         scales: {
           y: {
             ticks: {
@@ -355,6 +357,7 @@ export class GearComparePage {
   }
 
   graphRefresh(){
+    if(this.char.charAvailable.length==0) return;
     const base = this.chart.data.datasets.map((x:any)=>x.data[0]);
     if(this.multiType){
       this.chart.data.labels = ['Current','New'];
@@ -368,6 +371,30 @@ export class GearComparePage {
       this.chart.data.labels = ['Current'];
       for(let i=0; i<5; i++){
         this.chart.data.datasets[i].data = [base[i]];
+      }
+      let ind = 0;
+      for(let x of this.gearsCompare){
+        ind++;
+        let xcs = new StatsService();
+        xcs.initAll();
+        xcs.add(this.char.characterStat.getAll());
+        xcs.sub(this.gears.calc(this.char.characterInfo.gear));
+        let ngs:gearList = JSON.parse(JSON.stringify(this.char.characterInfo.gear));
+        ngs[this.singleType] = {
+          enhance: x.enhance,
+          rarity: x.rarity,
+          augment: x.augment,
+          random: x.random,
+          rare: x.rare
+        }
+        xcs.add(this.gears.calc(ngs));
+        let xcsD = this.char.calcDamage(xcs.getAll());
+        this.chart.data.labels.push(`New ${ind}`);
+        this.chart.data.datasets[0].data.push(xcsD.flame);
+        this.chart.data.datasets[1].data.push(xcsD.frost);
+        this.chart.data.datasets[2].data.push(xcsD.physical);
+        this.chart.data.datasets[3].data.push(xcsD.volt);
+        this.chart.data.datasets[4].data.push(xcsD.altered);
       }
     }
     this.chart.update();
@@ -918,6 +945,7 @@ export class GearComparePage {
       enhance: prevGear.enhance,
       compareStats: []
     })));
+    this.graphRefresh();
   }
 
   eqTypeGenerate(){
