@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService } from '.';
+import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService, stats } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -170,7 +170,7 @@ export class CharacterService {
       }
     }
     //base stat
-    stat.add({"Resist":150,"HP":24000,"Attack":300});
+    stat.add({"Resist":150,"HP":24000,"Attack":300,"CritDamage":50});
     return stat.getAll();
   }
 
@@ -289,6 +289,35 @@ export class CharacterService {
     this.characterStat.add(statGears);
     this.characterStat.add(statChar);
     this.characterStat.add(statWeap);
+  }
+
+  //Calculate damage, for certain multiplier
+  //temporary formula
+  calcDamage(stat:stats, mult:number=1){
+    const calc = (atkFinal:number,eleDamage:number,multiplier:number) => {
+      let cr = (this.calcCrit(stat.Crit??0,"percent",this.characterInfo.level)+(stat.CritPercent??0));
+      let cdmgmult = cr<0?1:cr>100?1:(1+(((stat.CritDamage??0)/100)*(cr/100)));
+      return atkFinal*(1+(eleDamage/100))*multiplier*cdmgmult;
+    }
+    const calcAtk = (baseAtk:number,eleAtk:number,atkPercent:number) => {
+      return (baseAtk+eleAtk)*(1+(atkPercent/100));
+    }
+    let atkFinal = {
+      flame:calcAtk(stat.Attack??0,stat.FlameAttack??0,stat.FlameAttackPercent??0),
+      frost:calcAtk(stat.Attack??0,stat.FrostAttack??0,stat.FrostAttackPercent??0),
+      physical:calcAtk(stat.Attack??0,stat.PhysicalAttack??0,stat.PhysicalAttackPercent??0),
+      volt:calcAtk(stat.Attack??0,stat.VoltAttack??0,stat.VoltAttackPercent??0),
+      altered:0,
+    }
+    atkFinal.altered = [atkFinal.flame,atkFinal.frost,atkFinal.physical,atkFinal.volt].sort((a,b)=>b-a)[0]+(stat.AlterAttack??0);
+    let dam = {
+      flame:calc(atkFinal.flame,stat.FlameDamagePercent??0,mult),
+      frost:calc(atkFinal.frost,stat.FrostDamagePercent??0,mult),
+      physical:calc(atkFinal.physical,stat.PhysicalDamagePercent??0,mult),
+      volt:calc(atkFinal.volt,stat.VoltDamagePercent??0,mult),
+      altered:calc(atkFinal.altered,0,mult)
+    };
+    return dam;
   }
 
   //Crit Calc

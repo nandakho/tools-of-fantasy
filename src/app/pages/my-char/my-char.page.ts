@@ -801,6 +801,9 @@ export class MyCharPage {
   get crit() {
     return Math.floor(this.char.characterStat.getVal("Crit"));
   }
+  get critDamage() {
+    return this.char.characterStat.getVal("CritDamage");
+  }
   get critPCalc() {
     return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("Crit"),"percent",this.char.characterInfo.level))*100)/100;
   }

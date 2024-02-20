@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, AlertInput, NavController } from '@ionic/angular';
 import { MiscService, augStat, basicStat, statTypes, gear, gearTypes, CharacterService, characterInfo, randomStatList, augStatList, titanStatList, augAvailable, StatsService, GearsService, gearList } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-gear-compare',
@@ -10,6 +11,8 @@ import { Title, Meta } from '@angular/platform-browser';
   styleUrls: ['./gear-compare.page.scss'],
 })
 export class GearComparePage {
+  @ViewChild('graphcanvas') editCanvas:any;
+  chart: any;
   rs = randomStatList;
   as = augStatList;
   ts = titanStatList;
@@ -60,6 +63,7 @@ export class GearComparePage {
 
   ionViewWillEnter(){
     this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
+    this.graphInit();
     this.recalcStat();
   }
 
@@ -158,6 +162,7 @@ export class GearComparePage {
     if(this.titanHeal!=this.titanHealOld){
       this.changedStats.push({iconname:'Heal',name:'Increased Healing',val:this.titanHeal,increase:this.titanHeal-this.titanHealOld});
     }
+    this.graphRefresh();
   }
 
   recalcCompareStat(){
@@ -287,6 +292,85 @@ export class GearComparePage {
       });
     }
     this.compareStats.sort((a,b)=>Object.keys(statsOld).indexOf(a.iconname)-Object.keys(statsOld).indexOf(b.iconname));
+    this.graphRefresh();
+  }
+
+  graphInit(){
+    var canvasElement = this.editCanvas.nativeElement;
+    let ctx = canvasElement.getContext('2d');
+    let d = this.char.calcDamage(this.char.characterStat.getAll());
+    this.chart = new Chart(ctx,{
+      type: 'bar',
+      data: {
+        labels: ['Current'],
+        datasets: [{
+          label: 'Flame',
+          data: [d.flame],
+          borderWidth: 1,
+          borderColor: `rgb(255, 99, 132)`,
+          backgroundColor: `rgba(255, 99, 132, 0.5)`
+        },{
+          label: 'Frost',
+          data: [d.frost],
+          borderWidth: 1,
+          borderColor: `rgb(54, 162, 235)`,
+          backgroundColor: `rgba(54, 162, 235, 0.5)`
+        },{
+          label: 'Physical',
+          data: [d.physical],
+          borderWidth: 1,
+          borderColor: `rgb(255, 159, 64)`,
+          backgroundColor: `rgba(255, 159, 64, 0.5)`
+        },{
+          label: 'Volt',
+          data: [d.volt],
+          borderWidth: 1,
+          borderColor: `rgb(112, 54, 235)`,
+          backgroundColor: `rgba(112, 54, 235, 0.5)`
+        },{
+          label: 'Altered',
+          data: [d.altered],
+          borderWidth: 1,
+          borderColor: `rgb(54, 255, 132)`,
+          backgroundColor: `rgba(54, 255, 132, 0.5)`
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              color: `#f4f5f8`
+            },
+            beginAtZero: false
+          },
+          x: {
+            ticks: {
+              color: `#f4f5f8`
+            }
+          }
+        },
+        color: `#f4f5f8`
+      }
+    });
+  }
+
+  graphRefresh(){
+    const base = this.chart.data.datasets.map((x:any)=>x.data[0]);
+    if(this.multiType){
+      this.chart.data.labels = ['Current','New'];
+      const newD = this.char.calcDamage(this.curStat.getAll());
+      let news = [newD.flame,newD.frost,newD.physical,newD.volt,newD.altered];
+      for(let i=0; i<5; i++){
+        this.chart.data.datasets[i].data = [base[i],news[i]];
+      }
+    } else {
+      //to be added
+      this.chart.data.labels = ['Current'];
+      for(let i=0; i<5; i++){
+        this.chart.data.datasets[i].data = [base[i]];
+      }
+    }
+    this.chart.update();
   }
 
   validLength(length:number): boolean {
@@ -536,6 +620,9 @@ export class GearComparePage {
 
   get crit() {
     return Math.floor(this.curStat.getVal("Crit"));
+  }
+  get critDamage() {
+    return this.curStat.getVal("CritDamage");
   }
   get critPCalc() {
     return Math.floor((this.char.calcCrit(this.curStat.getVal("Crit"),"percent",this.curChar.level))*100)/100;

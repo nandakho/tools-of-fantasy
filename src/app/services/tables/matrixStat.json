@@ -43,6 +43,16 @@
             "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
             "Value": [13,17,21,25]
         },
+        "Fenrir": {
+            "Set": 2,
+            "Increase": ["CritDamage"],
+            "Value": [14,15,16,18]
+        },
+        "Scylla": {
+            "Set": 2,
+            "Increase": ["CritDamage"],
+            "Value": [13,16,19,23]
+        },
         "Lan": {
             "Set": 2,
             "Increase": ["FlameAttackPercent"],

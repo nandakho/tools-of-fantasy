@@ -490,6 +490,13 @@
                           </div>
                         </ion-item>
                         <ion-item lines="none" class="ion-text-wrap">
+                          <ion-img src="assets/icon/stats/CritDamage.png"></ion-img>
+                          <div class="stat-val">
+                            <ion-text>Crit Damage</ion-text><br>
+                            <ion-text>{{critDamage}}%</ion-text>
+                          </div>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-text-wrap">
                           <ion-img src="assets/icon/stats/PhysicalResist.png"></ion-img>
                           <div class="stat-val">
                             <ion-text>Physical Resistance</ion-text><br>
@@ -661,6 +668,19 @@
           </ion-card>
         </ion-row>
       </div>
+    </div>
+    <div [ngClass]="selectedChar==''?'hidden':''">
+      <ion-row>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Estimated Damage</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label class="subtitle">Matrix set effects not added yet</ion-label>
+            <canvas #graphcanvas height="300"></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
     </div>
   </ion-grid>
 </ion-content>
