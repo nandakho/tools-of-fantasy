@@ -296,7 +296,8 @@ export class CharacterService {
   calcDamage(stat:stats, mult:number=1){
     const calc = (atkFinal:number,eleDamage:number,multiplier:number) => {
       let cr = (this.calcCrit(stat.Crit??0,"percent",this.characterInfo.level)+(stat.CritPercent??0));
-      let cdmgmult = cr<0?1:cr>100?1:(1+(((stat.CritDamage??0)/100)*(cr/100)));
+      cr = cr>100?100:cr<0?0:cr;
+      let cdmgmult = (1+(((stat.CritDamage??0)/100)*(cr/100)));
       return atkFinal*(1+(eleDamage/100))*multiplier*cdmgmult;
     }
     const calcAtk = (baseAtk:number,eleAtk:number,atkPercent:number) => {

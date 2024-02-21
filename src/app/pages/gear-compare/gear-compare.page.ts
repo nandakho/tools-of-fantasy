@@ -48,6 +48,7 @@ export class GearComparePage {
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   multiType: boolean = true;
   singleType: gearTypes = "Helm";
+  baseDam: any = null;
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
@@ -295,84 +296,99 @@ export class GearComparePage {
     this.graphRefresh();
   }
 
+  percentageDamage(dam:{flame:number,frost:number,physical:number,volt:number,altered:number}){
+    const avg = (cur:number,baseMax:number) => {
+      return Math.floor((cur/baseMax)*10000)/100;
+    }
+    const x = JSON.parse(JSON.stringify(this.baseDam));
+    let b = Object.values({
+      flame: x.flame,
+      frost: x.frost,
+      physical: x.physical,
+      volt: x.volt,
+      altered: x.altered
+    }).sort((a,b)=>b-a)[0];
+    return {
+      flame: avg(dam.flame,b),
+      frost: avg(dam.frost,b),
+      physical: avg(dam.physical,b),
+      volt: avg(dam.volt,b),
+      altered: avg(dam.altered,b)
+    };
+  }  
+
+  randomColor(){
+    return {r:Math.floor(Math.random()*255),g:Math.floor(Math.random()*255),b:Math.floor(Math.random()*255)};
+  }
+
   graphInit(){
     if(this.char.charAvailable.length==0) return;
     var canvasElement = this.editCanvas.nativeElement;
     let ctx = canvasElement.getContext('2d');
-    let d = this.char.calcDamage(this.char.characterStat.getAll());
+    this.baseDam = this.char.calcDamage(this.char.characterStat.getAll());
+    let d = this.percentageDamage(this.baseDam);
     this.chart = new Chart(ctx,{
       type: 'bar',
       data: {
-        labels: ['Current'],
+        labels: ['Flame','Frost','Physical','Volt','Altered'],
         datasets: [{
-          label: 'Flame',
-          data: [d.flame],
-          borderWidth: 1,
-          borderColor: `rgb(255, 99, 132)`,
-          backgroundColor: `rgba(255, 99, 132, 0.5)`
-        },{
-          label: 'Frost',
-          data: [d.frost],
-          borderWidth: 1,
-          borderColor: `rgb(54, 162, 235)`,
-          backgroundColor: `rgba(54, 162, 235, 0.5)`
-        },{
-          label: 'Physical',
-          data: [d.physical],
-          borderWidth: 1,
-          borderColor: `rgb(255, 159, 64)`,
-          backgroundColor: `rgba(255, 159, 64, 0.5)`
-        },{
-          label: 'Volt',
-          data: [d.volt],
-          borderWidth: 1,
-          borderColor: `rgb(112, 54, 235)`,
-          backgroundColor: `rgba(112, 54, 235, 0.5)`
-        },{
-          label: 'Altered',
-          data: [d.altered],
-          borderWidth: 1,
-          borderColor: `rgb(54, 255, 132)`,
-          backgroundColor: `rgba(54, 255, 132, 0.5)`
+          label: 'Current',
+          data: [d.flame,d.frost,d.physical,d.volt,d.altered],
+          borderColor: `rgb(0,128,214)`,
+          backgroundColor: `rgb(0,128,214)`
         }]
       },
       options: {
         maintainAspectRatio: false,
         scales: {
-          y: {
-            ticks: {
-              color: `#f4f5f8`
-            },
-            beginAtZero: false
-          },
           x: {
             ticks: {
-              color: `#f4f5f8`
+              color(z){
+                return ['rgb(255, 99, 132)','rgb(114, 222, 235)','rgb(255, 159, 64)','rgb(192, 134, 235)','rgb(54, 255, 132)'][z.index];
+              }
+            },
+            grid: {
+              color: "rgba(255,255,255,0.1)"
+            }
+          },
+          y: {
+            ticks: {
+              color: '#f4f5f8'
+            },
+            grid: {
+              color: "rgba(255,255,255,0.1)"
             }
           }
         },
-        color: `#f4f5f8`
+        color: `#f4f5f8`,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label(x){
+                return `${x.dataset.label}: ${x.formattedValue}%`;
+              }
+            }
+          }
+        }
       }
     });
   }
 
   graphRefresh(){
     if(this.char.charAvailable.length==0) return;
-    const base = this.chart.data.datasets.map((x:any)=>x.data[0]);
+    this.chart.data.datasets = [this.chart.data.datasets[0]];
     if(this.multiType){
-      this.chart.data.labels = ['Current','New'];
-      const newD = this.char.calcDamage(this.curStat.getAll());
-      let news = [newD.flame,newD.frost,newD.physical,newD.volt,newD.altered];
-      for(let i=0; i<5; i++){
-        this.chart.data.datasets[i].data = [base[i],news[i]];
-      }
+      let d = this.percentageDamage(this.char.calcDamage(this.curStat.getAll()));
+      let c = this.randomColor();
+      this.chart.data.datasets.push({
+        label: 'New',
+        data: [d.flame,d.frost,d.physical,d.volt,d.altered],
+        borderColor: `rgb(${c.r},${c.g},${c.b})`,
+        backgroundColor: `rgb(${c.r},${c.g},${c.b})`
+      });
     } else {
       //to be added
-      this.chart.data.labels = ['Current'];
-      for(let i=0; i<5; i++){
-        this.chart.data.datasets[i].data = [base[i]];
-      }
-      let ind = 0;
+      let ind=0;
       for(let x of this.gearsCompare){
         ind++;
         let xcs = new StatsService();
@@ -388,13 +404,14 @@ export class GearComparePage {
           rare: x.rare
         }
         xcs.add(this.gears.calc(ngs));
-        let xcsD = this.char.calcDamage(xcs.getAll());
-        this.chart.data.labels.push(`New ${ind}`);
-        this.chart.data.datasets[0].data.push(xcsD.flame);
-        this.chart.data.datasets[1].data.push(xcsD.frost);
-        this.chart.data.datasets[2].data.push(xcsD.physical);
-        this.chart.data.datasets[3].data.push(xcsD.volt);
-        this.chart.data.datasets[4].data.push(xcsD.altered);
+        let d = this.percentageDamage(this.char.calcDamage(xcs.getAll()));
+        let c = this.randomColor();
+        this.chart.data.datasets.push({
+          label: `New ${ind}`,
+          data: [d.flame,d.frost,d.physical,d.volt,d.altered],
+          borderColor: `rgb(${c.r},${c.g},${c.b})`,
+          backgroundColor: `rgb(${c.r},${c.g},${c.b})`
+        });
       }
     }
     this.chart.update();

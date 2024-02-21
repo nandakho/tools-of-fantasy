@@ -669,14 +669,15 @@
         </ion-row>
       </div>
     </div>
-    <div [ngClass]="selectedChar==''?'hidden':''">
-      <ion-row>
+    <div [ngClass]="(selectedChar==''||typeSelected=='Manual')?'hidden':''">
+      <ion-row class="compare-graph">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Estimated Damage</ion-card-title>
+            <ion-card-title>Compared Damage %</ion-card-title>
+            <ion-button color="warning" class="btn" fill="outline" size="small" (click)="graphRefresh()"><ion-icon name="refresh-outline"></ion-icon></ion-button>
           </ion-card-header>
           <ion-card-content class="graph">
-            <ion-label class="subtitle">Matrix set effects not added yet</ion-label>
+            <ion-label class="subtitle">Click the color to hide them</ion-label>
             <canvas #graphcanvas height="100"></canvas>
           </ion-card-content>
         </ion-card>

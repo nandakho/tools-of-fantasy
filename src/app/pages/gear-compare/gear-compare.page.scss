@@ -551,6 +551,15 @@ ion-row.equip {
     }
 }
 
+ion-row.compare-graph {
+    ion-button.btn {
+        position: absolute;
+        font-size: x-small;
+        right: 22px;
+        margin: 0px;
+    }
+}
+
 a.link {
     font-weight: bold;
     color: var(--ion-color-warning);
