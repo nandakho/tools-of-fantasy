@@ -69,6 +69,13 @@ ion-card {
             font-weight: lighter;
             white-space: break-spaces;
         }
+        ion-button.import-btn {
+            position: absolute;
+            font-size: x-small;
+            right: 22px;
+            margin: 0px;
+            padding-top: 5px;
+        }
         ion-toggle.changed-stat {
             color: rgba(var(--ion-color-primary-contrast-rgb), 0.75);
         }
@@ -277,6 +284,12 @@ ion-col.equipments {
                 }
                 ion-img.icon {
                     border-bottom: 0px;
+                }
+                ion-img.plus-icon {
+                    background-color: #00310f
+                }
+                ion-img.minus-icon {
+                    background-color: #310000
                 }
                 ion-text {
                     width: 72px;
@@ -557,6 +570,7 @@ ion-row.compare-graph {
         font-size: x-small;
         right: 22px;
         margin: 0px;
+        padding-top: 12px;
     }
 }
 

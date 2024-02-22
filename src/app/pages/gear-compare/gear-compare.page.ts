@@ -4,6 +4,7 @@ import { AlertController, AlertInput, NavController } from '@ionic/angular';
 import { MiscService, augStat, basicStat, statTypes, gear, gearTypes, CharacterService, characterInfo, randomStatList, augStatList, titanStatList, augAvailable, StatsService, GearsService, gearList } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { Chart } from 'chart.js/auto';
+import { getMetadata } from 'meta-png';
 
 @Component({
   selector: 'app-gear-compare',
@@ -66,6 +67,42 @@ export class GearComparePage {
     this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
     this.graphInit();
     this.recalcStat();
+  }
+
+  async loadImage(){
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = async (_) => { 
+      const fr = new FileReader();
+      const item = await input.files?.item(0);
+      if(item!=null){
+        fr.readAsArrayBuffer(item);
+        fr.onload = async (e) =>{
+          const loaded = e?.target?.result;
+          if(loaded!=null){
+            try {
+              const dataArray = new Uint8Array(loaded as ArrayBuffer);
+              const metadata = getMetadata(dataArray,"tof.nandakho.my.id");
+              if(metadata){
+                const decoded = this.misc.decodeString(metadata);
+                if(this.char.validateJson(decoded)){
+                  this.curChar = JSON.parse(decoded);
+                  this.recalcStat();
+                  this.misc.showToast('Equipment loaded');
+                } else {
+                  this.misc.showToast('Invalid metadata');
+                }
+              } else {
+                this.misc.showToast('Metadata not found!');
+              }
+            } catch (err) {
+              this.misc.showToast('Unrecognized file!');
+            }
+          }
+        }
+      }
+    }
+    input.click();
   }
 
   recalcStat(){
