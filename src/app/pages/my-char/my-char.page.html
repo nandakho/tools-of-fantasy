@@ -267,6 +267,14 @@
                                 </ion-content>
                               </ng-template>
                             </ion-popover>
+                            <ion-popover *ngIf="eq.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqType,'random',rIdx,tempAddStat)" [trigger]="'rand-'+eqType+'-'+rIdx+'val'" triggerAction="context-menu">
+                              <ng-template>
+                                <ion-content class="popups">
+                                  <ion-text class="title">Add to {{beautifyStatString(eq.type)}} Value</ion-text>
+                                  <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
+                                </ion-content>
+                              </ng-template>
+                            </ion-popover>
                           </ion-item>
                           <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
                           <div *ngIf="char.characterInfo.gear[eqType].rarity!='5'">
@@ -279,6 +287,14 @@
                                   <ion-content class="popups">
                                     <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
                                     <ion-input type="number" (ionChange)="saveChanges()" [(ngModel)]="char.characterInfo.gear[eqType].augment[arIdx].val"></ion-input>
+                                  </ion-content>
+                                </ng-template>
+                              </ion-popover>
+                              <ion-popover *ngIf="eqa.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqType,'augment',arIdx,tempAddStat)" [trigger]="'randa-'+eqType+'-'+arIdx+'val'" triggerAction="context-menu">
+                                <ng-template>
+                                  <ion-content class="popups">
+                                    <ion-text class="title">Add to {{beautifyStatString(eqa.type)}} Value</ion-text>
+                                    <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
                                   </ion-content>
                                 </ng-template>
                               </ion-popover>

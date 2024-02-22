@@ -27,6 +27,7 @@ export class MyCharPage {
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
   tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
   tempMatrixStar = [{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}}];
+  tempAddStat: number|undefined = undefined;
   constructor(
     private alert: AlertController,
     private meta: Meta,
@@ -474,6 +475,12 @@ export class MyCharPage {
       }
     }
     input.click();
+  }
+
+  addStat(eqType:gearTypes,statType:"random"|"augment",index:number,tempVal:number|undefined){
+    let addVal = tempVal??0;
+    this.char.characterInfo.gear[eqType][statType][index].val+=addVal;
+    this.saveChanges();
   }
 
   starWeaponSet(index:number,star:number) {

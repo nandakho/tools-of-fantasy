@@ -62,15 +62,14 @@ ion-card {
                 padding-left: 4px;
             }
         }
-        ion-button.import-btn {
-            position: absolute;
-            font-size: x-small;
-            right: 22px;
-            margin: 0px;
-            padding-top: 12px;
-        }
     }
     ion-card-content {
+        ion-button.btn {
+            width: fit-content;
+            ion-label {
+                text-transform: none;
+            }
+        }
         ion-label.subtitle {
             color: rgba(var(--ion-color-primary-contrast-rgb), 0.75);
             font-weight: lighter;
@@ -565,12 +564,13 @@ ion-row.equip {
 }
 
 ion-row.compare-graph {
-    ion-button.btn {
-        position: absolute;
-        font-size: x-small;
-        right: 22px;
-        margin: 0px;
-        padding-top: 12px;
+    ion-card-content {
+        ion-button.btn {
+            width: fit-content;
+            ion-label {
+                text-transform: none;
+            }
+        }
     }
 }
 

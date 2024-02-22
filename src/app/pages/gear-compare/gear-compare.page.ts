@@ -51,6 +51,7 @@ export class GearComparePage {
   singleType: gearTypes = "Helm";
   graphInitDone: boolean = false;
   baseDam: any = null;
+  tempAddStat: number|undefined = undefined;
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
@@ -98,6 +99,17 @@ export class GearComparePage {
       }
     }
     input.click();
+  }
+
+  addStat(compareId:number|null,eqType:gearTypes,statType:"random"|"augment",index:number,tempVal:number|undefined){
+    let addVal = tempVal??0;
+    if(compareId==null){
+      this.curChar.gear[eqType][statType][index].val+=addVal;
+      this.recalcStat();
+    } else {
+      this.gearsCompare.find(x=>x.id==compareId)[statType][index].val+=addVal;
+      this.recalcCompareStat();
+    }
   }
 
   recalcStat(){

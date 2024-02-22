@@ -161,10 +161,10 @@
           <ion-card>
             <ion-card-header>
               <ion-card-title>Equipment</ion-card-title>
-              <ion-button *ngIf="multiType" class="import-btn" (click)="loadImage()" size="small" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
             </ion-card-header>
             <ion-card-content>
-              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" (ionChange)="graphRefresh()" class="changed-stat">Multi parts compare</ion-toggle>
+              <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" (ionChange)="graphRefresh()" class="changed-stat">Multi parts compare</ion-toggle><br>
+              <ion-button class="btn" size="small" *ngIf="multiType" (click)="loadImage()" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon>&nbsp;<ion-label>Compare From File</ion-label></ion-button>
               <ion-list *ngIf="multiType">
                 <ion-item lines="none" class="ion-text-wrap">
                   <ion-grid>
@@ -179,12 +179,20 @@
                             <ion-item lines="none" class="body" *ngFor="let eq of curChar.gear[eqType].random; index as rIdx">
                               <ion-img class="icon" [ngClass]="((eq.type!=char.characterInfo.gear[eqType].random[rIdx].type)||(char.characterInfo.gear[eqType].rarity==null))?'plus-icon':''" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type!=null" [src]="'assets/icon/stats/'+eq.type+'.png'"></ion-img>
                               <ion-img class="icon" [ngClass]="((eq.type!=char.characterInfo.gear[eqType].random[rIdx].type))?'minus-icon':''" (click)="eqstatChange(eqType,rIdx,'random')" *ngIf="eq.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
-                              <ion-text [ngClass]="((eq.val>char.characterInfo.gear[eqType].random[rIdx].val)||(eq.type!=null&&char.characterInfo.gear[eqType].random[rIdx].type==null))?'increase-val':((eq.type==null&&char.characterInfo.gear[eqType].random[rIdx].type!=null)||(eq.val<char.characterInfo.gear[eqType].random[rIdx].val))?'decrease-val':''" [id]="'rand-'+eqType+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
-                              <ion-popover *ngIf="eq.type" [trigger]="'rand-'+eqType+'-'+rIdx+'val'" triggerAction="click">
+                              <ion-text [ngClass]="((eq.val>char.characterInfo.gear[eqType].random[rIdx].val)||(eq.type!=null&&char.characterInfo.gear[eqType].random[rIdx].type==null))?'increase-val':((eq.type==null&&char.characterInfo.gear[eqType].random[rIdx].type!=null)||(eq.val<char.characterInfo.gear[eqType].random[rIdx].val))?'decrease-val':''" [id]="'randcmp-'+eqType+'-'+rIdx+'val'">{{eq.type?eq.val:'-'}}</ion-text>
+                              <ion-popover *ngIf="eq.type" [trigger]="'randcmp-'+eqType+'-'+rIdx+'val'" triggerAction="click">
                                 <ng-template>
                                   <ion-content class="popups">
                                     <ion-text class="title">Change {{beautifyStatString(eq.type)}} Value</ion-text>
                                     <ion-input (ionChange)="recalcStat()" type="number" [(ngModel)]="eq.val"></ion-input>
+                                  </ion-content>
+                                </ng-template>
+                              </ion-popover>
+                              <ion-popover *ngIf="eq.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(null,eqType,'random',rIdx,tempAddStat)" [trigger]="'randcmp-'+eqType+'-'+rIdx+'val'" triggerAction="context-menu">
+                                <ng-template>
+                                  <ion-content class="popups">
+                                    <ion-text class="title">Add to {{beautifyStatString(eq.type)}} Value</ion-text>
+                                    <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
                                   </ion-content>
                                 </ng-template>
                               </ion-popover>
@@ -194,12 +202,20 @@
                               <ion-item lines="none" class="body" *ngFor="let eqa of curChar.gear[eqType].augment; index as arIdx">
                                 <ion-img class="icon" [ngClass]="((eqa.type!=char.characterInfo.gear[eqType].augment[arIdx].type)||(char.characterInfo.gear[eqType].rarity=='5')||(char.characterInfo.gear[eqType].rarity==null))?'plus-icon':''" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type!=null && (curChar.gear[eqType].rarity=='Augment'||curChar.gear[eqType].rarity=='Titan')" [src]="'assets/icon/stats/'+eqa.type+'.png'"></ion-img>
                                 <ion-img class="icon" [ngClass]="((eqa.type!=char.characterInfo.gear[eqType].augment[arIdx].type))?'minus-icon':''" (click)="eqstatChange(eqType,arIdx,'augment')" *ngIf="eqa.type==null || curChar.gear[eqType].rarity=='5'" [src]="'assets/icon/equipments/null.svg'"></ion-img>
-                                <ion-text [ngClass]="((eqa.val>char.characterInfo.gear[eqType].augment[arIdx].val)||(eqa.type!=null&&char.characterInfo.gear[eqType].augment[arIdx].type==null))?'increase-val':((eqa.type==null&&char.characterInfo.gear[eqType].augment[arIdx].type!=null)||(eqa.val<char.characterInfo.gear[eqType].augment[arIdx].val))?'decrease-val':''" [id]="'randa-'+eqType+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
-                                <ion-popover *ngIf="eqa.type" [trigger]="'randa-'+eqType+'-'+arIdx+'val'" triggerAction="click">
+                                <ion-text [ngClass]="((eqa.val>char.characterInfo.gear[eqType].augment[arIdx].val)||(eqa.type!=null&&char.characterInfo.gear[eqType].augment[arIdx].type==null))?'increase-val':((eqa.type==null&&char.characterInfo.gear[eqType].augment[arIdx].type!=null)||(eqa.val<char.characterInfo.gear[eqType].augment[arIdx].val))?'decrease-val':''" [id]="'randacmp-'+eqType+'-'+arIdx+'val'">{{eqa.type?eqa.val:'-'}}</ion-text>
+                                <ion-popover *ngIf="eqa.type" [trigger]="'randacmp-'+eqType+'-'+arIdx+'val'" triggerAction="click">
                                   <ng-template>
                                     <ion-content class="popups">
                                       <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
                                       <ion-input (ionChange)="recalcStat()" type="number" [(ngModel)]="eqa.val"></ion-input>
+                                    </ion-content>
+                                  </ng-template>
+                                </ion-popover>
+                                <ion-popover *ngIf="eqa.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(null,eqType,'augment',arIdx,tempAddStat)" [trigger]="'randacmp-'+eqType+'-'+arIdx+'val'" triggerAction="context-menu">
+                                  <ng-template>
+                                    <ion-content class="popups">
+                                      <ion-text class="title">Add to {{beautifyStatString(eqa.type)}} Value</ion-text>
+                                      <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
                                     </ion-content>
                                   </ng-template>
                                 </ion-popover>
@@ -214,8 +230,8 @@
                               <ion-item lines="none" class="body">
                                 <ion-img class="icon" [ngClass]="((curChar.gear[eqType].rare.type!=char.characterInfo.gear[eqType].rare.type)||(char.characterInfo.gear[eqType].rarity!='Titan')||(char.characterInfo.gear[eqType].rarity==null))?'plus-icon':''" (click)="eqtitanChange(eqType)" *ngIf="curChar.gear[eqType].rare.type!=null" [src]="'assets/icon/stats/'+curChar.gear[eqType].rare.type+'.png'"></ion-img>
                                 <ion-img class="icon" [ngClass]="((curChar.gear[eqType].rare.type!=char.characterInfo.gear[eqType].rare.type))?'minus-icon':''" (click)="eqtitanChange(eqType)" *ngIf="curChar.gear[eqType].rare.type==null" [src]="'assets/icon/equipments/null.svg'"></ion-img>
-                                <ion-text [ngClass]="((curChar.gear[eqType].rare.val>char.characterInfo.gear[eqType].rare.val)||(curChar.gear[eqType].rare.type!=null&&char.characterInfo.gear[eqType].rare.type==null))?'increase-val':((curChar.gear[eqType].rare.type==null&&char.characterInfo.gear[eqType].rare.type!=null)||(curChar.gear[eqType].rare.val<char.characterInfo.gear[eqType].rare.val))?'decrease-val':''" [id]="'rare-'+eqType">{{curChar.gear[eqType].rare.type?curChar.gear[eqType].rare.val:'-'}}</ion-text>
-                                <ion-popover *ngIf="curChar.gear[eqType].rare.type!=null" [trigger]="'rare-'+eqType" triggerAction="click">
+                                <ion-text [ngClass]="((curChar.gear[eqType].rare.val>char.characterInfo.gear[eqType].rare.val)||(curChar.gear[eqType].rare.type!=null&&char.characterInfo.gear[eqType].rare.type==null))?'increase-val':((curChar.gear[eqType].rare.type==null&&char.characterInfo.gear[eqType].rare.type!=null)||(curChar.gear[eqType].rare.val<char.characterInfo.gear[eqType].rare.val))?'decrease-val':''" [id]="'rarecmp-'+eqType">{{curChar.gear[eqType].rare.type?curChar.gear[eqType].rare.val:'-'}}</ion-text>
+                                <ion-popover *ngIf="curChar.gear[eqType].rare.type!=null" [trigger]="'rarecmp-'+eqType" triggerAction="click">
                                   <ng-template>
                                     <ion-content class="popups">
                                       <ion-text class="title">Change {{beautifyStatString(curChar.gear[eqType].rare.type)}} Level</ion-text>
@@ -328,6 +344,14 @@
                                     </ion-content>
                                   </ng-template>
                                 </ion-popover>
+                                <ion-popover *ngIf="eq.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqcompare.id,singleType,'random',rIdx,tempAddStat)" [trigger]="'rand-'+singleType+eqcompare.id+'-'+rIdx+'val'" triggerAction="context-menu">
+                                  <ng-template>
+                                    <ion-content class="popups">
+                                      <ion-text class="title">Add to {{beautifyStatString(eq.type)}} Value</ion-text>
+                                      <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
+                                    </ion-content>
+                                  </ng-template>
+                                </ion-popover>
                               </ion-item>
                               <ion-item lines="none" class="header"><ion-text>Augment</ion-text></ion-item>
                               <div *ngIf="eqcompare.rarity!='5'">
@@ -340,6 +364,14 @@
                                       <ion-content class="popups">
                                         <ion-text class="title">Change {{beautifyStatString(eqa.type)}} Value</ion-text>
                                         <ion-input (ionChange)="recalcCompareStat()" type="number" [(ngModel)]="eqcompare.augment[arIdx].val"></ion-input>
+                                      </ion-content>
+                                    </ng-template>
+                                  </ion-popover>
+                                  <ion-popover *ngIf="eqa.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqcompare.id,singleType,'random',arIdx,tempAddStat)" [trigger]="'randa-'+singleType+eqcompare.id+'-'+arIdx+'val'" triggerAction="context-menu">
+                                    <ng-template>
+                                      <ion-content class="popups">
+                                        <ion-text class="title">Add to {{beautifyStatString(eqa.type)}} Value</ion-text>
+                                        <ion-input type="number" [(ngModel)]="tempAddStat" placeholder="0"></ion-input>
                                       </ion-content>
                                     </ng-template>
                                   </ion-popover>
@@ -675,10 +707,10 @@
         <ion-card>
           <ion-card-header>
             <ion-card-title>Compared Damage %</ion-card-title>
-            <ion-button color="warning" class="btn" size="small" (click)="graphRefresh()"><ion-icon name="refresh-outline"></ion-icon></ion-button>
           </ion-card-header>
           <ion-card-content class="graph">
-            <ion-label class="subtitle">Click the color to hide them</ion-label>
+            <ion-label class="subtitle">Click the color to hide them</ion-label><br>
+            <ion-button color="warning" size="small" class="btn" (click)="graphRefresh()"><ion-icon name="refresh-outline"></ion-icon>&nbsp;<ion-label>Refresh Graph</ion-label></ion-button>
             <canvas #graphcanvas height="100"></canvas>
           </ion-card-content>
         </ion-card>
