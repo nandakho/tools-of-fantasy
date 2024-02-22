@@ -49,6 +49,7 @@ export class GearComparePage {
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   multiType: boolean = true;
   singleType: gearTypes = "Helm";
+  graphInitDone: boolean = false;
   baseDam: any = null;
   constructor(
     private route: ActivatedRoute,
@@ -61,12 +62,6 @@ export class GearComparePage {
     private gears: GearsService
   ) {
     this.serverSide();
-  }
-
-  ionViewWillEnter(){
-    this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
-    this.graphInit();
-    this.recalcStat();
   }
 
   async loadImage(){
@@ -409,10 +404,12 @@ export class GearComparePage {
         }
       }
     });
+    this.graphInitDone = true;
   }
 
   graphRefresh(){
     if(this.char.charAvailable.length==0) return;
+    if(!this.graphInitDone) this.graphInit();
     this.chart.data.datasets = [this.chart.data.datasets[0]];
     if(this.multiType){
       let d = this.percentageDamage(this.char.calcDamage(this.curStat.getAll()));
@@ -595,6 +592,11 @@ export class GearComparePage {
     this.char.charId = this.selectedChar;
     await this.char.loadStat(this.char.charId);
     this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
+    if(this.graphInitDone){
+      this.chart.destroy();
+      this.graphInitDone = false;
+    }
+    this.recalcStat();
   }
 
   async showHelp(section:any){

@@ -161,10 +161,10 @@
           <ion-card>
             <ion-card-header>
               <ion-card-title>Equipment</ion-card-title>
+              <ion-button *ngIf="multiType" class="import-btn" (click)="loadImage()" size="small" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
             </ion-card-header>
             <ion-card-content>
               <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" (ionChange)="graphRefresh()" class="changed-stat">Multi parts compare</ion-toggle>
-              <ion-button *ngIf="multiType" class="import-btn" (click)="loadImage()" size="small" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
               <ion-list *ngIf="multiType">
                 <ion-item lines="none" class="ion-text-wrap">
                   <ion-grid>
