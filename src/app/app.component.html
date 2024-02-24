@@ -28,7 +28,7 @@
         <p><ion-label>Created by nandakho</ion-label></p>
         <div *ngIf="con.mode=='web'">
           <a [href]="gitLink" target="_blank"><ion-icon name="logo-github"></ion-icon><p><ion-label> Find this project on Github!</ion-label></p></a>
-          <a [href]="psLink" target="_blank"><ion-icon name="logo-google-playstore"></ion-icon><p><ion-label> Android version now available!</ion-label></p></a>
+          <a [href]="psLink" target="_blank"><ion-icon name="logo-google-playstore"></ion-icon><p><ion-label> Android version (Coming Soon)</ion-label></p></a>
         </div>
         <div *ngIf="con.mode!='web'">
           <a (click)="visit('Github')"><ion-icon name="logo-github"></ion-icon><p><ion-label> Github Page</ion-label></p></a>
