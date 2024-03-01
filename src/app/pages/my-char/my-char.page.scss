@@ -555,3 +555,44 @@ div.char-select {
         font-weight: bold;
     }
 }
+
+ion-modal.share-modal {
+    ion-toolbar {
+        ion-button {
+            ion-icon {
+                font-size: xx-large;
+            }
+        }
+    }
+    ion-content {
+        background: var(--ion-color-dark-shade);
+        text-align: -webkit-center;
+        ion-img {
+            width: 90%;
+            align-self: center;
+            border: 2px solid white;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        ion-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-button {
+                text-transform: none;
+                font-weight: bold;
+            }
+            ion-text {
+                color: var(--ion-color-primary-contrast);
+                border: 2px solid var(--ion-color-primary-contrast);
+                border-radius: 6px;
+                padding: 9px 20px;
+                cursor: pointer;
+            }
+            ion-text:hover {
+                color: var(--ion-color-warning);
+                border: 2px solid var(--ion-color-warning);
+            }
+        }
+    }
+}

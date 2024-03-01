@@ -27,7 +27,7 @@
                     <ion-col class="btn">
                       <div class="char-btn">
                         <ion-button class="del-btn" *ngIf="char.charId!=''" (click)="delChar()" color="danger"><ion-icon name="trash-outline"></ion-icon></ion-button>
-                        <ion-button class="export-btn" *ngIf="char.charId!=''" [disabled]="saving" (click)="share()" color="warning"><ion-icon *ngIf="!saving" name="save-outline"></ion-icon><ion-spinner *ngIf="saving" name="crescent"></ion-spinner></ion-button>
+                        <ion-button class="export-btn" *ngIf="char.charId!=''" [disabled]="saving" (click)="share()" color="warning"><ion-icon *ngIf="!saving" name="share-social-outline"></ion-icon><ion-spinner *ngIf="saving" name="crescent"></ion-spinner></ion-button>
                         <ion-button class="import-btn" (click)="loadData()" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon></ion-button>
                       </div>
                     </ion-col>
@@ -557,4 +557,38 @@
       </ion-row>
     </div>
   </ion-grid>
+  <ion-modal class="share-modal" [isOpen]="shareModal" [backdropDismiss]="false" (didDismiss)="shareModal=false">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Save</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="shareModal=false"><ion-icon name="close-circle-outline" color="danger"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-img [src]="shareImage"></ion-img>
+        <ion-grid>
+          <ion-col size="auto">
+            <ion-button (click)="loadCustomImage()" color="warning"><ion-icon name="brush-outline"></ion-icon>&nbsp;Custom Background</ion-button>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-text id="customOpacity">Background Opacity: {{shareImageBgOpacity}}%</ion-text>
+            <ion-popover trigger="customOpacity" triggerAction="click">
+              <ng-template>
+                <ion-content class="popups">
+                  <ion-text class="title">Adjust Opacity</ion-text>
+                  <ion-range (ionChange)="refreshShareImage()" color="warning" [(ngModel)]="shareImageBgOpacity" [min]="0" [max]="100" [pin]="true"></ion-range>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button (click)="finalizeImage()" color="tertiary"><ion-icon name="save-outline"></ion-icon>&nbsp;Save</ion-button>
+          </ion-col>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

@@ -28,6 +28,11 @@ export class MyCharPage {
   tempWeaponStar = [{hovering:false,star:0},{hovering:false,star:0},{hovering:false,star:0}];
   tempMatrixStar = [{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}},{Emotion:{hovering:false,star:0},Faith:{hovering:false,star:0},Memory:{hovering:false,star:0},Mind:{hovering:false,star:0}}];
   tempAddStat: number|undefined = undefined;
+  baseImage: any = undefined;
+  customBackground: any = null;
+  shareImage: string = "";
+  shareModal: boolean = false;
+  shareImageBgOpacity: number = 100;
   constructor(
     private alert: AlertController,
     private meta: Meta,
@@ -60,6 +65,82 @@ export class MyCharPage {
   }
 
   async share(){
+    this.baseImage = await this.generateBaseImage();
+    this.shareImageBgOpacity = 100;
+    this.customBackground = null;
+    var c = this.editCanvas.nativeElement;
+    let ctx = c.getContext('2d');
+    ctx.canvas.width  = 1920;
+    ctx.canvas.height = 1080;
+    ctx.clearRect(0, 0, 1920, 1080);
+    ctx.fillStyle = `rgba(30, 32, 35, 1)`
+    ctx.fillRect(0, 0, 1920, 1080);
+    ctx.drawImage(this.baseImage,0,0);
+    this.shareImage = this.embedMetadata(c.toDataURL('image/png'));
+    this.shareModal = true;
+  }
+
+  async loadCustomImage(){
+    try {
+      this.customBackground = await this.getCustomImage();
+      await this.refreshShareImage();
+    } catch (err:any) {
+      this.customBackground = null;
+      this.misc.showToast(err);
+    }
+  }
+
+  async getCustomImage(){
+    return new Promise((resolve,reject)=>{
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.onchange = async (_) => { 
+        const fr = new FileReader();
+        const item = await input.files?.item(0);
+        if(item!=null){
+          fr.readAsDataURL(item);
+          fr.onload = async (e) =>{
+            const loaded = e?.target?.result;
+            if(loaded!=null){
+              try {
+                let img = new Image();
+                img.src = loaded as string;
+                return resolve(img);
+              } catch(err) {
+                return reject(err);
+              }
+            }
+          }
+        }
+      }
+      input.click();
+    });
+  }
+
+  async refreshShareImage(){
+    var c = this.editCanvas.nativeElement;
+    let ctx = c.getContext('2d');
+    ctx.canvas.width  = 1920;
+    ctx.canvas.height = 1080;
+    ctx.clearRect(0, 0, 1920, 1080);
+    if(this.customBackground!=null){
+      ctx.drawImage(this.customBackground,0,0);
+      ctx.fillStyle = `rgba(30, 32, 35, ${(100-this.shareImageBgOpacity)/100})`;
+      ctx.fillRect(0, 0, 1920, 1080);
+    } else {
+      ctx.fillStyle = `rgba(30, 32, 35, ${this.shareImageBgOpacity/100})`;
+      ctx.fillRect(0, 0, 1920, 1080);
+    }
+    ctx.drawImage(this.baseImage,0,0);
+    this.shareImage = this.embedMetadata(c.toDataURL('image/png'));
+  }
+
+  embedMetadata(imgString:string){
+    let strData = this.misc.encodeString(JSON.stringify(this.char.characterInfo));
+    return addMetadataFromBase64DataURI(imgString,'tof.nandakho.my.id',strData);
+  }
+
+  async generateBaseImage(){
     this.saving = true;
     const imgSize = {
       width: 1920,
@@ -110,13 +191,10 @@ export class MyCharPage {
       ctx.roundRect(x, y, w, h, 5);
       ctx.stroke();
     }
-    var canvasElement = this.editCanvas.nativeElement;
-    let ctx = canvasElement.getContext('2d');
+    let offCanvas = new OffscreenCanvas(1920,1080);
+    let ctx:any = offCanvas.getContext('2d');
     ctx.canvas.width  = imgSize.width;
     ctx.canvas.height = imgSize.height;
-    //full background
-    color.fill(colors.dark);
-    ctx.fillRect(0, 0, imgSize.width, imgSize.height);
     //nickname
     fontSize(72);
     strokedText(`${this.char.characterInfo.name}`,8, 10, 65);
@@ -405,10 +483,13 @@ export class MyCharPage {
     fontSize(24);
     strokedText(`Generate your own at:`, 2, 200, 1039);
     strokedText(`https://tof.nandakho.my.id`, 2, 200, 1067);
-    let strData = this.misc.encodeString(JSON.stringify(this.char.characterInfo));
-    const imgjson = addMetadataFromBase64DataURI(canvasElement.toDataURL('image/png'),'tof.nandakho.my.id',strData);
-    this.download(imgjson,`${this.char.generateTimestamp()}.png`);
     this.saving = false;
+    return Promise.resolve(offCanvas);
+  }
+
+  async finalizeImage(){ 
+    this.download(this.shareImage,`${this.char.generateTimestamp()}.png`);
+    this.shareModal = false;
   }
 
   async download(what:string,name:string){

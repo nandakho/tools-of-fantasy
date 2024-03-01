@@ -164,7 +164,7 @@
             </ion-card-header>
             <ion-card-content>
               <ion-toggle color="warning" [enableOnOffLabels]="true" [(ngModel)]="multiType" (ionChange)="graphRefresh()" class="changed-stat">Multi parts compare</ion-toggle><br>
-              <ion-button class="btn" size="small" *ngIf="multiType" (click)="loadImage()" color="tertiary"><ion-icon name="folder-open-outline"></ion-icon>&nbsp;<ion-label>Compare From File</ion-label></ion-button>
+              <ion-button class="btn" size="small" *ngIf="multiType" (click)="loadFrom()" color="warning"><ion-icon name="folder-open-outline"></ion-icon>&nbsp;<ion-label>Load From...</ion-label></ion-button>
               <ion-list *ngIf="multiType">
                 <ion-item lines="none" class="ion-text-wrap">
                   <ion-grid>

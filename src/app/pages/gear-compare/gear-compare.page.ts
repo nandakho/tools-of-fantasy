@@ -5,6 +5,7 @@ import { MiscService, augStat, basicStat, statTypes, gear, gearTypes, CharacterS
 import { Title, Meta } from '@angular/platform-browser';
 import { Chart } from 'chart.js/auto';
 import { getMetadata } from 'meta-png';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-gear-compare',
@@ -52,6 +53,7 @@ export class GearComparePage {
   graphInitDone: boolean = false;
   baseDam: any = null;
   tempAddStat: number|undefined = undefined;
+  targetLv: number = 0;
   constructor(
     private route: ActivatedRoute,
     private meta: Meta,
@@ -63,6 +65,66 @@ export class GearComparePage {
     private gears: GearsService
   ) {
     this.serverSide();
+  }
+
+  async loadFrom(){
+    const alert = await this.alert.create({
+      header: "Load From?",
+      backdropDismiss: true,
+      inputs: [
+        {
+          label: `File`,
+          type: "radio",
+          value: `File`
+        },
+        {
+          label: `Saved Character`,
+          type: "radio",
+          value: `Char`,
+        },
+      ],
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (from)=>{
+          if(from=="File") await this.loadImage();
+          if(from=="Char") await this.loadChar();
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  async loadChar(){
+    const inp:AlertInput[] = this.char.charAvailable.map(c=>{
+      return {
+        label: [c.name??'No Name',c.uid??'Empty UID'].join(' - '),
+        type: `radio`,
+        value: `${c.id}`
+      }
+    });
+    const alert = await this.alert.create({
+      header: "Which Character?",
+      backdropDismiss: true,
+      inputs: inp,
+      mode: "ios",
+      buttons: [{
+        text:'Cancel'
+      },{
+        text:'OK',
+        handler: async (cId)=>{
+          const c = JSON.parse((await Preferences.get({key:`char_${cId}`})).value??"null");
+          if(c!=null){
+            this.curChar = c;
+            this.recalcStat();
+            this.misc.showToast('Equipment loaded');
+          }
+        }
+      }]
+    });
+    alert.present();
   }
 
   async loadImage(){
@@ -604,6 +666,7 @@ export class GearComparePage {
     this.char.charId = this.selectedChar;
     await this.char.loadStat(this.char.charId);
     this.curChar = JSON.parse(JSON.stringify(this.char.characterInfo));
+    this.targetLv = JSON.parse(JSON.stringify(this.char.characterInfo.level));
     if(this.graphInitDone){
       this.chart.destroy();
       this.graphInitDone = false;
