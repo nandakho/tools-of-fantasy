@@ -463,7 +463,7 @@
                             <ion-text>Crit</ion-text><br>
                             <ion-text>{{crit}}</ion-text>
                             <ion-text *ngIf="crit!=critOld" class="stat-diff" [ngClass]="crit>critOld?'increase-val':'decrease-val'"><ion-icon [name]="crit>critOld?'caret-up':'caret-down'"></ion-icon>{{crit-critOld}}</ion-text>
-                            <span class="tooltip">Against level <div class="highlight">{{curChar.level}}</div><br>Equal to <div class="highlight">{{critPCalc}}%</div></span>
+                            <span class="tooltip">Against level <div class="highlight">{{targetLv}}</div><br>Equal to <div class="highlight">{{critPCalc}}%</div></span>
                           </div>
                         </ion-item>
                         <ion-item lines="none" class="ion-text-wrap">
@@ -519,7 +519,7 @@
                             <ion-text>Crit Rate</ion-text><br>
                             <ion-text>{{critPercent}}%</ion-text>
                             <ion-text *ngIf="critPercent!=critPercentOld" class="stat-diff" [ngClass]="critPercent>critPercentOld?'increase-val':'decrease-val'"><ion-icon [name]="critPercent>critPercentOld?'caret-up':'caret-down'"></ion-icon>{{critPercent-critPercentOld}}</ion-text>
-                            <span class="tooltip">Against level <div class="highlight">{{curChar.level}}</div><br>Equal to <div class="highlight">{{critBCalc}}</div> Crit stat</span>
+                            <span class="tooltip">Against level <div class="highlight">{{targetLv}}</div><br>Equal to <div class="highlight">{{critBCalc}}</div> Crit stat</span>
                           </div>
                         </ion-item>
                         <ion-item lines="none" class="ion-text-wrap">
@@ -714,7 +714,7 @@
               <ng-template>
                 <ion-content class="popups">
                   <ion-text class="title">Change Target Level</ion-text>
-                  <ion-range (ionChange)="graphRefresh()" color="warning" [(ngModel)]="targetLv" [min]="1" [max]="100" [pin]="true"></ion-range>
+                  <ion-range (ionChange)="changeLevel()" color="warning" [(ngModel)]="targetLv" [min]="1" [max]="100" [pin]="true"></ion-range>
                 </ion-content>
               </ng-template>
             </ion-popover>

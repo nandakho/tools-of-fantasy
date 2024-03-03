@@ -481,6 +481,14 @@ export class GearComparePage {
     this.graphInitDone = true;
   }
 
+  changeLevel(){
+    if(this.graphInitDone){
+      this.chart.destroy();
+      this.graphInitDone = false;
+    }
+    this.graphRefresh();
+  }
+
   graphRefresh(){
     if(this.char.charAvailable.length==0) return;
     if(!this.graphInitDone) this.graphInit();
