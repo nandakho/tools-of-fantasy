@@ -11,6 +11,7 @@ import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
 })
 export class MyCharPage {
   @ViewChild('hiddenCanvas') editCanvas:any;
+  @ViewChild('shareModal') modal:any;
   wp = Object.keys(weaponAvailable);
   mt = matrixAvailable.List;
   sp = Object.keys(supreAvailable).map(x=>{
@@ -30,8 +31,8 @@ export class MyCharPage {
   tempAddStat: number|undefined = undefined;
   baseImage: any = undefined;
   customBackground: any = null;
+  customBackgroundStretch: boolean = true;
   shareImage: string = "";
-  shareModal: boolean = false;
   shareImageBgOpacity: number = 100;
   constructor(
     private alert: AlertController,
@@ -42,6 +43,10 @@ export class MyCharPage {
     private con: ConstService
   ) {
     this.setTag();
+  }
+
+  async ionViewWillLeave(){
+    this.modal.dismiss();
   }
 
   setTag(){
@@ -65,19 +70,23 @@ export class MyCharPage {
   }
 
   async share(){
+    const dim = {
+      w: 1920,
+      h: 1080
+    }
     this.baseImage = await this.generateBaseImage();
     this.shareImageBgOpacity = 100;
     this.customBackground = null;
     var c = this.editCanvas.nativeElement;
     let ctx = c.getContext('2d');
-    ctx.canvas.width  = 1920;
-    ctx.canvas.height = 1080;
-    ctx.clearRect(0, 0, 1920, 1080);
+    ctx.canvas.width  = dim.w;
+    ctx.canvas.height = dim.h;
+    ctx.clearRect(0, 0, dim.w, dim.h);
     ctx.fillStyle = `rgba(30, 32, 35, 1)`
-    ctx.fillRect(0, 0, 1920, 1080);
+    ctx.fillRect(0, 0, dim.w, dim.h);
     ctx.drawImage(this.baseImage,0,0);
     this.shareImage = this.embedMetadata(c.toDataURL('image/png'));
-    this.shareModal = true;
+    this.modal.present();
   }
 
   async loadCustomImage(){
@@ -92,6 +101,10 @@ export class MyCharPage {
 
   async getCustomImage(){
     return new Promise((resolve,reject)=>{
+      const isImage = (str:string) => {
+        if(str.startsWith("data:image/")) return true;
+        return false;
+      }
       var input = document.createElement('input');
       input.type = 'file';
       input.onchange = async (_) => { 
@@ -101,7 +114,7 @@ export class MyCharPage {
           fr.readAsDataURL(item);
           fr.onload = async (e) =>{
             const loaded = e?.target?.result;
-            if(loaded!=null){
+            if(loaded!=null && isImage(loaded as string)){
               try {
                 let img = new Image();
                 img.src = loaded as string;
@@ -109,6 +122,8 @@ export class MyCharPage {
               } catch(err) {
                 return reject(err);
               }
+            } else {
+              return reject ("File is not an image!");
             }
           }
         }
@@ -118,18 +133,26 @@ export class MyCharPage {
   }
 
   async refreshShareImage(){
+    const dim = {
+      w: 1920,
+      h: 1080
+    }
     var c = this.editCanvas.nativeElement;
     let ctx = c.getContext('2d');
-    ctx.canvas.width  = 1920;
-    ctx.canvas.height = 1080;
-    ctx.clearRect(0, 0, 1920, 1080);
+    ctx.canvas.width  = dim.w;
+    ctx.canvas.height = dim.h;
+    ctx.clearRect(0, 0, dim.w, dim.h);
     if(this.customBackground!=null){
-      ctx.drawImage(this.customBackground,0,0);
+      if(this.customBackgroundStretch){
+        ctx.drawImage(this.customBackground,0,0,dim.w,dim.h);
+      } else {
+        ctx.drawImage(this.customBackground,0,0);
+      }
       ctx.fillStyle = `rgba(30, 32, 35, ${(100-this.shareImageBgOpacity)/100})`;
-      ctx.fillRect(0, 0, 1920, 1080);
+      ctx.fillRect(0, 0, dim.w, dim.h);
     } else {
       ctx.fillStyle = `rgba(30, 32, 35, ${this.shareImageBgOpacity/100})`;
-      ctx.fillRect(0, 0, 1920, 1080);
+      ctx.fillRect(0, 0, dim.w, dim.h);
     }
     ctx.drawImage(this.baseImage,0,0);
     this.shareImage = this.embedMetadata(c.toDataURL('image/png'));
@@ -489,7 +512,7 @@ export class MyCharPage {
 
   async finalizeImage(){ 
     this.download(this.shareImage,`${this.char.generateTimestamp()}.png`);
-    this.shareModal = false;
+    this.modal.dismiss();
   }
 
   async download(what:string,name:string){

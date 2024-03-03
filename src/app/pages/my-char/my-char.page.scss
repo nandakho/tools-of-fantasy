@@ -578,6 +578,7 @@ ion-modal.share-modal {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
             ion-button {
                 text-transform: none;
                 font-weight: bold;
@@ -588,6 +589,15 @@ ion-modal.share-modal {
                 border-radius: 6px;
                 padding: 9px 20px;
                 cursor: pointer;
+            }
+            div.checkbox {
+                border: 2px solid var(--ion-color-primary-contrast);
+                border-radius: 6px;
+                padding: 7px 20px;
+                padding-top: 11px;
+                ion-checkbox {
+                    color: var(--ion-color-primary-contrast);
+                }
             }
             ion-text:hover {
                 color: var(--ion-color-warning);

@@ -709,7 +709,15 @@
             <ion-card-title>Compared Damage %</ion-card-title>
           </ion-card-header>
           <ion-card-content class="graph">
-            <ion-label class="subtitle">Click the color to hide them</ion-label><br>
+            <ion-label id="targetLvChange" class="subtitle lvl-change">Calculated against level: {{targetLv}} (Click to change!)</ion-label><br>
+            <ion-popover trigger="targetLvChange" triggerAction="click">
+              <ng-template>
+                <ion-content class="popups">
+                  <ion-text class="title">Change Target Level</ion-text>
+                  <ion-range (ionChange)="graphRefresh()" color="warning" [(ngModel)]="targetLv" [min]="1" [max]="100" [pin]="true"></ion-range>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
             <ion-button color="warning" size="small" class="btn" (click)="graphRefresh()"><ion-icon name="refresh-outline"></ion-icon>&nbsp;<ion-label>Refresh Graph</ion-label></ion-button>
             <canvas #graphcanvas height="100"></canvas>
           </ion-card-content>

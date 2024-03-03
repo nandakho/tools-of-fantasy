@@ -557,13 +557,13 @@
       </ion-row>
     </div>
   </ion-grid>
-  <ion-modal class="share-modal" [isOpen]="shareModal" [backdropDismiss]="false" (didDismiss)="shareModal=false">
+  <ion-modal #shareModal [backdropDismiss]="false" class="share-modal">
     <ng-template>
       <ion-header class="ion-no-border">
         <ion-toolbar>
           <ion-title>Save</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="shareModal=false"><ion-icon name="close-circle-outline" color="danger"></ion-icon></ion-button>
+            <ion-button (click)="modal.dismiss()"><ion-icon name="close-circle-outline" color="danger"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -572,6 +572,11 @@
         <ion-grid>
           <ion-col size="auto">
             <ion-button (click)="loadCustomImage()" color="warning"><ion-icon name="brush-outline"></ion-icon>&nbsp;Custom Background</ion-button>
+          </ion-col>
+          <ion-col size="auto">
+            <div class="checkbox">
+              <ion-checkbox color="warning" [(ngModel)]="customBackgroundStretch" (ionChange)="refreshShareImage()" labelPlacement="end">Stretch Image</ion-checkbox>
+            </div>
           </ion-col>
           <ion-col size="auto">
             <ion-text id="customOpacity">Background Opacity: {{shareImageBgOpacity}}%</ion-text>

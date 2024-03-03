@@ -293,9 +293,9 @@ export class CharacterService {
 
   //Calculate damage, for certain multiplier
   //temporary formula
-  calcDamage(stat:stats, mult:number=1){
+  calcDamage(stat:stats, level:number, mult:number=1){
     const calc = (atkFinal:number,eleDamage:number,multiplier:number) => {
-      let cr = (this.calcCrit(stat.Crit??0,"percent",this.characterInfo.level)+(stat.CritPercent??0));
+      let cr = (this.calcCrit(stat.Crit??0,"percent",level)+(stat.CritPercent??0));
       cr = cr>100?100:cr<0?0:cr;
       let cdmgmult = (1+(((stat.CritDamage??0)/100)*(cr/100)));
       return atkFinal*(1+(eleDamage/100))*multiplier*cdmgmult;

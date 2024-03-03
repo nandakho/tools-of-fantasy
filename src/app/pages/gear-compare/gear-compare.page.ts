@@ -431,7 +431,7 @@ export class GearComparePage {
     if(this.char.charAvailable.length==0) return;
     var canvasElement = this.editCanvas.nativeElement;
     let ctx = canvasElement.getContext('2d');
-    this.baseDam = this.char.calcDamage(this.char.characterStat.getAll());
+    this.baseDam = this.char.calcDamage(this.char.characterStat.getAll(),this.targetLv);
     let d = this.percentageDamage(this.baseDam);
     this.chart = new Chart(ctx,{
       type: 'bar',
@@ -486,7 +486,7 @@ export class GearComparePage {
     if(!this.graphInitDone) this.graphInit();
     this.chart.data.datasets = [this.chart.data.datasets[0]];
     if(this.multiType){
-      let d = this.percentageDamage(this.char.calcDamage(this.curStat.getAll()));
+      let d = this.percentageDamage(this.char.calcDamage(this.curStat.getAll(),this.targetLv));
       let c = this.randomColor();
       this.chart.data.datasets.push({
         label: 'New',
@@ -512,7 +512,7 @@ export class GearComparePage {
           rare: x.rare
         }
         xcs.add(this.gears.calc(ngs));
-        let d = this.percentageDamage(this.char.calcDamage(xcs.getAll()));
+        let d = this.percentageDamage(this.char.calcDamage(xcs.getAll(),this.targetLv));
         let c = this.randomColor();
         this.chart.data.datasets.push({
           label: `New ${ind}`,
@@ -783,10 +783,10 @@ export class GearComparePage {
     return this.curStat.getVal("CritDamage");
   }
   get critPCalc() {
-    return Math.floor((this.char.calcCrit(this.curStat.getVal("Crit"),"percent",this.curChar.level))*100)/100;
+    return Math.floor((this.char.calcCrit(this.curStat.getVal("Crit"),"percent",this.targetLv))*100)/100;
   }
   get critBCalc() {
-    return Math.floor((this.char.calcCrit(this.curStat.getVal("CritPercent"),"base",this.curChar.level))*100)/100;
+    return Math.floor((this.char.calcCrit(this.curStat.getVal("CritPercent"),"base",this.targetLv))*100)/100;
   }
   get critPercent() {
     return this.curStat.getVal("CritPercent");
@@ -795,10 +795,10 @@ export class GearComparePage {
     return Math.floor(this.char.characterStat.getVal("Crit"));
   }
   get critPCalcOld() {
-    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("Crit"),"percent",this.char.characterInfo.level))*100)/100;
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("Crit"),"percent",this.targetLv))*100)/100;
   }
   get critBCalcOld() {
-    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("CritPercent"),"base",this.char.characterInfo.level))*100)/100;
+    return Math.floor((this.char.calcCrit(this.char.characterStat.getVal("CritPercent"),"base",this.targetLv))*100)/100;
   }
   get critPercentOld() {
     return this.char.characterStat.getVal("CritPercent");

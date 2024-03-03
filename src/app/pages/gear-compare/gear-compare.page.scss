@@ -709,3 +709,9 @@ ion-card-content.graph {
     padding-bottom: 0px;
     margin-bottom: 70px;
 }
+.lvl-change {
+    cursor: pointer;
+}
+.lvl-change:hover {
+    color: var(--ion-color-warning) !important;
+}
