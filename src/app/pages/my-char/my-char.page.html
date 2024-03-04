@@ -573,10 +573,10 @@
           <ion-col size="auto">
             <ion-button (click)="loadCustomImage()" color="warning"><ion-icon name="brush-outline"></ion-icon>&nbsp;Custom Background</ion-button>
           </ion-col>
-          <ion-col size="auto">
-            <div class="checkbox">
-              <ion-checkbox color="warning" [(ngModel)]="customBackgroundStretch" (ionChange)="refreshShareImage()" labelPlacement="end">Stretch Image</ion-checkbox>
-            </div>
+          <ion-col size="auto" *ngIf="customBackground!=null">
+            <ion-select mode="ios" (ionChange)="refreshShareImage()" justify="space-between" label="Mode:" [(ngModel)]="fillMethod">
+              <ion-select-option *ngFor="let m of fillMethodList" [value]="m">{{m}}</ion-select-option>
+            </ion-select>
           </ion-col>
           <ion-col size="auto">
             <ion-text id="customOpacity">Background Opacity: {{shareImageBgOpacity}}%</ion-text>

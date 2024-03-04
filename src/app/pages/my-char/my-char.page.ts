@@ -31,7 +31,8 @@ export class MyCharPage {
   tempAddStat: number|undefined = undefined;
   baseImage: any = undefined;
   customBackground: any = null;
-  customBackgroundStretch: boolean = true;
+  fillMethod: imageFillMethod = "Fill";
+  fillMethodList: imageFillMethod[] = ["Fill","Contain","Contain & Centered","Cover","Cover & Centered","Original","Centered"];
   shareImage: string = "";
   shareImageBgOpacity: number = 100;
   constructor(
@@ -137,16 +138,52 @@ export class MyCharPage {
       w: 1920,
       h: 1080
     }
+    const calcImgDim = (xw:number,yw:number) => {
+      const ratio = {
+        x: dim.w/xw,
+        y: dim.h/yw
+      }
+      return {
+        ratio,
+        cover: {
+          width: ratio.x>ratio.y?1920:Math.round(xw*ratio.y),
+          height: ratio.y>ratio.x?1080:Math.round(yw*ratio.x)
+        },
+        contain: {
+          width: ratio.x>ratio.y?Math.round(xw*ratio.y):1920,
+          height: ratio.y>ratio.x?Math.round(yw*ratio.x):1080
+        }
+      };
+    }
     var c = this.editCanvas.nativeElement;
     let ctx = c.getContext('2d');
     ctx.canvas.width  = dim.w;
     ctx.canvas.height = dim.h;
     ctx.clearRect(0, 0, dim.w, dim.h);
     if(this.customBackground!=null){
-      if(this.customBackgroundStretch){
-        ctx.drawImage(this.customBackground,0,0,dim.w,dim.h);
-      } else {
-        ctx.drawImage(this.customBackground,0,0);
+      const imgDim = calcImgDim(this.customBackground.width,this.customBackground.height);
+      switch(this.fillMethod){
+        case "Fill":
+          ctx.drawImage(this.customBackground,0,0,dim.w,dim.h);
+          break;
+        case "Contain":
+          ctx.drawImage(this.customBackground,0,0,imgDim.contain.width,imgDim.contain.height);
+          break;
+        case "Contain & Centered":
+          ctx.drawImage(this.customBackground,((dim.w/2)-(imgDim.contain.width/2)),((dim.h/2)-(imgDim.contain.height/2)),imgDim.contain.width,imgDim.contain.height);
+          break;
+        case "Cover":
+          ctx.drawImage(this.customBackground,0,0,imgDim.cover.width,imgDim.cover.height);
+          break;
+        case "Cover & Centered":
+          ctx.drawImage(this.customBackground,((dim.w/2)-(imgDim.cover.width/2)),((dim.h/2)-(imgDim.cover.height/2)),imgDim.cover.width,imgDim.cover.height);
+          break;
+        case "Original":
+          ctx.drawImage(this.customBackground,0,0);
+          break;
+        case "Centered":
+          ctx.drawImage(this.customBackground,((dim.w/2)-(this.customBackground.width/2)),((dim.h/2)-(this.customBackground.height/2)),this.customBackground.width,this.customBackground.height);
+          break;
       }
       ctx.fillStyle = `rgba(30, 32, 35, ${(100-this.shareImageBgOpacity)/100})`;
       ctx.fillRect(0, 0, dim.w, dim.h);
@@ -1058,3 +1095,5 @@ export class MyCharPage {
     return this.char.characterStat.getVal("Heal");
   }
 }
+
+type imageFillMethod = "Fill"|"Contain"|"Contain & Centered"|"Cover"|"Cover & Centered"|"Original"|"Centered";

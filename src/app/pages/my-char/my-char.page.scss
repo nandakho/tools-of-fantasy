@@ -590,18 +590,17 @@ ion-modal.share-modal {
                 padding: 9px 20px;
                 cursor: pointer;
             }
-            div.checkbox {
-                border: 2px solid var(--ion-color-primary-contrast);
-                border-radius: 6px;
-                padding: 7px 20px;
-                padding-top: 11px;
-                ion-checkbox {
-                    color: var(--ion-color-primary-contrast);
-                }
-            }
             ion-text:hover {
                 color: var(--ion-color-warning);
                 border: 2px solid var(--ion-color-warning);
+            }
+            ion-select {
+                color: var(--ion-color-primary-contrast);
+                border: 2px solid var(--ion-color-primary-contrast);
+                border-radius: 6px;
+                padding-left: 20px;
+                padding-right: 20px;
+                color: var(--ion-color-primary-contrast);
             }
         }
     }
