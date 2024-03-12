@@ -91,7 +91,7 @@
         "Asuka": {
             "Set": 2,
             "Increase": ["PhysicalAttackPercent","FlameAttackPercent"],
-            "Value": [19,21,23,25]
+            "Value": [20,22,24,26]
         }
     }
 }
