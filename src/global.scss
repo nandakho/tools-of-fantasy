@@ -100,7 +100,7 @@ ion-alert {
                     background-image: url("assets/icon/equipments/#{get-gear-url($name)} Titan.png");
                 }
             }
-            $weapon-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_Lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey", "Plotti", "Yanuo";
+            $weapon-names: "KING", "Zero", "Huma", "Tsubasa", "Cocoritter", "Meryl", "Shiro", "Crow", "Samir", "Nemesis", "Frigg", "Claudia", "Cobalt-B", "Ruby", "Saki", "Lin", "Lyra", "Tian_Lang", "Annabella", "Alyss", "Umi", "Fenrir", "Lan", "Icarus", "Fiona", "Gnonno", "Rubilia", "Liu_Huo", "Yu_Lan", "Ming_Jing", "Mimi", "Fei_Se", "Ling_Han", "Nanyin", "Yan_Miao", "Brevey", "Plotti", "Yanuo", "Asuka";
             @each $name in $weapon-names {
                 .weapon-#{$name} {
                     background-image: url("assets/icon/weapons/#{repl-space($name)}.png");
