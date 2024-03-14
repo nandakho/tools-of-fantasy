@@ -1334,7 +1334,7 @@
         }
     },
     "Asuka": {
-        "Type":"Attack",
+        "Type":"Fortitude",
         "Element":["Physical","Flame"],
         "Reso":[
             {
