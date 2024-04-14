@@ -367,7 +367,7 @@
                                       </ion-content>
                                     </ng-template>
                                   </ion-popover>
-                                  <ion-popover *ngIf="eqa.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqcompare.id,singleType,'random',arIdx,tempAddStat)" [trigger]="'randa-'+singleType+eqcompare.id+'-'+arIdx+'val'" triggerAction="context-menu">
+                                  <ion-popover *ngIf="eqa.type" (willPresent)="tempAddStat=undefined" (willDismiss)="addStat(eqcompare.id,singleType,'augment',arIdx,tempAddStat)" [trigger]="'randa-'+singleType+eqcompare.id+'-'+arIdx+'val'" triggerAction="context-menu">
                                     <ng-template>
                                       <ion-content class="popups">
                                         <ion-text class="title">Add to {{beautifyStatString(eqa.type)}} Value</ion-text>
