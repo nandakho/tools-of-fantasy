@@ -95,7 +95,7 @@ export class GearsService {
   }
 }
 
-export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders"];
+export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders","Combat Engine","Eyepiece"];
 export const randomStatList = {
   "Bracers": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
   "Legguards": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
