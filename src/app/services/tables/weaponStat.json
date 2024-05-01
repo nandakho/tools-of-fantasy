@@ -1429,7 +1429,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Ji_Yu": {
+    "Ji Yu": {
         "Type":"Attack",
         "Element":["Flame","Physical"],
         "Reso":[
