@@ -138,8 +138,8 @@ export const titanStatList = {
   "Helm": [],
   "Exoskeleton": [],
   "Microreactor": ["Lifesteal","Recovery","Block","Reduction","Dodge","Discharge"],
-  "Eyepiece": [],
-  "Combat Engine": [],
+  "Eyepiece": ["Lifesteal","Recovery","Block","Reduction","Normal","Discharge"],
+  "Combat Engine": ["Delay","Heal","Dodge","Skill","Damage","Weak"],
 }
 
 export interface gear {

@@ -39,7 +39,7 @@ export class GearComparePage {
   equipment: eqStats[] = [];
   equipped: number|undefined = undefined;
   helpGif: any = undefined;
-  typeSelected: string = "Manual";
+  typeSelected: string = "Auto";
   changedOnly: boolean = true;
   changedStats: any[] = [];
   compareStats: any[] = [];
