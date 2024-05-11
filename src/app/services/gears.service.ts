@@ -80,6 +80,9 @@ export class GearsService {
     }
     lvl.sort((a,b)=>a-b);
     if(lvl.length==8){
+      if(lvl[0]>=65) return gearComboStat[65];
+      if(lvl[0]>=60) return gearComboStat[60];
+      if(lvl[0]>=55) return gearComboStat[55];
       if(lvl[0]>=50) return gearComboStat[50];
       if(lvl[0]>=45) return gearComboStat[45];
       if(lvl[0]>=40) return gearComboStat[40];
@@ -321,7 +324,7 @@ export const randStatNeedCount:needCount = {
   "VoltResist":215
 };
 export const gearCombo:gearTypes[] = ["Bracers","Legguards","Sabatons","Spaulders","Armor","Handguards","Belt","Helm"];
-type comboLevel = "5"|"10"|"15"|"20"|"25"|"30"|"35"|"40"|"45"|"50";
+type comboLevel = "5"|"10"|"15"|"20"|"25"|"30"|"35"|"40"|"45"|"50"|"55"|"60"|"65";
 export type comboStat = {
   [lv in comboLevel]: {
     "Attack":number;
