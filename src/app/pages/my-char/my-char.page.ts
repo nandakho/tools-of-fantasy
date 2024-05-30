@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService } from 'src/app/services';
+import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, evoAvailable } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -22,6 +22,8 @@ export class MyCharPage {
   as = augStatList;
   ts = titanStatList;
   al = augAvailable;
+  evo = evoAvailable;
+  evoMax = evoMax;
   saving:boolean = false;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
@@ -224,12 +226,12 @@ export class MyCharPage {
         ctx.strokeStyle = color;
       }
     }
-    const strokedText = (text:string,lineWidth:number,x:number,y:number) => {
+    const strokedText = (text:string,lineWidth:number,x:number,y:number,clr:"white"|"black"|"warning"|"medium"|"dark"="white") => {
       ctx.lineWidth = lineWidth;
       ctx.lineJoin = "miter";
 	    ctx.miterLimit = 2;
       color.stroke(colors.medium);
-      color.fill(colors.white);
+      color.fill(colors[clr]);
       ctx.strokeText(text, x, y);
       ctx.fillText(text, x, y);
     }
@@ -336,6 +338,10 @@ export class MyCharPage {
       if(g.rarity!=null){
         fontSize(24);
         strokedText(`${g.enhance}`, 2, 673, 36+(gidx*84)+(gidx*4));
+        if(evoAvailable.includes(gtype)){
+          fontSize(18);
+          strokedText(`E${g.evolution??0}`, 2, 705, 34+(gidx*84)+(gidx*4),"warning");
+        }
         await insertIcon(`assets/icon/equipments/${gtype} ${g.rarity}.png`,{zoom:0.3}, 670, 24+(gidx*84)+(gidx*4));
         let ridx = 0;
         let hrd = 26;

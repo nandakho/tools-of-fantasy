@@ -250,6 +250,17 @@
                             </ion-content>
                           </ng-template>
                         </ion-popover>
+                        <div *ngIf="evo.includes(eqType)">
+                          <ion-text class="level right" [id]="'evolevel-'+eqType">{{char.characterInfo.gear[eqType].evolution??0}}</ion-text>
+                          <ion-popover [trigger]="'evolevel-'+eqType" triggerAction="click">
+                            <ng-template>
+                              <ion-content class="popups">
+                                <ion-text class="title">Adjust Super Computing Level</ion-text>
+                                <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.characterInfo.gear[eqType].evolution" [min]="0" [max]="evoMax" [pin]="true"></ion-range>
+                              </ion-content>
+                            </ng-template>
+                          </ion-popover>
+                        </div>
                         <div class="choose">
                           <ion-img (click)="eqChange(eqType)" [src]="'assets/icon/equipments/'+eqType+'%20'+char.characterInfo.gear[eqType].rarity+'.png'"></ion-img>
                         </div>

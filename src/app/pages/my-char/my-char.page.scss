@@ -138,6 +138,12 @@ ion-card {
                             ion-text.level:hover {
                                 border: 2px solid var(--ion-color-warning);
                             }
+                            ion-text.right {
+                                border-right: 2px solid transparent;
+                                right: 0;
+                                border-left: 2px solid var(--ion-color-medium);
+                                border-radius: 0px 5px 0px 25%;
+                            }
                             div.null-equip {
                                 border: 1px solid var(--ion-color-medium);
                                 border-radius: 5px;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatsService, statTypes } from '.';
+import { StatsService, statTypes, stats } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,10 @@ export class GearsService {
             stat.addVal(kk as statTypes,vv[i]);
           }
         };
+        if(evoAvailable.includes(k as gearTypes)){
+          //stat.add(this.evolutionStat(k as gearTypes,v.evolution??0));
+          console.log(`EVO LEVEL ${v.evolution??0}`);
+        }
         const advLevel = Math.floor(v.enhance/5);
         for(let i=0;i<advLevel;i++){
           for(let [kk,vv] of Object.entries(gearAvailable[k as gearTypes].Advance[i])){
@@ -96,9 +100,69 @@ export class GearsService {
     }
     return null;
   }
+
+  evolutionStat(gear:gearTypes, evoLevel:number):stats{
+    let evstat = new StatsService();
+    //tba
+    return evstat.getAll();
+  }
 }
 
 export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders","Combat Engine","Eyepiece"];
+export const evoAvailable:gearTypes[] = ["Combat Engine", "Eyepiece", "Microreactor", "Exoskeleton"];
+const evoStats = {
+  "Combat Engine": {
+    "AlterDamagePercent": 0.005,
+    "FlameDamagePercent": 0.005,
+    "FrostDamagePercent": 0.005,
+    "PhysicalDamagePercent": 0.005,
+    "VoltDamagePercent": 0.005,
+    "AlterResistPercent": 0.01,
+    "FlameResistPercent": 0.01,
+    "FrostResistPercent": 0.01,
+    "PhysicalResistPercent": 0.01,
+    "VoltResistPercent": 0.01,
+    "Healing": 0.01,
+  },
+  "Microreactor": {
+    "AlterDamagePercent": 0.005,
+    "FlameDamagePercent": 0.005,
+    "FrostDamagePercent": 0.005,
+    "PhysicalDamagePercent": 0.005,
+    "VoltDamagePercent": 0.005,
+    "AlterResistPercent": 0.01,
+    "FlameResistPercent": 0.01,
+    "FrostResistPercent": 0.01,
+    "PhysicalResistPercent": 0.01,
+    "VoltResistPercent": 0.01,
+    "Healing": 0.01,
+  },
+  "Eyepiece": {
+    "AlterDamagePercent": 0.005,
+    "FlameDamagePercent": 0.005,
+    "FrostDamagePercent": 0.005,
+    "PhysicalDamagePercent": 0.005,
+    "VoltDamagePercent": 0.005,
+    "FlameAttackPercent": 0.01,
+    "FrostAttackPercent": 0.01,
+    "PhysicalAttackPercent": 0.01,
+    "VoltAttackPercent": 0.01,
+    "Shatter": 0.01,
+  },
+  "Exoskeleton": {
+    "AlterDamagePercent": 0.005,
+    "FlameDamagePercent": 0.005,
+    "FrostDamagePercent": 0.005,
+    "PhysicalDamagePercent": 0.005,
+    "VoltDamagePercent": 0.005,
+    "FlameAttackPercent": 0.01,
+    "FrostAttackPercent": 0.01,
+    "PhysicalAttackPercent": 0.01,
+    "VoltAttackPercent": 0.01,
+    "Shatter": 0.01,
+  }
+};
+export const evoMax = 10;
 export const randomStatList = {
   "Bracers": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
   "Legguards": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],
@@ -207,84 +271,96 @@ export interface gearList {
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Legguards": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Sabatons": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Spaulders": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Armor": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Handguards": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Belt": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Helm": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   },
   "Exoskeleton": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   }, 
   "Microreactor": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   }, 
   "Eyepiece": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   }, 
   "Combat Engine": {
     rarity: eqRarity|null,
     random: randomStat[],
     augment: randomStat[],
     rare: rareStat,
-    enhance: number
+    enhance: number,
+    evolution?: number,
   }
 }
 export type eqRarity = "5"|"Augment"|"Titan";

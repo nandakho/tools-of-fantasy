@@ -93,6 +93,11 @@
             "Increase": ["PhysicalAttackPercent","FlameAttackPercent"],
             "Value": [20,22,24,26]
         },
+        "Yanuo": {
+            "Set": 2,
+            "Increase": ["FrostAttackPercent","VoltAttackPercent"],
+            "Value": [5,5,5,5]
+        },
         "Ji Yu": {
             "Set": 2,
             "Increase": ["FlameAttackPercent"],
