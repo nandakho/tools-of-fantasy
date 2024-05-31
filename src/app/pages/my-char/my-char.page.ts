@@ -1029,6 +1029,9 @@ export class MyCharPage {
   get alterAtkP() {
     return Math.floor(this.char.characterStat.getVal("AlterAttack"));
   }
+  get alterDam() {
+    return Math.round(this.char.characterStat.getVal("AlterDamagePercent")*100)/100;
+  }
   get eleHighest() {
     return [{name:"Physical",val:this.physicalAtk},{name:"Flame",val:this.flameAtk},{name:"Frost",val:this.frostAtk},{name:"Volt",val:this.voltAtk}].sort((a,b)=>b.val-a.val)[0].name;
   }

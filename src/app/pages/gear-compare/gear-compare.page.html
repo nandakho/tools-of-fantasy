@@ -508,7 +508,7 @@
                             <ion-text>Altered Attack</ion-text><br>
                             <ion-text>{{alterAtk}}</ion-text>
                             <ion-text *ngIf="alterAtk!=alterAtkOld" class="stat-diff" [ngClass]="alterAtk>alterAtkOld?'increase-val':'decrease-val'"><ion-icon [name]="alterAtk>alterAtkOld?'caret-up':'caret-down'"></ion-icon>{{alterAtk-alterAtkOld}}</ion-text>
-                            <span class="tooltip">Highest: <div class="highlight">{{eleHighest}}</div><br><div class="highlight">{{alterAtkB}}</div> + <div class="highlight">{{alterAtkP}}</div></span>
+                            <span class="tooltip"><div class="highlight">{{eleHighest}} {{alterAtkB}} + {{alterAtkP}}</div><br>Alter Damage: <div class="highlight">{{alterDam}}%</div></span>
                           </div>
                         </ion-item>
                       </ion-col>

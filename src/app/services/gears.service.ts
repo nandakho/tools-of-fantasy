@@ -22,8 +22,7 @@ export class GearsService {
           }
         };
         if(evoAvailable.includes(k as gearTypes)){
-          //stat.add(this.evolutionStat(k as gearTypes,v.evolution??0));
-          console.log(`EVO LEVEL ${v.evolution??0}`);
+          stat.add(this.evolutionStat(k as gearTypes,v.evolution??0));
         }
         const advLevel = Math.floor(v.enhance/5);
         for(let i=0;i<advLevel;i++){
@@ -103,63 +102,70 @@ export class GearsService {
 
   evolutionStat(gear:gearTypes, evoLevel:number):stats{
     let evstat = new StatsService();
-    //tba
+    for(let [sName,sVal] of Object.entries(evoStats[gear]!)){
+      evstat.addVal(sName as statTypes,sVal*((evoLevel<0)?0:(evoLevel>evoMax)?evoMax:evoLevel));
+    }
     return evstat.getAll();
   }
 }
 
 export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders","Combat Engine","Eyepiece"];
 export const evoAvailable:gearTypes[] = ["Combat Engine", "Eyepiece", "Microreactor", "Exoskeleton"];
-const evoStats = {
+const evoStats:evoStat = {
   "Combat Engine": {
-    "AlterDamagePercent": 0.005,
-    "FlameDamagePercent": 0.005,
-    "FrostDamagePercent": 0.005,
-    "PhysicalDamagePercent": 0.005,
-    "VoltDamagePercent": 0.005,
-    "AlterResistPercent": 0.01,
-    "FlameResistPercent": 0.01,
-    "FrostResistPercent": 0.01,
-    "PhysicalResistPercent": 0.01,
-    "VoltResistPercent": 0.01,
-    "Healing": 0.01,
+    "AlterDamagePercent": 0.5,
+    "FlameDamagePercent": 0.5,
+    "FrostDamagePercent": 0.5,
+    "PhysicalDamagePercent": 0.5,
+    "VoltDamagePercent": 0.5,
+    "AlterResistPercent": 1,
+    "FlameResistPercent": 1,
+    "FrostResistPercent": 1,
+    "PhysicalResistPercent": 1,
+    "VoltResistPercent": 1,
+    "Healing": 1,
   },
   "Microreactor": {
-    "AlterDamagePercent": 0.005,
-    "FlameDamagePercent": 0.005,
-    "FrostDamagePercent": 0.005,
-    "PhysicalDamagePercent": 0.005,
-    "VoltDamagePercent": 0.005,
-    "AlterResistPercent": 0.01,
-    "FlameResistPercent": 0.01,
-    "FrostResistPercent": 0.01,
-    "PhysicalResistPercent": 0.01,
-    "VoltResistPercent": 0.01,
-    "Healing": 0.01,
+    "AlterDamagePercent": 0.5,
+    "FlameDamagePercent": 0.5,
+    "FrostDamagePercent": 0.5,
+    "PhysicalDamagePercent": 0.5,
+    "VoltDamagePercent": 0.5,
+    "AlterResistPercent": 1,
+    "FlameResistPercent": 1,
+    "FrostResistPercent": 1,
+    "PhysicalResistPercent": 1,
+    "VoltResistPercent": 1,
+    "Healing": 1,
   },
   "Eyepiece": {
-    "AlterDamagePercent": 0.005,
-    "FlameDamagePercent": 0.005,
-    "FrostDamagePercent": 0.005,
-    "PhysicalDamagePercent": 0.005,
-    "VoltDamagePercent": 0.005,
-    "FlameAttackPercent": 0.01,
-    "FrostAttackPercent": 0.01,
-    "PhysicalAttackPercent": 0.01,
-    "VoltAttackPercent": 0.01,
-    "Shatter": 0.01,
+    "AlterDamagePercent": 0.5,
+    "FlameDamagePercent": 0.5,
+    "FrostDamagePercent": 0.5,
+    "PhysicalDamagePercent": 0.5,
+    "VoltDamagePercent": 0.5,
+    "FlameAttackPercent": 1,
+    "FrostAttackPercent": 1,
+    "PhysicalAttackPercent": 1,
+    "VoltAttackPercent": 1,
+    "Shatter": 1,
   },
   "Exoskeleton": {
-    "AlterDamagePercent": 0.005,
-    "FlameDamagePercent": 0.005,
-    "FrostDamagePercent": 0.005,
-    "PhysicalDamagePercent": 0.005,
-    "VoltDamagePercent": 0.005,
-    "FlameAttackPercent": 0.01,
-    "FrostAttackPercent": 0.01,
-    "PhysicalAttackPercent": 0.01,
-    "VoltAttackPercent": 0.01,
-    "Shatter": 0.01,
+    "AlterDamagePercent": 0.5,
+    "FlameDamagePercent": 0.5,
+    "FrostDamagePercent": 0.5,
+    "PhysicalDamagePercent": 0.5,
+    "VoltDamagePercent": 0.5,
+    "FlameAttackPercent": 1,
+    "FrostAttackPercent": 1,
+    "PhysicalAttackPercent": 1,
+    "VoltAttackPercent": 1,
+    "Shatter": 1,
+  }
+};
+type evoStat = {
+  [gear in gearTypes]?: {
+    [st in statTypes]?: number
   }
 };
 export const evoMax = 10;

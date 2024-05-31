@@ -921,6 +921,9 @@ export class GearComparePage {
   get alterAtkP() {
     return Math.floor(this.curStat.getVal("AlterAttack"));
   }
+  get alterDam() {
+    return Math.round(this.curStat.getVal("AlterDamagePercent")*100)/100;
+  }
   get alterAtkOld() {
     return Math.floor([this.physicalAtkOld,this.flameAtkOld,this.frostAtkOld,this.voltAtkOld].sort((a,b)=>b-a)[0]+this.char.characterStat.getVal("AlterAttack"));
   }
@@ -929,6 +932,9 @@ export class GearComparePage {
   }
   get alterAtkPOld() {
     return Math.floor(this.char.characterStat.getVal("AlterAttack"));
+  }
+  get alterDamOld() {
+    return Math.round(this.char.characterStat.getVal("AlterDamagePercent")*100)/100;
   }
   get eleHighest() {
     return [{name:"Physical",val:this.physicalAtk},{name:"Flame",val:this.flameAtk},{name:"Frost",val:this.frostAtk},{name:"Volt",val:this.voltAtk}].sort((a,b)=>b.val-a.val)[0].name;
