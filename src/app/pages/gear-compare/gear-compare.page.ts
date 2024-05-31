@@ -6,6 +6,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { Chart } from 'chart.js/auto';
 import { getMetadata } from 'meta-png';
 import { Preferences } from '@capacitor/preferences';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-gear-compare',
@@ -433,6 +434,7 @@ export class GearComparePage {
     let ctx = canvasElement.getContext('2d');
     this.baseDam = this.char.calcDamage(this.char.characterStat.getAll(),this.targetLv);
     let d = this.percentageDamage(this.baseDam);
+    Chart.register(ChartDataLabels)
     this.chart = new Chart(ctx,{
       type: 'bar',
       data: {
@@ -474,9 +476,16 @@ export class GearComparePage {
                 return `${x.dataset.label}: ${x.formattedValue}%`;
               }
             }
+          },
+          datalabels: {
+            color: '#ffffff',
+            textStrokeColor: "#000000",
+            textStrokeWidth: 4,
+            opacity: 0.6,
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     });
     this.graphInitDone = true;
   }
