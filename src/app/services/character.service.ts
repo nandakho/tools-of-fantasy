@@ -316,7 +316,7 @@ export class CharacterService {
       frost:calc(atkFinal.frost,stat.FrostDamagePercent??0,mult),
       physical:calc(atkFinal.physical,stat.PhysicalDamagePercent??0,mult),
       volt:calc(atkFinal.volt,stat.VoltDamagePercent??0,mult),
-      altered:calc(atkFinal.altered,0,mult)
+      altered:calc(atkFinal.altered,stat.AlterDamagePercent??0,mult)
     };
     return dam;
   }
