@@ -109,7 +109,7 @@ export class GearsService {
   }
 }
 
-export const augAvailable = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders","Combat Engine","Eyepiece"];
+export const augAvailable:gearTypes[] = ["Bracers","Legguards","Sabatons","Armor","Handguards","Microreactor","Belt","Spaulders","Combat Engine","Eyepiece","Helm"];
 export const evoAvailable:gearTypes[] = ["Combat Engine", "Eyepiece", "Microreactor", "Exoskeleton"];
 const evoStats:evoStat = {
   "Combat Engine": {
@@ -205,7 +205,7 @@ export const titanStatList = {
   "Armor": ["Delay","Heal","Dodge","Discharge","Damage","Weak"],
   "Handguards": ["Delay","Heal","Normal","Skill","Damage","Weak"],
   "Belt": ["Lifesteal","Recovery","Block","Reduction","Dodge","Skill"],
-  "Helm": [],
+  "Helm": ["Delay","Heal","Normal","Dodge","Damage","Weak"],
   "Exoskeleton": [],
   "Microreactor": ["Lifesteal","Recovery","Block","Reduction","Dodge","Discharge"],
   "Eyepiece": ["Lifesteal","Recovery","Block","Reduction","Normal","Discharge"],
