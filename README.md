@@ -3,6 +3,9 @@
 [![GitHub Issues](https://img.shields.io/github/issues/nandakho/tools-of-fantasy.svg)](https://github.com/nandakho/tools-of-fantasy/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/nandakho/tools-of-fantasy.svg)](https://github.com/nandakho/tools-of-fantasy/stargazers)
 
+## Android Version Available
+<a href='https://play.google.com/store/apps/details?id=id.my.nandakho.tofu'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="100px"/></a>
+
 ## Description
 This project is still in **development!**  
 Tools of Fantasy is a serverless tools built with the Ionic-Angular framework, designed to assist players in the MMO game \"Tower of Fantasy\".  
