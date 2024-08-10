@@ -287,7 +287,7 @@ export class MyCharPage {
       ctx.lineWidth = 4;
       insertBorder(200,380,20+(widx*200)+(widx*10),380);
       if(w.name!=null){
-        await insertIcon(`assets/icon/weapons/${w.name}.png`, {zoom:0.6}, 20+(widx*200)+(widx*10), 380);
+        await insertIcon(`assets/icon/weapons/${this.getName(widx)}.png`, {zoom:0.6}, 20+(widx*200)+(widx*10), 380);
         await insertIcon(`assets/icon/elements/Element_${this.getEle(widx)}.png`, {zoom:0.8}, 22+(widx*200)+(widx*10), 382);
         await insertIcon(`assets/icon/weapons/Reso_${this.getReso(widx)}.png`, {zoom:0.8}, 68+(widx*200)+(widx*10), 382);
         fontSize(24);
@@ -643,6 +643,14 @@ export class MyCharPage {
     this.tempWeaponStar[index].hovering = true;
   }
 
+  getName(index:number):string{
+    const cw = this.char.characterInfo.weapon[index].name;
+    if(cw!=null){
+      return `${cw.split(" ")[0]=='Nola'?'Nola':cw}`;
+    }
+    return `KING`;
+  }
+
   getEle(index:number):string{
     const cw = this.char.characterInfo.weapon[index].name;
     if(cw!=null){
@@ -670,12 +678,13 @@ export class MyCharPage {
       cssClass: `eq-unequip`
     }];
     if(curWeap!=null){
+      const cssClass = curWeap.split(" ")[0]=="Nola"?"weapon-Nola":`weapon-${curWeap.replace(/\s/g,"_")}`;
       r.push({
         label: curWeap,
         type: "radio",
         value: curWeap,
         checked: true,
-        cssClass: `weapon-${curWeap.replace(" ","_")}`
+        cssClass
       });
     }
     for(const w of this.wp.sort((a,b)=>{
@@ -684,12 +693,13 @@ export class MyCharPage {
       return -1;
     })){
       if(!alrdyEq.includes(w)){
+        const cssClass = w.split(" ")[0]=="Nola"?"weapon-Nola":`weapon-${w.replace(/\s/g,"_")}`;
         r.push({
           label: w,
           type: "radio",
           value: w,
           checked: w==this.char.characterInfo.weapon[index].name,
-          cssClass: `weapon-${w.replace(" ","_")}`
+          cssClass
         });
       }
     }
