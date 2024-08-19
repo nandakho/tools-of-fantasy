@@ -1097,6 +1097,7 @@ export class GearComparePage {
       augment: prevGear.augment,
       rare: prevGear.rare,
       enhance: prevGear.enhance,
+      evolution: prevGear.evolution??0,
       compareStats: []
     })));
     this.graphRefresh();
