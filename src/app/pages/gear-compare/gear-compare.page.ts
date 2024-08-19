@@ -325,6 +325,7 @@ export class GearComparePage {
         enhance: x.enhance,
         rarity: x.rarity,
         augment: x.augment,
+        evolution: x.evolution??0,
         random: x.random,
         rare: x.rare
       }
