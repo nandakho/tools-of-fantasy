@@ -482,6 +482,8 @@ export class GearComparePage {
             color: '#ffffff',
             textStrokeColor: "#000000",
             textStrokeWidth: 4,
+            rotation: 270,
+            clamp: true,
             opacity: 0.6,
           }
         }
