@@ -66,6 +66,12 @@
                         <ion-select-option *ngFor="let sup of sp" [value]="sup.k">{{sup.v}}</ion-select-option>
                       </ion-select>
                     </ion-col>
+                    <ion-col size="12">
+                      <ion-select mode="ios" (ionChange)="saveChanges()" justify="space-between" label="Trait" placeholder="Choose" [(ngModel)]="char.characterInfo.trait">
+                        <ion-select-option [value]="undefined">Unequipped</ion-select-option>
+                        <ion-select-option *ngFor="let trait of tr" [value]="trait">{{trait}}</ion-select-option>
+                      </ion-select>
+                    </ion-col>
                   </ion-row>
                   <ion-row>
                     <ion-col size="12">

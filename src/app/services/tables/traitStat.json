@@ -1,0 +1,11 @@
+{
+    "Nola": {
+        "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
+        "Value": 5,
+        "Condition": {
+            "Trigger": "Each",
+            "On": "Element",
+            "What": "Altered"
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService, stats } from '.';
+import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService, stats, weaponAvailable, weaponElement } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -289,6 +289,41 @@ export class CharacterService {
     this.characterStat.add(statGears);
     this.characterStat.add(statChar);
     this.characterStat.add(statWeap);
+    if(this.characterInfo.trait!=undefined){
+      this.characterStat.add(this.traitCalc(this.characterInfo.trait));
+    }
+  }
+
+  traitCalc(trait:string){
+    const triggerTimes = (condition:traitCondition) => {
+      let ok = 0;
+      switch(condition.Trigger){
+        case "Each":
+          switch(condition.On){
+            case "Element":
+              for(let wpname of this.characterInfo.weapon){
+                if(wpname.name!=null){
+                  if(weaponAvailable[wpname.name].Element.includes(condition.What as weaponElement)) ok++;
+                }
+              }
+            break;
+          }
+        break;
+      }
+      return ok;
+    }
+    let stat = new StatsService();
+    const hasSpecialTrait = Object.keys(traitAvailable).includes(trait);
+    if(hasSpecialTrait){
+      const t = traitAvailable[trait];
+      const n = triggerTimes(t.Condition);
+      if(n>0){
+        for(let s of t.Increase){
+          stat.addVal(s as statTypes,(t.Value*n));
+        }
+      }
+    }
+    return stat.getAll();
   }
 
   //Calculate damage, for certain multiplier
@@ -407,13 +442,27 @@ export interface characterInfo {
   supre: string|null;
   shots: shotTaken;
   simul: simulActive;
+  trait?: string;
 }
 type supreStat = {
   [name:string]:{
     [stat:string]:number;
   }
 }
+type traitStat = {
+  [name:string]:{
+    Increase:string;
+    Value:number;
+    Condition:traitCondition;
+  }
+}
+type traitCondition = {
+  Trigger: string;
+  On: string;
+  What: string;
+}
 export const supreAvailable:supreStat = require("./tables/supreStat.json");
+export const traitAvailable:traitStat = require("./tables/traitStat.json");
 
 interface critConstant {
   a: number,

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, evoAvailable } from 'src/app/services';
+import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, evoAvailable, traitAvailable } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -16,6 +16,11 @@ export class MyCharPage {
   mt = matrixAvailable.List;
   sp = Object.keys(supreAvailable).map(x=>{
     return {k:x,v:x.replace("_",".")}
+  });
+  tr = Object.keys(traitAvailable).sort((a,b)=>{
+    if(a==b) return 0;
+    if(a>b) return 1;
+    return -1;
   });
   gr = Object.keys(gearAvailable);
   rs = randomStatList;

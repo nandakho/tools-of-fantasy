@@ -86,8 +86,8 @@ export class WeaponService {
   }
 }
 
-type weaponResoType = "Attack"|"Benedict"|"Fortitude";
-type weaponElement = "Flame"|"Frost"|"Physical"|"Volt"|"Altered";
+export type weaponResoType = "Attack"|"Benedict"|"Fortitude";
+export type weaponElement = "Flame"|"Frost"|"Physical"|"Volt"|"Altered";
 type weaponResonance = {
   "Name": string;
   "Cond": resoCondition;
