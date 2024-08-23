@@ -271,6 +271,11 @@ export class MyCharPage {
     if(this.char.characterInfo.supre!=null){
       await insertIcon(`assets/icon/suppressors/${this.char.characterInfo.supre}.png`, {zoom:1.5}, 310, 100);
     }
+    //trait - if defined
+    if(this.char.characterInfo.trait){
+      strokedText(`Trait:`, 6, 480, 140);
+      await insertIcon(`assets/icon/trait/${this.char.characterInfo.trait}.png`, {zoom:1.5}, 480, 140);
+    }
     //server & uid
     fontSize(32);
     const suid = `Server: ${this.char.characterInfo.server??'-'}   UID: ${this.char.characterInfo.uid??'-'}`
