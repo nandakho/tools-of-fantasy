@@ -1802,5 +1802,53 @@
             "HP": [1,1.166667,1.333333,1.5,1.666667,1.833333,2],
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
+    },
+    "MerylX": {
+        "Type":"Fortitude",
+        "Element":["Volt","Frost"],
+        "Reso":[
+            {
+                "Name":"Volt Resonance",
+                "Cond": {
+                    "On":"Element",
+                    "What":"Volt",
+                    "Number":2
+                },
+                "Boost": {
+                    "VoltAttackPercent":15,
+                    "VoltResistPercent":25
+                },
+                "Overrides":[]
+            },
+            {
+                "Name":"Frost Resonance",
+                "Cond": {
+                    "On":"Element",
+                    "What":"Frost",
+                    "Number":2
+                },
+                "Boost": {
+                    "FrostAttackPercent":15,
+                    "FrostResistPercent":25
+                },
+                "Overrides":[]
+            }
+        ],
+        "Base": {
+            "Attack":16.571905,
+            "HP":1010.0971,
+            "Crit":11.837075
+        },
+        "Upgrade": {
+            "Attack":3.15534,
+            "HP":194.17476,
+            "Crit":2.427185
+        },
+        "Ascend": {
+            "Attack": [1,1.166667,1.493333,1.66,2.146667,2.313333,2.48],
+            "Resist": [1,1.166667,1.333333,1.5,1.666667,1.833333,2],
+            "HP": [1,1.166667,1.333333,1.5,1.666667,1.833333,2],
+            "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
+        }
     }
 }
