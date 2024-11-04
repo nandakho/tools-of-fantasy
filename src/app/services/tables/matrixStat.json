@@ -117,6 +117,11 @@
             "Set": 4,
             "Increase": ["VoltAttackPercent"],
             "Value": [21,24,27,30]
+        },
+        "Asurada": {
+            "Set": 2,
+            "Increase": ["FlameAttackPercent"],
+            "Value": [26,28,30,32]
         }
     }
 }
