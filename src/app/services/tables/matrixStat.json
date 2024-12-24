@@ -127,6 +127,11 @@
             "Set": 2,
             "Increase": ["FrostAttackPercent"],
             "Value": [24,26,28,30]
+        },
+        "ClaudiaX": {
+            "Set": 2,
+            "Increase": ["PhysicalAttackPercent"],
+            "Value": [24,26,28,30]
         }
     }
 }

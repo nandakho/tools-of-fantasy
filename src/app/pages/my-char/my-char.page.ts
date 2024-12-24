@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, evoAvailable, traitAvailable } from 'src/app/services';
+import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, enhMax, evoAvailable, traitAvailable } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -29,6 +29,7 @@ export class MyCharPage {
   al = augAvailable;
   evo = evoAvailable;
   evoMax = evoMax;
+  enhMax = enhMax;
   saving:boolean = false;
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
