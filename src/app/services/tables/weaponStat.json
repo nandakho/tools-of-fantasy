@@ -1995,7 +1995,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Void Piercer - Altered": {
+    "Voidpiercer - Altered": {
         "Type":"Attack",
         "Element":["Altered"],
         "Reso":[],
@@ -2016,7 +2016,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Void Piercer - Frost": {
+    "Voidpiercer - Frost": {
         "Type":"Attack",
         "Element":["Frost","Volt"],
         "Reso":[
@@ -2064,7 +2064,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Void Piercer - Flame": {
+    "Voidpiercer - Flame": {
         "Type":"Attack",
         "Element":["Flame","Physical"],
         "Reso":[
@@ -2112,7 +2112,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Void Piercer - Volt": {
+    "Voidpiercer - Volt": {
         "Type":"Attack",
         "Element":["Volt","Frost"],
         "Reso":[
@@ -2160,7 +2160,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Void Piercer - Physical": {
+    "Voidpiercer - Physical": {
         "Type":"Attack",
         "Element":["Physical","Flame"],
         "Reso":[
@@ -2208,7 +2208,7 @@
             "Crit": [1,1.166667,1.333333,1.5,1.666667,1.833333,2]
         }
     },
-    "Antolia": {
+    "Antoria": {
         "Type":"Attack",
         "Element":["Volt","Frost"],
         "Reso":[

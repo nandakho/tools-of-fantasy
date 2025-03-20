@@ -118,3 +118,4 @@ export interface baseWeap {
   [weaponName:string]: baseStat;
 }
 export const weaponAvailable:baseWeap = require("./tables/weaponStat.json");
+export const multiEleWeapons = ['Nola','Voidpiercer'];

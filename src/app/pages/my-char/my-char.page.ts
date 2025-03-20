@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, enhMax, evoAvailable, traitAvailable } from 'src/app/services';
+import { multiEleWeapons, ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, enhMax, evoAvailable, traitAvailable } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -657,7 +657,8 @@ export class MyCharPage {
   getName(index:number):string{
     const cw = this.char.characterInfo.weapon[index].name;
     if(cw!=null){
-      return `${cw.split(" ")[0]=='Nola'?'Nola':cw}`;
+      const w = cw.split(" ")[0];
+      return `${multiEleWeapons.includes(w)?`${w}`:cw}`;
     }
     return `KING`;
   }
@@ -689,7 +690,8 @@ export class MyCharPage {
       cssClass: `eq-unequip`
     }];
     if(curWeap!=null){
-      const cssClass = curWeap.split(" ")[0]=="Nola"?"weapon-Nola":`weapon-${curWeap.replace(/\s/g,"_")}`;
+      const w = curWeap.split(" ")[0];
+      const cssClass = multiEleWeapons.includes(w)?`weapon-${w}`:`weapon-${curWeap.replace(/\s/g,"_")}`;
       r.push({
         label: curWeap,
         type: "radio",
@@ -704,7 +706,8 @@ export class MyCharPage {
       return -1;
     })){
       if(!alrdyEq.includes(w)){
-        const cssClass = w.split(" ")[0]=="Nola"?"weapon-Nola":`weapon-${w.replace(/\s/g,"_")}`;
+        const mw = w.split(" ")[0];
+        const cssClass = multiEleWeapons.includes(mw)?`weapon-${mw}`:`weapon-${w.replace(/\s/g,"_")}`;
         r.push({
           label: w,
           type: "radio",
