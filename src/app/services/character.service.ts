@@ -137,7 +137,7 @@ export class CharacterService {
     }
   }
 
-  charStat(){
+  charStat(booster?:boosterActive){
     let stat = new StatsService();
     if(this.characterInfo.shots.powerShot>0){
       for(let [ps,pv] of Object.entries(shotIncrease.powerShot)){
@@ -171,6 +171,30 @@ export class CharacterService {
     }
     //base stat
     stat.add({"Resist":150,"HP":24000,"Attack":300,"CritDamage":50});
+    //blade shot
+    if(booster?.bladeShot=="normal"){
+      stat.add({"FlameAttackPercent":2.5,"FrostAttackPercent":2.5,"PhysicalAttackPercent":2.5,"VoltAttackPercent":2.5});
+    }
+    if(booster?.bladeShot=="enhanced"){
+      stat.add({"FlameAttackPercent":3.5,"FrostAttackPercent":3.5,"PhysicalAttackPercent":3.5,"VoltAttackPercent":3.5});
+    }
+    //drinks
+    if(booster?.drinks!=null){
+      switch(booster.drinks){
+        case "Flame":
+          stat.add({"FlameAttackPercent":10});
+          break;
+        case "Frost":
+          stat.add({"FrostAttackPercent":10});
+          break;
+        case "Physical":
+          stat.add({"PhysicalAttackPercent":10});
+          break;
+        case "Volt":
+          stat.add({"VoltAttackPercent":10});
+          break;
+      }
+    }
     return stat.getAll();
   }
 
@@ -284,8 +308,8 @@ export class CharacterService {
   calcStat(){
     this.characterStat.initAll();
     const statGears = this.gears.calc(this.characterInfo.gear);
-    const statChar = this.charStat();
-    const statWeap = this.weapons.calc(this.characterInfo.weapon);
+    const statChar = this.charStat(this.characterInfo.booster);
+    const statWeap = this.weapons.calc(this.characterInfo.weapon,(this.characterInfo.booster?.enhancementShot??false));
     this.characterStat.add(statGears);
     this.characterStat.add(statChar);
     this.characterStat.add(statWeap);
@@ -411,6 +435,27 @@ export class CharacterService {
       c: -49787
     };
   }
+
+  set bladeShot(bladeShot:"enhanced"|"normal"|null){
+    this.characterInfo = Object.assign(this.characterInfo,{booster:{bladeShot,enhancementShot:this.enhancementShot,drinks:this.drinks}});
+  }
+  get bladeShot(){
+    return this.characterInfo.booster?.bladeShot ?? null;
+  }
+
+  set enhancementShot(enhancementShot:boolean){
+    this.characterInfo = Object.assign(this.characterInfo,{booster:{bladeShot:this.bladeShot,enhancementShot,drinks:this.drinks}});
+  }
+  get enhancementShot(){
+    return this.characterInfo.booster?.enhancementShot ?? false;
+  }
+
+  set drinks(drinks:"Flame"|"Frost"|"Physical"|"Volt"|null){
+    this.characterInfo = Object.assign(this.characterInfo,{booster:{bladeShot:this.bladeShot,enhancementShot:this.enhancementShot,drinks}});
+  }
+  get drinks(){
+    return this.characterInfo.booster?.drinks ?? null;
+  }
 }
 
 export const shotIncrease = {
@@ -420,6 +465,11 @@ export const shotIncrease = {
 type shotTaken = {
   powerShot: number;
   sourceShot: number;
+}
+type boosterActive = {
+  bladeShot: "enhanced"|"normal"|null;
+  enhancementShot: boolean;
+  drinks: "Flame"|"Frost"|"Physical"|"Volt"|null;
 }
 export const simulIncrease = {
   "4500":{"HP":7600.0},
@@ -441,6 +491,7 @@ export interface characterInfo {
   level: number;
   supre: string|null;
   shots: shotTaken;
+  booster?: boosterActive;
   simul: simulActive;
   trait?: string;
 }

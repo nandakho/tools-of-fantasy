@@ -10,7 +10,7 @@ export class WeaponService {
     private matrixs:MatrixService
   ) { }
 
-  calc(weapons:weaponList[]){
+  calc(weapons:weaponList[],enhancementShot:boolean=false){
     let stat = new StatsService();
     let wtype = [];
     let wele = [];
@@ -29,14 +29,14 @@ export class WeaponService {
           ssw.addVal(s as statTypes,(v as number)*w.level);
         }
         for(let [as,av] of Object.entries(weaponAvailable[w.name].Ascend)){
-          ssw.setVal(as as statTypes,((av as number[])[w.advance])*ssw.getVal(as as statTypes));
+          ssw.setVal(as as statTypes,((av as number[])[enhancementShot?6:w.advance])*ssw.getVal(as as statTypes));
         }
         matrixs.push(w.matrix);
         stat.add(ssw.getAll());
       }
     }
     let ssm = new StatsService();
-    ssm.add(this.matrixs.calc(matrixs));
+    ssm.add(this.matrixs.calc(matrixs,enhancementShot));
     stat.add(ssm.getAll());
     let ssr = new StatsService();
     let activeReso = [];

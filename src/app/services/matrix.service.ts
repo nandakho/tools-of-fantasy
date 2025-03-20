@@ -8,7 +8,7 @@ export class MatrixService {
 
   constructor() { }
 
-  calc(matrixs:matrixStat[]){
+  calc(matrixs:matrixStat[],enhancementShot:boolean=false){
     let stat = new StatsService();
     let sets: matrixSet[] = [];
     for(let [mIdx,matrix] of matrixs.entries()){
@@ -19,7 +19,7 @@ export class MatrixService {
           for(let [s,v] of Object.entries(matrixAvailable.Upgrade[slot as matrixType])){
             sm.addVal(s as statTypes,(v as number)*mstat.level);
           }
-          sm.multiplyAll(matrixAvailable.Ascend[mstat.advance]);
+          sm.multiplyAll(matrixAvailable.Ascend[enhancementShot?3:mstat.advance]);
 
           let sIdx = sets.findIndex(x=>x.name==mstat.name);
           if(sIdx<0){
