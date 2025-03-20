@@ -277,14 +277,14 @@ export class MyCharPage {
       strokedText(`Trait:`, 6, 530, 140);
       await insertIcon(`assets/icon/trait/${this.char.characterInfo.trait}.png`, {zoom:1.5}, 530, 140);
     }
-    //booster - if defined / not null - temporary icon
+    //booster - if defined / not null
     if(this.char.characterInfo.booster){
       if(this.char.bladeShot){
-        if(this.char.bladeShot=="enhanced") await insertIcon(`assets/icon/items/PowerShot.png`, {zoom:0.3}, 440, 80);
-        if(this.char.bladeShot=="normal") await insertIcon(`assets/icon/items/PowerShot.png`, {zoom:0.3}, 440, 80);
+        if(this.char.bladeShot=="enhanced") await insertIcon(`assets/icon/items/EnhancedBladeShot.png`, {zoom:0.3}, 440, 80);
+        if(this.char.bladeShot=="normal") await insertIcon(`assets/icon/items/BladeShot.png`, {zoom:0.3}, 440, 80);
       }
-      if(this.char.enhancementShot) await insertIcon(`assets/icon/items/PowerShot.png`, {zoom:0.3}, 440, 145);
-      if(this.char.drinks) await insertIcon(`assets/icon/items/PowerShot.png`, {zoom:0.3}, 440, 210);
+      if(this.char.enhancementShot) await insertIcon(`assets/icon/items/EnhancementShot.png`, {zoom:0.3}, 440, 145);
+      if(this.char.drinks) await insertIcon(`assets/icon/items/${this.char.drinks}.png`, {zoom:0.3}, 440, 210);
     }
     //server & uid
     fontSize(32);
