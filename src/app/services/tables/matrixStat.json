@@ -36,7 +36,7 @@
         }
     },
     "Ascend": [1.0,1.333333,0.666667,2.0],
-    "List": ["KING","Zero","Huma","Tsubasa","Cocoritter","Meryl","Shiro","Crow","Samir","Nemesis","Frigg","Claudia","Cobalt-B","Ruby","Saki","Lin","Lyra","Tian Lang","Annabella","Alyss","Umi","Fenrir","Scylla","Haboela","Lan","Icarus","Fiona","Gnonno","Rubilia","Liu Huo","Yu Lan","Ming Jing","Mimi","Fei Se","Ling Han","Nanyin","Yan Miao","Brevey","Plotti","Yanuo","Asuka","Ayanami Rei","Ji Yu","Roslyn","Anka","Nola","MerylX","Asurada","Gray Fox","ClaudiaX","Voidpiercer","Antoria"],
+    "List": ["KING","Zero","Huma","Tsubasa","Cocoritter","Meryl","Shiro","Crow","Samir","Nemesis","Frigg","Claudia","Cobalt-B","Ruby","Saki","Lin","Lyra","Tian Lang","Annabella","Alyss","Umi","Fenrir","Scylla","Haboela","Lan","Icarus","Fiona","Gnonno","Rubilia","Liu Huo","Yu Lan","Ming Jing","Mimi","Fei Se","Ling Han","Nanyin","Yan Miao","Brevey","Plotti","Yanuo","Asuka","Ayanami Rei","Ji Yu","Roslyn","Anka","Nola","MerylX","Asurada","Gray Fox","ClaudiaX","Voidpiercer","Antoria","Carrot"],
     "Special": {
         "Lyra": {
             "Set": 2,
@@ -142,6 +142,11 @@
             "Set": 2,
             "Increase": ["VoltAttackPercent"],
             "Value": [24,26,28,30]
+        },
+        "Carrot": {
+            "Set": 2,
+            "Increase": ["FlameAttackPercent"],
+            "Value": [26,28,30,32]
         }
     }
 }
