@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
-import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService, stats, weaponAvailable, weaponElement } from '.';
+import { GearsService, gearList, WeaponService, weaponList, StatsService, statTypes, MiscService, stats, weaponAvailable, weaponElement, basicElement } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -184,15 +184,52 @@ export class CharacterService {
         case "Flame":
           stat.add({"FlameAttackPercent":10});
           break;
+        case "Flame_Nutripaste":
+          stat.add({"FlameAttackPercent":12,"FlameAttackFlat":500});
+          break;
         case "Frost":
           stat.add({"FrostAttackPercent":10});
+          break;
+        case "Frost_Nutripaste":
+          stat.add({"FrostAttackPercent":12,"FrostAttackFlat":500});
           break;
         case "Physical":
           stat.add({"PhysicalAttackPercent":10});
           break;
+        case "Physical_Nutripaste":
+          stat.add({"PhysicalAttackPercent":12,"PhysicalAttackFlat":500});
+          break;
         case "Volt":
           stat.add({"VoltAttackPercent":10});
           break;
+        case "Volt_Nutripaste":
+          stat.add({"VoltAttackPercent":12,"VoltAttackFlat":500});
+          break;
+      }
+    }
+    //sss - cosmic system
+    if(this.characterInfo.sss!=undefined){
+      const maxAtk = sssIncrease.Attack.length-1;
+      const maxDmg = sssIncrease.Damage.length-1;
+      for(let [ele,up] of Object.entries(this.characterInfo.sss)){
+        switch(ele){
+          case "Flame":
+            if(up.Attack>0) stat.addVal("FlameAttack",sssIncrease.Attack[up.Attack>=maxAtk?maxAtk:up.Attack]);
+            if(up.Damage>0) stat.addVal("FlameDamagePercent",sssIncrease.Damage[up.Damage>=maxDmg?maxDmg:up.Damage]);
+            break;
+          case "Frost":
+            if(up.Attack>0) stat.addVal("FrostAttack",sssIncrease.Attack[up.Attack>=maxAtk?maxAtk:up.Attack]);
+            if(up.Damage>0) stat.addVal("FrostDamagePercent",sssIncrease.Damage[up.Damage>=maxDmg?maxDmg:up.Damage]);
+            break;
+          case "Physical":
+            if(up.Attack>0) stat.addVal("PhysicalAttack",sssIncrease.Attack[up.Attack>=maxAtk?maxAtk:up.Attack]);
+            if(up.Damage>0) stat.addVal("PhysicalDamagePercent",sssIncrease.Damage[up.Damage>=maxDmg?maxDmg:up.Damage]);
+            break;
+          case "Volt":
+            if(up.Attack>0) stat.addVal("VoltAttack",sssIncrease.Attack[up.Attack>=maxAtk?maxAtk:up.Attack]);
+            if(up.Damage>0) stat.addVal("VoltDamagePercent",sssIncrease.Damage[up.Damage>=maxDmg?maxDmg:up.Damage]);
+            break;
+        }
       }
     }
     return stat.getAll();
@@ -450,11 +487,63 @@ export class CharacterService {
     return this.characterInfo.booster?.enhancementShot ?? false;
   }
 
-  set drinks(drinks:"Flame"|"Frost"|"Physical"|"Volt"|null){
+  set drinks(drinks:foodBuffs){
     this.characterInfo = Object.assign(this.characterInfo,{booster:{bladeShot:this.bladeShot,enhancementShot:this.enhancementShot,drinks}});
   }
   get drinks(){
     return this.characterInfo.booster?.drinks ?? null;
+  }
+  
+  set sssFlameAttack(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:stat,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssFlameAttack():number {
+    return this.characterInfo.sss?.Flame?.Attack ?? 0;
+  }
+  set sssFlameDamage(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:stat},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssFlameDamage():number {
+    return this.characterInfo.sss?.Flame?.Damage ?? 0;
+  }
+
+  set sssFrostAttack(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:stat,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssFrostAttack():number {
+    return this.characterInfo.sss?.Frost?.Attack ?? 0;
+  }
+  set sssFrostDamage(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:stat},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssFrostDamage():number {
+    return this.characterInfo.sss?.Frost?.Damage ?? 0;
+  }
+  
+  set sssPhysicalAttack(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:stat,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssPhysicalAttack():number {
+    return this.characterInfo.sss?.Physical?.Attack ?? 0;
+  }
+  set sssPhysicalDamage(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:stat},Volt:{Attack:this.sssVoltAttack,Damage:this.sssVoltDamage}}});
+  }
+  get sssPhysicalDamage():number {
+    return this.characterInfo.sss?.Physical?.Damage ?? 0;
+  }
+  
+  set sssVoltAttack(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:stat,Damage:this.sssVoltDamage}}});
+  }
+  get sssVoltAttack():number {
+    return this.characterInfo.sss?.Volt?.Attack ?? 0;
+  }
+  set sssVoltDamage(stat:number){
+    this.characterInfo = Object.assign(this.characterInfo,{sss:{Flame:{Attack:this.sssFlameAttack,Damage:this.sssFlameDamage},Frost:{Attack:this.sssFrostAttack,Damage:this.sssFrostDamage},Physical:{Attack:this.sssPhysicalAttack,Damage:this.sssPhysicalDamage},Volt:{Attack:this.sssVoltAttack,Damage:stat}}});
+  }
+  get sssVoltDamage():number {
+    return this.characterInfo.sss?.Volt?.Damage ?? 0;
   }
 }
 
@@ -469,8 +558,24 @@ type shotTaken = {
 type boosterActive = {
   bladeShot: "enhanced"|"normal"|null;
   enhancementShot: boolean;
-  drinks: "Flame"|"Frost"|"Physical"|"Volt"|null;
+  drinks: foodBuffs;
 }
+type sssStat = {
+  Attack:number;
+  Damage:number
+}
+type sssAllStat = {
+  [element in basicElement]:sssStat;
+};
+export type sssAvailable = {
+  element: basicElement,
+  type: string[];
+}
+export const sssIncrease = {
+  Attack: [0,150,300,450,600,750],
+  Damage: [0,0.5,1,1.5,2,2.5]
+}
+export type foodBuffs = "Flame"|"Flame_Nutripaste"|"Frost"|"Frost_Nutripaste"|"Physical"|"Physical_Nutripaste"|"Volt"|"Volt_Nutripaste"|null;
 export const simulIncrease = {
   "4500":{"HP":7600.0},
   "5500":{"Attack":25.0,"HP":2000.0},
@@ -494,6 +599,7 @@ export interface characterInfo {
   booster?: boosterActive;
   simul: simulActive;
   trait?: string;
+  sss?: sssAllStat;
 }
 type supreStat = {
   [name:string]:{

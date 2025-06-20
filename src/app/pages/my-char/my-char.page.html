@@ -125,13 +125,89 @@
                                     </ion-select>
                                   </ion-col>
                                   <ion-col>
-                                    <ion-select mode="ios" (ionChange)="saveChanges()" justify="space-between" label="Drinks" placeholder="Choose" [(ngModel)]="char.drinks">
+                                    <ion-select mode="ios" (ionChange)="saveChanges()" justify="space-between" label="Buffs" placeholder="Choose" [(ngModel)]="char.drinks">
                                       <ion-select-option [value]="null">No</ion-select-option>
-                                      <ion-select-option value="Flame">Flame (10% Attack)</ion-select-option>
-                                      <ion-select-option value="Frost">Frost (10% Attack)</ion-select-option>
-                                      <ion-select-option value="Physical">Physical (10% Attack)</ion-select-option>
-                                      <ion-select-option value="Volt">Volt (10% Attack)</ion-select-option>
+                                      <ion-select-option value="Flame">Flame Wine (10% Attack)</ion-select-option>
+                                      <ion-select-option value="Flame_Nutripaste">Flame Nutripaste (12% Attack + 500 Flame Attack)</ion-select-option>
+                                      <ion-select-option value="Frost">Frost Wine (10% Attack)</ion-select-option>
+                                      <ion-select-option value="Frost_Nutripaste">Frost Nutripaste (12% Attack + 500 Frost Attack)</ion-select-option>
+                                      <ion-select-option value="Physical">Physical Wine (10% Attack)</ion-select-option>
+                                      <ion-select-option value="Physical_Nutripaste">Physical Nutripaste (12% Attack + 500 Physical Attack)</ion-select-option>
+                                      <ion-select-option value="Volt">Volt Wine (10% Attack)</ion-select-option>
+                                      <ion-select-option value="Volt_Nutripaste">Volt Nutripaste (12% Attack + 500 Volt Attack)</ion-select-option>
                                     </ion-select>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-grid>
+                            </ion-item>
+                          </ion-list>
+                        </ion-card-content>
+                      </ion-card>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-card class="no-margin">
+                        <ion-card-header>
+                          <ion-card-title>Cosmic System</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                          <ion-label class="subtitle">Space Support System</ion-label>
+                          <ion-list>
+                            <ion-item lines="none">
+                              <ion-grid>
+                                <ion-row>
+                                  <ion-col class="fullwidth sss-pick" size="12">
+                                    <ion-text id="sssFlame">Flame (A{{char.sssFlameAttack}} & D{{char.sssFlameDamage}})</ion-text>
+                                    <ion-popover trigger="sssFlame" triggerAction="click">
+                                      <ng-template>
+                                        <ion-content class="popups relative">
+                                          <ion-text class="title">Attack</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssFlameAttack" [min]="0" [max]="sssMax.Attack" [pin]="true"></ion-range>
+                                          <ion-text class="title">Damage</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssFlameDamage" [min]="0" [max]="sssMax.Damage" [pin]="true"></ion-range>
+                                        </ion-content>
+                                      </ng-template>
+                                    </ion-popover>
+                                  </ion-col>
+                                  <ion-col class="fullwidth sss-pick" size="12">
+                                    <ion-text id="sssFrost">Frost (A{{char.sssFrostAttack}} & D{{char.sssFrostDamage}})</ion-text>
+                                    <ion-popover trigger="sssFrost" triggerAction="click">
+                                      <ng-template>
+                                        <ion-content class="popups relative">
+                                          <ion-text class="title">Attack</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssFrostAttack" [min]="0" [max]="sssMax.Attack" [pin]="true"></ion-range>
+                                          <ion-text class="title">Damage</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssFrostDamage" [min]="0" [max]="sssMax.Damage" [pin]="true"></ion-range>
+                                        </ion-content>
+                                      </ng-template>
+                                    </ion-popover>
+                                  </ion-col>
+                                  <ion-col class="fullwidth sss-pick" size="12">
+                                    <ion-text id="sssPhysical">Physical (A{{char.sssPhysicalAttack}} & D{{char.sssPhysicalDamage}})</ion-text>
+                                    <ion-popover trigger="sssPhysical" triggerAction="click">
+                                      <ng-template>
+                                        <ion-content class="popups relative">
+                                          <ion-text class="title">Attack</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssPhysicalAttack" [min]="0" [max]="sssMax.Attack" [pin]="true"></ion-range>
+                                          <ion-text class="title">Damage</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssPhysicalDamage" [min]="0" [max]="sssMax.Damage" [pin]="true"></ion-range>
+                                        </ion-content>
+                                      </ng-template>
+                                    </ion-popover>
+                                  </ion-col>
+                                  <ion-col class="fullwidth sss-pick" size="12">
+                                    <ion-text id="sssVolt">Volt (A{{char.sssVoltAttack}} & D{{char.sssVoltDamage}})</ion-text>
+                                    <ion-popover trigger="sssVolt" triggerAction="click">
+                                      <ng-template>
+                                        <ion-content class="popups relative">
+                                          <ion-text class="title">Attack</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssVoltAttack" [min]="0" [max]="sssMax.Attack" [pin]="true"></ion-range>
+                                          <ion-text class="title">Damage</ion-text>
+                                          <ion-range (ionChange)="saveChanges()" color="warning" [(ngModel)]="char.sssVoltDamage" [min]="0" [max]="sssMax.Damage" [pin]="true"></ion-range>
+                                        </ion-content>
+                                      </ng-template>
+                                    </ion-popover>
                                   </ion-col>
                                 </ion-row>
                               </ion-grid>

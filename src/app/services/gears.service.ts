@@ -224,8 +224,6 @@ type gearTypesNormal = "Helm"|"Armor"|"Belt"|"Legguards"|"Bracers"|"Spaulders"|"
 type gearTypesSpecial = "Eyepiece"|"Combat Engine"|"Exoskeleton"|"Microreactor";
 type gearRarity = "5"|"Augment"|"Titan";
 
-type element = "Flame"|"Frost"|"Physical"|"Volt"|"Altered";
-
 /**
  * `type` only includes augment that matters in this calculator (at least for now):  
  * - `attack`: Your plain old attack that boost all elements  

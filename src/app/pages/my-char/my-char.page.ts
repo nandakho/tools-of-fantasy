@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { multiEleWeapons, ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, enhMax, evoAvailable, traitAvailable } from 'src/app/services';
+import { multiEleWeapons, ConstService, CharacterService, weaponAvailable, matrixAvailable, serverList, supreAvailable, gearAvailable, randomStatList, titanStatList, augAvailable, matrixType, gearTypes, augStatList, MiscService, evoMax, enhMax, evoAvailable, traitAvailable, sssIncrease, sssAvailable } from 'src/app/services';
 import { Title, Meta } from '@angular/platform-browser';
 import { AlertInput, AlertController } from '@ionic/angular';
 import { addMetadataFromBase64DataURI, getMetadata } from 'meta-png';
@@ -31,6 +31,11 @@ export class MyCharPage {
   evoMax = evoMax;
   enhMax = enhMax;
   saving:boolean = false;
+  sssAvailable:sssAvailable[] = [{element:"Flame",type:["Attack","Damage"]},{element:"Frost",type:["Attack","Damage"]},{element:"Physical",type:["Attack","Damage"]},{element:"Volt",type:["Attack","Damage"]}];
+  sssMax = {
+    "Attack": (sssIncrease.Attack.length-1),
+    "Damage": (sssIncrease.Damage.length-1)
+  }
   matrixOrder: matrixType[] = ["Emotion","Mind","Faith","Memory"];
   eqOrder: gearTypes[] = ["Helm","Eyepiece","Spaulders","Handguards","Bracers","Armor","Combat Engine","Belt","Legguards","Sabatons","Exoskeleton","Microreactor"];
   server:serverList[] = ["Asia Pacific","Europe","North America","South America","Southeast Asia"];
@@ -1002,52 +1007,52 @@ export class MyCharPage {
   }
 
   get physicalAtk() {
-    return Math.round(Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
+    return Math.round((Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("PhysicalAttackPercent")/100)))+this.char.characterStat.getVal("PhysicalAttackFlat"));
   }
   get physicalAtkB() {
     return Math.round(this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"));
   }
   get physicalAtkP() {
-    return Math.round((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("PhysicalAttackPercent")/100)));
+    return Math.round(((this.char.characterStat.getVal("PhysicalAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("PhysicalAttackPercent")/100)))+this.char.characterStat.getVal("PhysicalAttackFlat"));
   }
   get physicalDam() {
     return Math.round(this.char.characterStat.getVal("PhysicalDamagePercent")*100)/100;
   }
 
   get flameAtk() {
-    return Math.round(Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FlameAttackPercent")/100)));
+    return Math.round((Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FlameAttackPercent")/100)))+this.char.characterStat.getVal("FlameAttackFlat"));
   }
   get flameAtkB() {
     return Math.round(this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"));
   }
   get flameAtkP() {
-    return Math.round((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FlameAttackPercent")/100)));
+    return Math.round(((this.char.characterStat.getVal("FlameAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FlameAttackPercent")/100)))+this.char.characterStat.getVal("FlameAttackFlat"));
   }
   get flameDam() {
     return Math.round(this.char.characterStat.getVal("FlameDamagePercent")*100)/100;
   }
 
   get frostAtk() {
-    return Math.round(Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FrostAttackPercent")/100)));
+    return Math.round((Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("FrostAttackPercent")/100)))+this.char.characterStat.getVal("FrostAttackFlat"));
   }
   get frostAtkB() {
     return Math.round(this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"));
   }
   get frostAtkP() {
-    return Math.round((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FrostAttackPercent")/100)));
+    return Math.round(((this.char.characterStat.getVal("FrostAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("FrostAttackPercent")/100)))+this.char.characterStat.getVal("FrostAttackFlat"));
   }
   get frostDam() {
     return Math.round(this.char.characterStat.getVal("FrostDamagePercent")*100)/100;
   }
 
   get voltAtk() {
-    return Math.round(Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("VoltAttackPercent")/100)));
+    return Math.round((Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack")))*(1+(this.char.characterStat.getVal("VoltAttackPercent")/100)))+this.char.characterStat.getVal("VoltAttackFlat"));
   }
   get voltAtkB() {
     return Math.round(this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"));
   }
   get voltAtkP() {
-    return Math.round((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("VoltAttackPercent")/100)));
+    return Math.round(((this.char.characterStat.getVal("VoltAttack")+this.char.characterStat.getVal("Attack"))*((this.char.characterStat.getVal("VoltAttackPercent")/100)))+this.char.characterStat.getVal("VoltAttackFlat"));
   }
   get voltDam() {
     return Math.round(this.char.characterStat.getVal("VoltDamagePercent")*100)/100;

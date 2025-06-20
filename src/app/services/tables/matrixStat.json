@@ -147,6 +147,11 @@
             "Set": 2,
             "Increase": ["FlameAttackPercent"],
             "Value": [26,28,30,32]
+        },
+        "Lyncis": {
+            "Set": 2,
+            "Increase": ["FrostAttackPercent"],
+            "Value": [26,28,30,32]
         }
     }
 }
