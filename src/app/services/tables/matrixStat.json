@@ -152,6 +152,26 @@
             "Set": 2,
             "Increase": ["FrostAttackPercent"],
             "Value": [26,28,30,32]
+        },
+        "Aster": {
+            "Set": 2,
+            "Increase": ["PhysicalAttackPercent"],
+            "Value": [26,28,30,32]
+        },
+        "Hipper": {
+            "Set": 2,
+            "Increase": ["VoltAttackPercent"],
+            "Value": [26,28,30,32]
+        },
+        "Lechesis": {
+            "Set": 2,
+            "Increase": ["FlameAttackPercent","FrostAttackPercent","PhysicalAttackPercent","VoltAttackPercent"],
+            "Value": [26,28,30,32]
+        },
+        "Helene": {
+            "Set": 2,
+            "Increase": ["FrostAttackPercent"],
+            "Value": [26,28,30,32]
         }
     }
 }

@@ -104,7 +104,7 @@ export class GearsService {
   evolutionStat(gear:gearTypes, evoLevel:number):stats{
     let evstat = new StatsService();
     for(let [sName,sVal] of Object.entries(evoStats[gear]!)){
-      evstat.addVal(sName as statTypes,sVal*((evoLevel<0)?0:(evoLevel>evoMax)?evoMax:evoLevel));
+      evstat.addVal(sName as statTypes,sVal[evoLevel]??0);
     }
     return evstat.getAll();
   }
@@ -114,62 +114,62 @@ export const augAvailable:gearTypes[] = ["Bracers","Legguards","Sabatons","Armor
 export const evoAvailable:gearTypes[] = ["Combat Engine", "Eyepiece", "Microreactor", "Exoskeleton"];
 const evoStats:evoStat = {
   "Combat Engine": {
-    "AlterDamagePercent": 0.5,
-    "FlameDamagePercent": 0.5,
-    "FrostDamagePercent": 0.5,
-    "PhysicalDamagePercent": 0.5,
-    "VoltDamagePercent": 0.5,
-    "AlterResistPercent": 1,
-    "FlameResistPercent": 1,
-    "FrostResistPercent": 1,
-    "PhysicalResistPercent": 1,
-    "VoltResistPercent": 1,
-    "Healing": 1,
+    "AlterDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FrostDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "PhysicalDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "VoltDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "AlterResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FlameResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FrostResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "PhysicalResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "VoltResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "Healing": [0,1,2,3,4,5,6,7,8,9,10,10,10,10,10,10],
   },
   "Microreactor": {
-    "AlterDamagePercent": 0.5,
-    "FlameDamagePercent": 0.5,
-    "FrostDamagePercent": 0.5,
-    "PhysicalDamagePercent": 0.5,
-    "VoltDamagePercent": 0.5,
-    "AlterResistPercent": 1,
-    "FlameResistPercent": 1,
-    "FrostResistPercent": 1,
-    "PhysicalResistPercent": 1,
-    "VoltResistPercent": 1,
-    "Healing": 1,
+    "AlterDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FrostDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "PhysicalDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "VoltDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "AlterResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FlameResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FrostResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "PhysicalResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "VoltResistPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "Healing": [0,1,2,3,4,5,6,7,8,9,10,10,10,10,10,10],
   },
   "Eyepiece": {
-    "AlterDamagePercent": 0.5,
-    "FlameDamagePercent": 0.5,
-    "FrostDamagePercent": 0.5,
-    "PhysicalDamagePercent": 0.5,
-    "VoltDamagePercent": 0.5,
-    "FlameAttackPercent": 1,
-    "FrostAttackPercent": 1,
-    "PhysicalAttackPercent": 1,
-    "VoltAttackPercent": 1,
-    "Shatter": 1,
+    "AlterDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FrostDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "PhysicalDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "VoltDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FrostAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "PhysicalAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "VoltAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "Shatter": [0,1,2,3,4,5,6,7,8,9,10,10,10,10,10,10],
   },
   "Exoskeleton": {
-    "AlterDamagePercent": 0.5,
-    "FlameDamagePercent": 0.5,
-    "FrostDamagePercent": 0.5,
-    "PhysicalDamagePercent": 0.5,
-    "VoltDamagePercent": 0.5,
-    "FlameAttackPercent": 1,
-    "FrostAttackPercent": 1,
-    "PhysicalAttackPercent": 1,
-    "VoltAttackPercent": 1,
-    "Shatter": 1,
+    "AlterDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FrostDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "PhysicalDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "VoltDamagePercent": [0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,9,10],
+    "FlameAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "FrostAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "PhysicalAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "VoltAttackPercent": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    "Shatter": [0,1,2,3,4,5,6,7,8,9,10,10,10,10,10,10],
   }
 };
 type evoStat = {
   [gear in gearTypes]?: {
-    [st in statTypes]?: number
+    [st in statTypes]?: number[]
   }
 };
-export const evoMax = 10;
+export const evoMax = 15;
 export const enhMax = 70;
 export const randomStatList = {
   "Bracers": ["Attack","FlameAttack","FrostAttack","PhysicalAttack","VoltAttack","Resist","FlameResist","FrostResist","PhysicalResist","VoltResist","HP"],

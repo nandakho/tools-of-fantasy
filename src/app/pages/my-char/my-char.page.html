@@ -129,12 +129,16 @@
                                       <ion-select-option [value]="null">No</ion-select-option>
                                       <ion-select-option value="Flame">Flame Wine (10% Attack)</ion-select-option>
                                       <ion-select-option value="Flame_Nutripaste">Flame Nutripaste (12% Attack + 500 Flame Attack)</ion-select-option>
+                                      <ion-select-option value="Flame_Mushroom">Flame Mushroom (12% Attack + 600 Flame Attack)</ion-select-option>
                                       <ion-select-option value="Frost">Frost Wine (10% Attack)</ion-select-option>
                                       <ion-select-option value="Frost_Nutripaste">Frost Nutripaste (12% Attack + 500 Frost Attack)</ion-select-option>
+                                      <ion-select-option value="Frost_Mushroom">Frost Mushroom (12% Attack + 600 Frost Attack)</ion-select-option>
                                       <ion-select-option value="Physical">Physical Wine (10% Attack)</ion-select-option>
                                       <ion-select-option value="Physical_Nutripaste">Physical Nutripaste (12% Attack + 500 Physical Attack)</ion-select-option>
+                                      <ion-select-option value="Physical_Mushroom">Physical Mushroom (12% Attack + 600 Physical Attack)</ion-select-option>
                                       <ion-select-option value="Volt">Volt Wine (10% Attack)</ion-select-option>
                                       <ion-select-option value="Volt_Nutripaste">Volt Nutripaste (12% Attack + 500 Volt Attack)</ion-select-option>
+                                      <ion-select-option value="Volt_Mushroom">Volt Mushroom (12% Attack + 600 Volt Attack)</ion-select-option>
                                     </ion-select>
                                   </ion-col>
                                 </ion-row>
@@ -233,10 +237,10 @@
                                     <ion-input (ionChange)="saveChanges()" labelPlacement="floating" label="4500" placeholder="0" type="number" min="0" [(ngModel)]="char.characterInfo.simul['4500']"></ion-input>
                                   </ion-col>
                                   <ion-col>
-                                    <ion-input (ionChange)="saveChanges()" labelPlacement="floating" label="5500" placeholder="0" type="number" min="0" [(ngModel)]="char.characterInfo.simul['5500']"></ion-input>
+                                    <ion-input (ionChange)="saveChanges()" labelPlacement="floating" label="5500" placeholder="0" type="number" min="0" [max]="char.characterInfo.simul['4500']" [(ngModel)]="char.characterInfo.simul['5500']"></ion-input>
                                   </ion-col>
                                   <ion-col>
-                                    <ion-input (ionChange)="saveChanges()" labelPlacement="floating" label="7000" placeholder="0" type="number" min="0" [(ngModel)]="char.characterInfo.simul['7000']"></ion-input>
+                                    <ion-input (ionChange)="saveChanges()" labelPlacement="floating" label="7000" placeholder="0" type="number" min="0" [max]="char.characterInfo.simul['5500']" [(ngModel)]="char.characterInfo.simul['7000']"></ion-input>
                                   </ion-col>
                                 </ion-row>
                               </ion-grid>

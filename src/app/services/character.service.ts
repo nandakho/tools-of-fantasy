@@ -187,11 +187,17 @@ export class CharacterService {
         case "Flame_Nutripaste":
           stat.add({"FlameAttackPercent":12,"FlameAttackFlat":500});
           break;
+        case "Flame_Mushroom":
+          stat.add({"FlameAttackPercent":12,"FlameAttackFlat":600});
+          break;
         case "Frost":
           stat.add({"FrostAttackPercent":10});
           break;
         case "Frost_Nutripaste":
           stat.add({"FrostAttackPercent":12,"FrostAttackFlat":500});
+          break;
+        case "Frost_Mushroom":
+          stat.add({"FrostAttackPercent":12,"FrostAttackFlat":600});
           break;
         case "Physical":
           stat.add({"PhysicalAttackPercent":10});
@@ -199,11 +205,17 @@ export class CharacterService {
         case "Physical_Nutripaste":
           stat.add({"PhysicalAttackPercent":12,"PhysicalAttackFlat":500});
           break;
+        case "Physical_Mushroom":
+          stat.add({"PhysicalAttackPercent":12,"PhysicalAttackFlat":600});
+          break;
         case "Volt":
           stat.add({"VoltAttackPercent":10});
           break;
         case "Volt_Nutripaste":
           stat.add({"VoltAttackPercent":12,"VoltAttackFlat":500});
+          break;
+        case "Volt_Mushroom":
+          stat.add({"VoltAttackPercent":12,"VoltAttackFlat":600});
           break;
       }
     }
@@ -575,7 +587,7 @@ export const sssIncrease = {
   Attack: [0,150,300,450,600,750],
   Damage: [0,0.5,1,1.5,2,2.5]
 }
-export type foodBuffs = "Flame"|"Flame_Nutripaste"|"Frost"|"Frost_Nutripaste"|"Physical"|"Physical_Nutripaste"|"Volt"|"Volt_Nutripaste"|null;
+export type foodBuffs = "Flame"|"Flame_Nutripaste"|"Flame_Mushroom"|"Frost"|"Frost_Nutripaste"|"Frost_Mushroom"|"Physical"|"Physical_Nutripaste"|"Physical_Mushroom"|"Volt"|"Volt_Nutripaste"|"Volt_Mushroom"|null;
 export const simulIncrease = {
   "4500":{"HP":7600.0},
   "5500":{"Attack":25.0,"HP":2000.0},
